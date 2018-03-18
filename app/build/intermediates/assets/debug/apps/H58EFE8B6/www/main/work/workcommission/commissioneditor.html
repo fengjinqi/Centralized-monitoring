@@ -1,0 +1,1214 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/mui.picker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/new_file.min.css"/>
+
+		<link rel="stylesheet" type="text/css" href="../../../css/app.css" />
+		<style>
+			.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell{padding-left:15px;}
+			.mui-content > .mui-table-view:first-child{margin-top:0}
+			.form-control{width: 60%!important;float: left!important;}
+			.mui-input-row{background-color: #fff;}
+			.mui-input-group .mui-input-row:after{height: 0px;}
+			.mui-input-row label{padding: 7px 15px;}
+			.mui-input-row{height: auto;}
+			.mui-popover{top: 50%;margin-top: -60px;left: 50%;margin-left: -140px;}
+			.mui-popover {position:fixed}
+			.mui-radio input[type='radio']:before, .mui-checkbox input[type='checkbox']:before{font-size:20px;}
+			.mui-table-view-cell.mui-active{background:#fff}
+			.mui-table-view-cell:after{left:0}
+			.mui-radio input[type='radio']:before, .mui-checkbox input[type='checkbox']:before {
+    font-size: 25px;
+}
+.dan:nth-of-type(2){padding-right:27px!important;}
+input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;}
+</style>
+	</head>
+
+<body>
+	<div id="root">
+		<header class="mui-bar mui-bar-nav hrader">
+			<a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">{{guid}}</h1>
+			<!--<button type="button" id='btn' class="btn  mui-pull-right"style="padding:1px 6px;margin-top:13px;">提交</button>-->
+		</header>
+		<div class="mui-content top">
+			<template v-if="author==='yjbzgl'">
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'sqr'" key="sqr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name":data-id="item.value.id" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text":data-id="item.value.id" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+								</span>
+								<!--<input :class="item.displayType == 'required'?validaTetable:''" :readonly="item.displayType == 'readonly'? true:false" v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value.name" :name="item.bizField">-->
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="sqr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<span v-for="it in item.defaultValue">
+										<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+										<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+
+									</span>
+								</div>
+								<select v-model='item.value' class="form-control" v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option  :value="it.name"  v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"style='display:block;overflow:hidden;width:60%!important;'>
+									<form enctype="multipart/form-data" id="form2"style="position:relative;margin-bottom:15px;overflow:hidden;">
+									<input type="file" :name="item.bizField" class="mui-btn form-control" @change="onUploadChange" id='upload'style="position: relative;opacity: 0;z-index: 88;" />
+										<button class="mui-btn form-control"  type="button"style="position: absolute;">附件上传</button>
+									</form>
+									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+
+								</span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+					</ul>
+					<ul v-show='items.length>0' class="mui-table-view"style="padding-left:0;padding-right:0;text-align:center;">
+						<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:10px 10px;">{{item.name}}</button>
+					</ul>
+				</form><!--应急事件名称-->
+
+			</template>
+			<template v-else-if="author==='jjbgl'">
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'zbr'" key="zbr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" :data-id="item.value.id"class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="zbr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										<!--	</span>-->
+										<!--	<span v-else>
+                                        <input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+                                            <input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+                                        </span-->
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"style='display:block;overflow:hidden;width:60%!important;'>
+									<form enctype="multipart/form-data" id="form2"style="position:relative;margin-bottom:15px;overflow:hidden;">
+									<input type="file" :name="item.bizField" class="mui-btn form-control" @change="onUploadChange" id='upload'style="position: relative;opacity: 0;z-index: 88;" />
+										<button class="mui-btn form-control"  type="button"style="position: absolute;">附件上传</button>
+									</form>
+									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+
+								</span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+					</ul>
+					<ul class="mui-table-view"v-show='items.length>0'>
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+
+				</form>
+				<!--值班员-->
+			</template>
+			<template v-else-if="author==='zxgd'">
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'bzzxjlr'" key="bzzxjlr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'":data-id="item.value.id" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" :data-id="item.value.id"v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select  v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										<!--	</span>-->
+										<!--	<span v-else>
+                                        <input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+                                            <input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+                                        </span-->
+										</span>
+								</div>
+								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+							<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
+								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked  :name="item.bizField" class="checked "/>
+									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
+										</span>
+								</div>
+								<select v-model='item.value' class="form-control"v-else-if="item.bzType==='select'&& item.bizClass==='zxbd'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"style='display:block;overflow:hidden;width:60%!important;'>
+									<form enctype="multipart/form-data" id="form2"style="position:relative;margin-bottom:15px;overflow:hidden;">
+									<input type="file" :name="item.bizField" class="mui-btn form-control" @change="onUploadChange" id='upload'style="position: relative;opacity: 0;z-index: 88;" />
+										<button class="mui-btn form-control"  type="button"style="position: absolute;">附件上传</button>
+									</form>
+									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+
+								</span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textarea"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show="items.length>0">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+
+				<!--咨询单位-->
+			</template>
+			<template v-else-if="author==='gzcllc1'">
+				<!--故障处理-->
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'gzsgr'" key="gzsgr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'":data-id="item.value.id" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="gzsgr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										<!--	</span>-->
+										<!--	<span v-else>
+                                        <input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+                                            <input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+                                        </span-->
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"style='display:block;overflow:hidden;width:60%!important;'>
+									<form enctype="multipart/form-data" id="form2"style="position:relative;margin-bottom:15px;overflow:hidden;">
+									<input type="file" :name="item.bizField" class="mui-btn form-control" @change="onUploadChange" id='upload'style="position: relative;opacity: 0;z-index: 88;" />
+										<button class="mui-btn form-control"  type="button"style="position: absolute;">附件上传</button>
+									</form>
+									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
+
+								</span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textareaa"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show='items.length>0' >
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+
+			</template>
+			<template v-else-if="author==='sbxjjl1'">
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'jcry'" key="bzzxjlr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text":data-id="item.value.id" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id"  v-else-if="item.displayType=='required'" @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+							<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else-if="item.displayType=='opitonal'":data-id="item.value.id"  @click='show()' key="input"  type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										<!--	</span>-->
+										<!--	<span v-else>
+                                        <input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+                                            <input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+                                        </span-->
+										</span>
+								</div>
+								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+							<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
+								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
+									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"></span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textarea"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view"v-show="task.length>1">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+
+				<!--应急车设备检查记录-->
+			</template>
+			<template v-else-if="author==='ddzdjc'">
+				<!--调度终端检查记录-->
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'jcry'" key="jcry">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'":data-id="item.value.id" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id"  v-else-if="item.displayType=='required'" @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+							<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else-if="item.displayType=='opitonal'":data-id="item.value.id" @click='show()' key="input"  type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="jcry" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+									<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										<!--	</span>-->
+										<!--	<span v-else>
+                                        <input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+                                            <input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+                                        </span-->
+										</span>
+								</div>
+								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+							<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
+								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
+									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
+										</span>
+								</div>
+
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"></span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textareaa"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show="task.length>1">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+			</template>
+			<template v-else-if="author==='TestPro'">
+				<!--保障联调测试-->
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'txr'" key="txr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if=" item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+										<input type="hidden" id="hiddeen" value="">
+								</span>
+							</div>
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"
+									   v-if="item.bzType === 'text'" key="input" type="text" class="form-control text " v-model="item.value" :name="item.bizField">
+
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+							<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"style='display:block;overflow:hidden;width:60%!important;'>
+									<form enctype="multipart/form-data" id="form2"style="position:relative;margin-bottom:15px;overflow:hidden;">
+									<input type="file" :name="item.bizField" class="mui-btn form-control" @change="onUploadChange" id='upload'style="position: relative;opacity: 0;z-index: 88;" />
+										<button class="mui-btn form-control"  type="button"style="position: absolute;">附件上传</button>
+									</form>
+									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+
+								</span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show="items.length>0">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+
+			</template>
+			<template v-else-if="author==='dqgsTest'">
+				<!--地区联调测试-->
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'txr'" key="txr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if=" item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+										<input type="hidden" id="hiddeen" value="">
+								</span>
+							</div>
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"
+									   v-if="item.bzType === 'text'" key="input" type="text" class="form-control text " v-model="item.value" :name="item.bizField">
+
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+							<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<button type="button" class="mui-btn form-control" v-else-if="item.bzType==='attachFile'" @click.stop='Gareth()':name="item.bizField">附件上传</button>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show="items.length>0">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+
+			</template>
+			<template v-else-if="author==='xcjszclc'">
+				<form class="mui-input-group" enctype="application/x-www-form-urlencoded" id="form1">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"v-for="item in items" style="padding-left:0;padding-right:0;">
+							<div class="mui-input-row" v-if="item.bizField === 'txr'" key="txr">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'":data-id="item.value.id" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+
+								</span>
+								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
+								<select v-else-if ="item.bzType==='select'" class="form-control" :name="item.bizField" >
+									<option :value="item.value.name">{{item.value.name}}</option>
+								</select>
+								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
+							</div>
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
+								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span v-else-if="item.bzType === 'date'">
+									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
+									<input :class="item.displayType == 'required'?validaTetable:''"  @click.stop='getTime(item)' type="text"v-else="item.bzType === 'date'" readonly
+										   class="form-control text" v-model="item.value" :name="item.bizField"
+										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
+								</span>
+
+								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<!--<span v-if="item.displayType == 'required'">-->
+									<span v-for="it in item.defaultValue">
+								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
+							<!--	</span>-->
+								<!--	<span v-else>
+								<input  type="checkbox":value="it.name" v-if='it.selected==true'checked="checked" :name="item.bizField" disabled/>
+									<input  type="checkbox":value="it.name" v-else='it.selected==false':name="item.bizField" disabled/>{{it.name}}
+								</span-->
+										</span>
+								</div>
+								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
+									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
+								</select>
+								<span v-else-if="item.bzType==='attachFile'"></span>
+								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textareaa"  rows="3" v-model="item.value" :name="item.bizField"
+										  class="form-control"></textarea>
+							</div>
+						</li>
+
+					</ul>
+					<ul class="mui-table-view" v-show="items.length>0">
+						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
+
+							<button class="task" v-on:click="getTask(item)" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+						</li>
+					</ul>
+				</form>
+				<!--现场技术支持-->
+			</template>
+
+			<div id="popover" class="mui-popover">
+				<form enctype="application/x-www-form-urlencoded" id="">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" class="Album"onclick="galleryImgs()">相册</li>
+						<li class="mui-table-view-cell" class="Photograph" onclick="getImage()">拍照</li>
+						<li class="mui-table-view-cell" class="video" onclick="getVideo()">拍摄视频</li>
+					</ul>
+				</form>
+
+			</div>
+			<div class="mui-backdrop" id="mui-backdrop" style="display:none;background:rgba(0,0,0,.7)">
+
+				<div style="width:100%;height:220px;position:relative;top:50%;margin-top:-110px;background:#fff">
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>单位</label>
+						<input type="text" id='danwei' class="form-control" placeholder="单位"readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>部门</label>
+						<input id="bumen"  type="text" class="form-control" placeholder="部门" readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>人员</label>
+						<input id="jianchar" class="form-control" placeholder="人员" readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<button class="mui-btn" style="margin-top:15px;    margin-left: 35%;" @click="close()">关闭</button>
+					<button class="mui-btn"  style="margin-top:15px;" @click=confirm()>确认</button>
+				</div>
+			</div>
+			<div class="mui-backdrop" id="mui-backdropone" style="display:none;background:rgba(0,0,0,.7)">
+
+				<div style="width:100%;height:220px;position:relative;top:50%;margin-top:-110px;background:#fff">
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>单位</label>
+						<input type="text" id='danweione' class="form-control" placeholder="单位"readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>部门</label>
+						<input id="bumenone"  type="text" class="form-control" placeholder="部门" readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+						<label for="" style='line-height: 26px;background: url(../../../images/fjq.png)no-repeat;height:40px;color:#fff'>人员</label>
+						<input id="jiancharone" class="form-control" placeholder="人员" readonly style="background:#fff!important;height:40px!important;">
+					</div>
+					<button class="mui-btn" style="margin-top:15px;    margin-left: 35%;" @click="closeOne()">关闭</button>
+					<button class="mui-btn"  style="margin-top:15px;" @click=confirmone()>确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../../js/mui.min.js"></script>
+	<script src="../../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/setProcessing.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/mui.dtpicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../../js/getTime.js"></script>
+   <!-- <script src="../../../js/commissioneditor.min.js" type="text/javascript" charset="utf-8"></script>-->
+	<!--<script type="text/javascript">
+	/*	mui.init({
+	beforeback: function(){
+		//获得列表界面的webview
+		var list = plus.webview.getWebviewById('commissionListview');
+		//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+		mui.fire(list,'get_detail');
+		//返回true，继续页面关闭逻辑
+		return true;
+	}
+});*/
+		var vm=new Vue({
+			el:"#root",
+			data:{
+				guid:'',
+				validate:'validate',
+				author:'xcjszclc',
+				validaTetable:'validaTetable',
+				items:[],
+				task:[],
+				id:'',
+				taskid:'',
+				select:'',
+
+			},
+			methods:{
+				getTask: function(item){
+					var obj={};
+					obj.processId=this.id,
+					obj.transitionId=item.id,
+					obj.taskId=String(this.taskid),
+					obj.creator='admin',
+					obj.bizObj={};
+					var input=document.querySelectorAll('#form1 .text ')
+					for(var i=0;i<input.length;i++){
+						obj.bizObj[input[i].name]=input[i].value
+					}
+					var checked=document.querySelectorAll('#form1 .checked ')
+
+					for(var i=0;i<checked.length;i++){
+						if(checked[i].checked){
+							  if(obj.bizObj.hasOwnProperty(checked[i].name)){
+								obj.bizObj[checked[i].name] += ',' + checked[i].value;
+							  }else{
+								obj.bizObj[checked[i].name] = checked[i].value;
+							  }
+						}
+					}
+
+					var select=document.querySelectorAll('#form1 select ')
+					for(var i=0;i<select.length;i++){
+						select[i].disabled=false
+						 obj.bizObj[select[i].name]=select[i].value
+					}
+					var textare=document.querySelectorAll('#form1 textarea ')
+					for(var i=0;i<textare.length;i++){
+						 obj.bizObj[textare[i].name]=textare[i].value
+					}
+							alert(JSON.stringify(obj))
+					 mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
+            			data:obj,
+            			dataType:'json',
+            			type:'post',
+            			headers:{'Content-Type':'application/json'},
+            			success:function(data){
+            				alert(JSON.stringify(data))
+            				mui.back()
+            			},
+            			error:function(xhr,type,errorThrown){
+            				//异常处理；
+            				alert(2332);
+            			}
+            		})
+				}
+			}
+		})
+		/*mui.plusReady(function(){
+
+			window.addEventListener('get_detail',function(event){
+				vm.guid=event.detail.guid;
+				vm.id=event.detail.id
+				vm.author=event.detail.author;
+				alert(vm.id)
+				plus.nativeUI.showWaiting( '正在加载' )
+				mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/queryByForm?userId=admin&processId="+vm.id,{
+					dataType:'json',
+					type:'get',
+					success:function(res){*/
+					var res={
+  "result": {
+    "success": true
+  },
+  "ticket": {
+    "id": "a2de2a57-8b70-43f0-a525-faddb7ba8b60",
+    "data": [
+      {
+        "id": "e807af0a-899f-4922-9555-ffa798442519",
+        "row": 1,
+        "col": 1,
+        "title": "地区公司填写",
+        "type": "group",
+        "item": [
+          {
+            "id": "44f8a514-d8a8-4b0d-900e-2965fc1368d8",
+            "row": 1,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "5b0553e8-8b9e-4e6e-aace-6f96b69ab85f",
+                "row": 1,
+                "col": 1,
+                "title": "标题",
+                "bizClass": "xcjszc",
+                "bizField": "title",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text",
+                "value": "中国石油天然气集团公司现场技术支持2018-01-29 14:49"
+              },
+              {
+                "id": "0d6d0fa1-cdd4-4482-9ba8-c3d7629a7158",
+                "row": 2,
+                "col": 1,
+                "title": "填写人",
+                "bizClass": "xcjszc",
+                "bizField": "txr",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "userSelect",
+                "value": {
+                  "id": "admin",
+                  "name": "顶级管理员",
+                  "dept": "应急通信保障中心",
+                  "mobile": "13810855414"
+                }
+              }
+            ]
+          },
+          {
+            "id": "f66d4774-e2f7-4aef-a1cb-4158d34ff4f6",
+            "row": 2,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "52e45437-ba3b-49e7-8653-93cb25a175ae",
+                "row": 1,
+                "col": 1,
+                "title": "详细地址",
+                "bizClass": "xcjszc",
+                "bizField": "xxdz",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text",
+                "value": "admin"
+              }
+            ]
+          },
+          {
+            "id": "639f9b8a-bf8a-45bb-acfd-fb5b70fb5f87",
+            "row": 3,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "7cf13fe2-fc03-4479-bffb-69c0bdacbfac",
+                "row": 1,
+                "col": 1,
+                "title": "联系人",
+                "bizClass": "xcjszc",
+                "bizField": "lxr",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text",
+                "value": "455445"
+              },
+              {
+                "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
+                "row": 1,
+                "col": 2,
+                "title": "联系方式",
+                "bizClass": "xcjszc",
+                "bizField": "lxfs",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text",
+                "value": "4554545454"
+              }
+            ]
+          },
+          {
+            "id": "bc3c7ffb-df60-43c3-b0f2-d86ce062aeb6",
+            "row": 4,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "752ea33e-bedc-4bb9-a2ac-51f150bd4f43",
+                "row": 1,
+                "col": 1,
+                "title": "申请事由",
+                "bizClass": "xcjszc",
+                "bizField": "sqsy",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "textarea",
+                "value": "54545454545454"
+              },
+              {
+                "id": "f3ac6109-d19f-461a-a8b2-33f452febac5",
+                "row": 2,
+                "col": 1,
+                "title": "技术服务形式",
+                "bizClass": "xcjszc",
+                "bizField": "jsfwxs",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "checkbox",
+                "defaultValue": "故障处理 $^$故障处理 $?$现场培训$^$现场培训$?$系统维护$^$系统维护$?$安装调试$^$安装调试$?$需求调研$^$需求调研 $?$技术交流$^$技术交流$?$方案设计$^$方案设计$?$其它$^$其它",
+                "value": "$?$现场培训$?$系统维护$?$安装调试",
+                "dispValue": "现场培训,系统维护,安装调试"
+              },
+              {
+                "id": "0169e8a3-730e-441b-b935-21d73d699af5",
+                "row": 3,
+                "col": 1,
+                "title": "故障设备类别",
+                "bizClass": "xcjszc",
+                "bizField": "gzsblb",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "checkbox",
+                "defaultValue": "车载卫星天线子系统$^$车载卫星天线子系统$?$综合接入子系统$^$综合接入子系统$?$视频子系统$^$视频子系统$?$发电子系统$^$发电子系统$?$辅助子系统$^$辅助子系统$?$音频子系统$^$音频子系统$?$其他通信设备$^$其他通信设备$?$其它$^$其它$?$无$^$无",
+                "value": "$?$车载卫星天线子系统$?$视频子系统$?$无",
+                "dispValue": "车载卫星天线子系统,视频子系统,无"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "e6214173-6562-4a4a-b7ea-fe7e08eaaf2d",
+        "row": 2,
+        "col": 1,
+        "title": "保障中心受理",
+        "type": "group",
+        "item": [
+          {
+            "id": "22b4c7e3-8b2f-46cd-8816-18026e194ae3",
+            "row": 1,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "c55ba2c3-d174-40bc-bc2e-81397895982a",
+                "row": 1,
+                "col": 1,
+                "title": "受理人员",
+                "bizClass": "xcjszc",
+                "bizField": "slry",
+                "displayType": "required",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text"
+              },
+              {
+                "id": "992ac33d-7337-42e5-9608-8431e8c9711d",
+                "row": 1,
+                "col": 2,
+                "title": "受理时间",
+                "bizClass": "xcjszc",
+                "bizField": "slsj",
+                "displayType": "required",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "date"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5ea09f18-f955-496b-b602-1f2f31d9bb38",
+        "row": 3,
+        "col": 1,
+        "title": "保障中心领导审批",
+        "type": "group",
+        "item": [
+          {
+            "id": "5353f375-58a3-4508-b379-66972ddc2a1d",
+            "row": 1,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "a14c83a7-f6ba-4b84-91b4-5eb02f4d795d",
+                "row": 1,
+                "col": 1,
+                "title": "审批人",
+                "bizClass": "xcjszc",
+                "bizField": "ldsp",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "text"
+              },
+              {
+                "id": "f3c36844-1343-4670-b8d0-460a113a495c",
+                "row": 1,
+                "col": 2,
+                "title": "审批时间",
+                "bizClass": "xcjszc",
+                "bizField": "spsj",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "date"
+              }
+            ]
+          },
+          {
+            "id": "8d0412f4-7955-4a0b-98fe-49a39fcefc83",
+            "row": 2,
+            "col": 1,
+            "type": "group",
+            "item": [
+              {
+                "id": "e5164f31-0471-4686-ad20-b79149179004",
+                "row": 1,
+                "col": 1,
+                "title": "审批意见",
+                "bizClass": "xcjszc",
+                "bizField": "spyj",
+                "displayType": "readonly",
+                "readonly": "false",
+                "type": "element",
+                "bzType": "textarea"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "task": [
+    {
+      "id": 42814,
+      "name": "保障中心-受理工单",
+      "action": [
+        {
+          "id": "Link_1",
+          "name": "提交审批",
+          "performer": [
+            {
+              "id": "16ec12b7-81b1-4dde-b230-8971134978f8",
+              "name": "肖健",
+              "account": "xiaoj",
+              "orgId": "default",
+              "deptId": "d755e3a9-f2e3-4ffe-adb2-48bfd3cbab6f"
+            },
+            {
+              "id": "2c7afcd0-f0ca-433b-94d8-abcd0b6a6ebc",
+              "name": "陈小兵",
+              "account": "chenxb",
+              "orgId": "default",
+              "deptId": "d755e3a9-f2e3-4ffe-adb2-48bfd3cbab6f"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+					var ob=[]
+					var n=res.ticket.data
+					for(var obj in n){
+						if(n[obj].hasOwnProperty('item')&& Array.isArray(n[obj].item)){
+							ob.push(Recursion(n[obj]))
+						}
+					}
+
+
+					function Recursion(item){
+						var m = [];
+						for(var i in item.item){
+							if(item.item[i].hasOwnProperty('item') && Array.isArray(item.item[i].item)){
+								m.push(Recursion(item.item[i]))
+							}else{
+								if(item.item[i].title!==undefined){
+									if(item.item[i].value===undefined){
+										item.item[i].value=""
+									}
+									m.push({
+									id: item.item[i].id,
+									title: item.item[i].title,
+									value: item.item[i].value,
+									bizClass:item.item[i].bizClass,
+									bizField:item.item[i].bizField,
+									bzType:item.item[i].bzType,
+									displayType:item.item[i].displayType,
+									defaultValue:item.item[i].defaultValue
+								})
+								}
+							}
+						}
+						return m;
+					}
+					var t = [];
+				   function tran(n){
+						for(var i in n){
+							if(Array.isArray(n[i])){
+								tran(n[i])
+							}else{
+								t.push(n[i])
+							}
+						}
+				   }
+				tran(ob)
+				String.prototype.endWith=function(endStr){
+				  var d=this.length-endStr.length;
+				  return (d>=0&&this.lastIndexOf(endStr)==d)
+				}
+			function GetChinese(strValue,sValue) {
+				if(strValue!= null && strValue!= ""){
+					//var reg = /[\u4e00-\u9fa5]/g;
+					var return_strs = new Array();
+					var strs = new Array();
+					strs = strValue.split('$?$');
+					for(var i = 0; i < strs.length; i ++){
+						var st = new Array();
+						st = strs[i].split('$^$');
+						var re_str ;
+						if(st[0].endWith(":default")){
+							if(contains(sValue, st[0].substring(0,(st[0].length - 8)))){
+								re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : true}';
+							}else{
+								re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : false}';
+							}
+						}else{
+							if(contains(sValue, st[0])){
+								re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
+							}else{
+								re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
+							}
+
+						}
+						re_str = eval('(' + re_str + ')');
+						//console.log(re_str);
+						return_strs.push(re_str);
+					}
+					//console.log(strs);
+					return return_strs;
+				}
+				else
+					return "";
+			}
+
+			for(var n in t){
+				if(t[n].value != undefined && t[n].value != "" && t[n].value != null){
+					if(typeof(t[n].value) == 'string'){
+						if((t[n].value).indexOf('$?$') >= 0){
+							var strs = new Array();
+							strs = (t[n].value).split('$?$');
+							var return_strs = new Array();
+							for(var i = 1; i < strs.length; i++){
+								return_strs.push(strs[i]);
+							}
+							t[n].value = return_strs;
+						}
+					}
+				}
+				if(t[n].defaultValue!=undefined){
+					t[n].defaultValue = GetChinese(t[n].defaultValue,t[n].value);
+				}
+
+			}
+			function contains(arr, obj) {
+			  var i = arr.length;
+			  while (i&#45;&#45;) {
+				if (arr[i] === obj) {
+				  return true;
+				}
+			  }
+			  return false;
+			}
+					vm.items=t
+					console.log(vm.items)
+					var task=res.task[0];
+					for(var n in task.action){
+					vm.task.push(task.action[n])
+					if(task.action[n].hasOwnProperty("performer")&&Array.isArray(task.action[n].performer)&&task.action[n].name==='交班'){
+						for(var j in task.action[n].performer){
+							console.log(task.action[n].performer[j])
+						}
+					}
+
+				}
+				vm.taskid=task.id
+					/*//alert(JSON.stringify(vm.items))
+							setTimeout(function(){
+								plus.nativeUI.closeWaiting()
+							},800)
+
+					},
+					error:function(xhr,type,errorThrown){
+						alert('错误'+xhr.status+type+errorThrown)
+					}
+				})
+
+
+
+
+
+
+
+			})
+
+			mui.back = function() {
+			var list = plus.webview.getWebviewById('commissionListview');
+		//触发列表界面的自定义事件（refresh）,从而进行数据刷新
+		alert(list)
+			mui.fire(list,'get_detail');
+			plus.webview.currentWebview().hide("auto", 300);
+			var self = plus.webview.currentWebview();
+			self.addEventListener("hide",function (e) {
+				vm.guid='',
+				vm.author='',
+				vm.items=[],
+				vm.task=[]
+			},false);
+		}
+
+		})*/
+	</script>-->
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style type="text/css">
+			a{font-size: 16px;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">业务填报</h1>
+		</header>
+		
+		<div class="mui-content top">
+		    <ul class="mui-table-view" style="margin: 0;">
+		            <li class="mui-table-view-cell dai" data-text = "待办工单">
+		                <a class="mui-navigate-right">
+		                    待办工单
+		                </a>
+		            </li>
+		            <li class="mui-table-view-cell tian" data-text = "工单填报">
+		                <a class="mui-navigate-right">
+		                     工单填报
+		                </a>
+		            </li>
+		          
+		       </ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				preloadPages:[{
+					url:'workcommission/commissionList.html',
+			      id:'commissionList',
+				},{
+					url:'workList.html',
+					id:'workList'
+				}]
+			})
+			
+			mui('.mui-table-view').on('tap', '.dai', function(e){
+					
+			
+					mui.openWindowWithTitle({
+				    url:'workcommission/commissionList.html',
+				    id:'commissionList',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				       
+				    },
+				    extras:{
+
+				      },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+					plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+			
+				})
+			
+			
+			
+				mui('.mui-table-view').on('tap', '.tian', function(e){
+					
+			
+					mui.openWindowWithTitle({
+				    url:'workList.html',
+				    id:'workList',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				       
+				    },
+				    extras:{
+
+				      },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+			plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+				})
+		</script>
+	</body>
+
+</html>

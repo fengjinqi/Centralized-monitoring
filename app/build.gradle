@@ -1,0 +1,102 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '27'
+
+    defaultConfig {
+        applicationId "petrochina.zj.txc"
+        minSdkVersion 8
+        targetSdkVersion 8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs'];
+        }
+    }
+
+    lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+     }
+
+
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:19.1.0'
+    compile files('libs/alipaySingle-20161222.jar')
+    compile files('libs/alipayutdid.jar')
+    compile files('libs/aps-igexin.jar')
+    compile files('libs/aps.jar')
+    compile files('libs/audio.jar')
+    compile files('libs/barcode.jar')
+    compile files('libs/camera.jar')
+    compile files('libs/contacts.jar')
+    compile files('libs/device.jar')
+    compile files('libs/downloader.jar')
+    compile files('libs/file.jar')
+    compile files('libs/gallery.jar')
+    compile files('libs/geolocation-amap.jar')
+    compile files('libs/geolocation-baidu.jar')
+    compile files('libs/geolocation-system.jar')
+    compile files('libs/geolocation.jar')
+    compile files('libs/GetuiSDK2.10.3.5.jar')
+    compile files('libs/gif.jar')
+    compile files('libs/invocation.jar')
+    compile files('libs/map-baidu.jar')
+    compile files('libs/MapApiLocation_1.3.3.jar')
+    compile files('libs/messaging.jar')
+    compile files('libs/MiPush_SDK_Client_3_1_2.jar')
+    compile files('libs/Msc.jar')
+    compile files('libs/my-imageloader.jar')
+    compile files('libs/my-nineoldandroids-2.4.0.jar')
+    compile files('libs/mysonic.jar')
+    compile files('libs/nativeObj.jar')
+    compile files('libs/nativeui.jar')
+    compile files('libs/navigatorui.jar')
+    compile files('libs/nopermission.jar')
+    compile files('libs/oauth-miui.jar')
+    compile files('libs/oauth-qq.jar')
+    compile files('libs/oauth-sina.jar')
+    compile files('libs/oauth-weixin.jar')
+    compile files('libs/oauth.1.5.1.jar')
+    compile files('libs/oauth.jar')
+    compile files('libs/payment-alipay.jar')
+    compile files('libs/payment-weixin.jar')
+    compile files('libs/payment.jar')
+    compile files('libs/pdr.jar')
+    compile files('libs/qq_mta-sdk-1.6.2.jar')
+    compile files('libs/qq_sdk_v3.1.0.jar')
+    compile files('libs/sensor.jar')
+    compile files('libs/share-qq.jar')
+    compile files('libs/share-sina.jar')
+    compile files('libs/share-tencent.jar')
+    compile files('libs/share-weixin.jar')
+    compile files('libs/share.jar')
+    compile files('libs/sinaweibo4.1.jar')
+    compile files('libs/speech.jar')
+    compile files('libs/speech_ifly.jar')
+    compile files('libs/statistics-umeng.jar')
+    compile files('libs/tx_weibo_sdk-httpclient-3.0.1.jar')
+    compile files('libs/tx_weibo_sdk.jar')
+    compile files('libs/tx_weibo_sdk_component.jar')
+    compile files('libs/tx_wx.jar')
+    compile files('libs/ui.jar')
+    compile files('libs/umeng-analytics-v6.0.1.jar')
+    compile files('libs/uploader.jar')
+    compile files('libs/xhr.jar')
+    compile files('libs/BaiduLBS_Android_base.jar')
+    compile files('libs/BaiduLBS_Android_geolocation_v7.1.jar')
+    compile files('libs/BaiduLBS_Android_v4.3.1.jar')
+    compile files('libs/BSMCPBaseUtils.jar')
+}

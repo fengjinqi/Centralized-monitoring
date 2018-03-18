@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>自建车辆详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.css"/>
+		<style type="text/css">
+			p{color: #333;padding-top: 10px;font-size: 16px;}
+		
+			.liner{
+				border-top: 1px solid #c8c7cc;
+				/*padding-left: 15px;padding-right: 15px;*/
+			}
+			.mui-col-sm-4.mui-col-xs-4{padding-right: 15px;}
+		</style>
+	</head>
+
+	<body>
+	<div id="root">
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">{{title}}</h1>
+		</header>
+		<div class="mui-content"style="background: #fff;" >
+			<div class="mui-row"v-for="(item,index) in items">
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">负责人</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.fzr}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">车辆型号</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.carmodel}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">车牌号码</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.carcode}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">移动小站IP</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.satemodemip}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">登记时间</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.regdate}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">运维人员</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.ywry}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">单位</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.orgname}}</p>
+				</div>
+		    </div>
+		</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var vm=new Vue({
+				el:'#root',
+				data:{
+					author:'gzcllc1',
+					title:'',
+					id:'',
+					items:[]
+
+				}
+			})
+			window.addEventListener('get_detail',function(event){
+			vm.title=event.detail.title;
+			vm.id=event.detail.guid
+			plus.nativeUI.showWaiting( '正在加载' )
+				mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar",{
+					dataType:'json',
+					type:'get',
+					success:function(res){
+						for(var i=0;i<res.data.length;i++){
+							if(res.data[i].id===vm.id){
+									vm.items.push(res.data[i])
+							}
+						}
+
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+						alert('错误'+xhr.status+type+errorThrown)
+					},
+					complete :function(){
+						setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				})
+	  })
+
+     mui.back = function() {
+				plus.webview.currentWebview().hide("auto", 300);
+				var self = plus.webview.currentWebview();
+				self.addEventListener("hide",function (e) {
+					vm.author='',
+					vm.title='',
+					vm.id='',
+					vm.items=[]
+				},false);
+			}
+			mui.init()
+		</script>
+	</body>
+
+</html>

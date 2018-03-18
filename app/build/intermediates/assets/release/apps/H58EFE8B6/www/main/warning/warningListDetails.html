@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>告警信息详情页</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style type="text/css">
+			/*.liner {
+					padding-top: 10px;
+					padding-bottom: 10px;
+					margin: 0;
+					border-bottom: 1px solid #c8c7cc;
+				}*/
+			.mui-col-sm-4.mui-col-xs-4{padding-right: 15px;}
+			/*.mui-col-sm-6.mui-col-xs-6{padding: 0 15px;}*/
+
+			/*label{
+				 display: block;
+			    width: 100% !important;
+			    height: 34px !important;
+			    padding: 6px 0 !important;
+			    font-size: 14px !important;
+			    line-height: 1.42857143 !important;
+				}*/
+			
+			p{color: #333;padding-top: 10px;font-size: 16px;}
+		
+			.liner{
+				border-top: 1px solid #c8c7cc;
+				/*padding-left: 15px;padding-right: 15px;*/
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">告警信息详情页</h1>
+		</header>
+		<div class="mui-content top"id="root" style="background: #fff;">
+		   <div class="mui-row" v-for="(item,index) in items">
+		   	<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				<p  class="mui-col-sm-4 mui-col-xs-4 liner">告警类型</p>
+				<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.type}}</p>
+			</div>
+			<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				<p  class="mui-col-sm-4 mui-col-xs-4 liner">告警次数</p>
+				<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.count}}</p>
+			</div>
+			<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				<p  class="mui-col-sm-4 mui-col-xs-4 liner">告警源名称</p>
+				<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.entity_name}}</p>
+			</div>
+			 <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				 <p  class="mui-col-sm-4 mui-col-xs-4 liner">告警源地址</p>
+				 <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.entity_addr}}</p>
+		   	</div>
+			<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				<p  class="mui-col-sm-4 mui-col-xs-4 liner">第一次发生的时间</p>
+				<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.first_occurtime}}</p>
+			</div>
+			 <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				   <p  class="mui-col-sm-4 mui-col-xs-4 liner">最后一次发生的时间</p>
+				   <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.last_occurtime}}</p>
+			</div>
+			   <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				   <p  class="mui-col-sm-4 mui-col-xs-4 liner">告警等级</p>
+				   <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.severity}}</p>
+				   </div>
+
+			   <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+				   <p  class="mui-col-sm-4 mui-col-xs-4 liner">告警描述</p>
+				   <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.discrimination}}</p>
+				   </div>
+			</div>
+		    
+		    
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm=new Vue({
+				el:'#root',
+				data:{
+					items:[],
+				},
+			})
+			mui.plusReady(function() {
+				window.addEventListener('detail',function(event){
+					var id=event.detail.guid
+					plus.nativeUI.showWaiting( '正在加载' )
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlertInfo?id='+id,{
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						success:function(data){
+							//获得服务器响应,
+							if(data.success==true){
+								vm.items.push(data.data);
+								 setTimeout(function(){
+									plus.nativeUI.closeWaiting()
+								},500)
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							alert('错误'+xhr.status+type+errorThrown)
+						}
+					});
+				})
+					mui.back = function() {
+					plus.webview.currentWebview().hide("auto", 300);
+					var self = plus.webview.currentWebview();
+					self.addEventListener("hide",function (e) {
+						vm.items=[];
+					},false);
+				}
+
+			})
+			
+		</script>
+	</body>
+
+</html>

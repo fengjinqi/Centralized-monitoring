@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>告警信息列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.min.css"/>
+		<style type="text/css">
+			.mui-col-sm-4.mui-col-xs-4{padding-left: 15px;}
+			.mui-col-sm-6.mui-col-xs-6{padding: 0 15px;}
+			.mui-col-sm-2.mui-col-xs-2{padding-right:15px;}
+			i{font-style: normal;}
+			a{font-size: 16px;}
+			@media (max-width: 375px) {
+				.media{width:47% !important;}
+			}
+			@media (max-width: 320px) {
+				.media{width:44% !important;}
+			}
+			.ellipsis{
+				margin: 0 15px 0 0;
+				padding: 0 15px 0 0;
+			}
+			.top{position:relative;}
+		</style>
+	</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav hrader">
+	    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">告警信息列表</h1>
+	</header>
+	<div class="mui-content top" id="root1" >
+		<div class="mui-row"style="width:100%;padding-top: 20px;background: #fff;position:fixed;top:40px;left:0;z-index:99">
+		    <div class="mui-col-sm-4 mui-col-xs-4 serach">
+		    	<button class="btn form-control "id="showUserPicker" data='2' style="font-size: 16px !important;">告警类型</button>
+		    	<span></span>
+		    </div>
+		    <div class="mui-col-sm-6 mui-col-xs-6 media">
+		        <input type="text" class="form-control" id='seach'style='font-size:16px;'>
+		    </div>
+		    <div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn" id="btn"style="font-size: 16px !important;">查询</button></div>
+		</div>
+		<div class="container"style='margin-top:69px'>
+		<ul class="mui-table-view">
+		        <li class="mui-table-view-cell"v-for="(item,index) in items"  :data-id=item.alert_id>
+		            <a class="mui-navigate-right">
+		                <div  class="mui-ellipsis ellipsis">告警源名称:{{item.entity_name}}</div>
+		                <div  class="mui-ellipsis ellipsis">告警类型:{{item.type}}</div>
+		            </a>
+		        </li>
+		    
+		    </ul>
+			<p v-if='items.length<1'style='position:absolute;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
+		</div>
+	</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+<!--<script>
+	(function($, doc) {
+		$.init();
+		$.ready(function() {
+			/**
+			 * 获取对象属性的值
+			 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+			 * @param {Object} obj 对象
+			 * @param {String} param 属性名
+			 */
+			var _getParam = function(obj, param) {
+				return obj[param] || '';
+			};
+			//普通示例
+			var userPicker = new $.PopPicker();
+			userPicker.setData([{
+				value: '2',
+				text: '告警类型'
+			}, {
+				value: '1',
+				text: '告警源名称'
+			}]);
+			var showUserPickerButton = doc.getElementById('showUserPicker');
+			var userResult = doc.getElementById('userResult');
+			showUserPickerButton.addEventListener('tap', function(event) {
+				userPicker.show(function(items) {
+					showUserPickerButton.innerText = items[0].text;
+					doc.getElementById('showUserPicker').setAttribute('data',items[0].value)
+					//返回 false 可以阻止选择框的关闭
+					//return false;
+				});
+			}, false);
+			
+		});
+	})(mui, document);
+</script>-->
+<script type="text/javascript">
+
+function getPastHalfYear() {
+    // 先获取当前时间
+    var curDate = (new Date()).getTime();
+    // 将半年的时间单位换算成毫秒
+    var halfYear = 365 / 2 * 24 * 3600 * 1000;
+    var pastResult = curDate - halfYear;  // 半年前的时间（毫秒单位）
+
+    // 日期函数，定义起点为半年前
+    var pastDate = new Date(pastResult),
+        pastYear = pastDate.getFullYear(),
+        pastMonth = pastDate.getMonth() + 1,
+        pastDay = pastDate.getDate(),
+		pastH=pastDate.getHours(),
+		pastM=pastDate.getMinutes(),
+		pastS=pastDate.getSeconds();
+
+    return pastYear + '-' + pastMonth + '-' + pastDay+' '+pastH+':'+pastM+':'+pastS;
+}
+
+
+	mui.init()
+
+	var vm=new Vue({
+		el:'#root1',
+		data:{
+			items:[],
+			uid:''
+		},
+
+	})
+
+		
+	mui.plusReady(function() {
+document.getElementById('showUserPicker').addEventListener('tap',function(){
+		var picker = new mui.PopPicker();
+		picker.setData([{
+						value: '2',
+						text: '告警类型'
+					}, {
+						value: '1',
+						text: '告警源名称'
+					}])
+		picker.show(function(SelectedItem) {
+		document.getElementById('showUserPicker').innerText = SelectedItem[0].text;
+		})
+	})
+    //预加载详情页
+    webview_detail = mui.preload({
+        url: 'warningListDetails.html',
+        id: 'warningListDetails',
+        
+    });
+   //添加newId自定义事件监听
+	window.addEventListener('get_detail',function(event){
+	  //获得事件参数
+
+	  var id = event.detail.cover;
+	  var author=event.detail.author;
+	  vm.uid=author
+
+	  if(vm.uid==='all'){
+ 		plus.nativeUI.showWaiting( '正在加载' )
+		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?startTime='+getPastHalfYear(),{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					//获得服务器响应,
+					if(data.success==true){
+						vm.items=data.data;
+
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				},
+				complete :function(){
+					 setTimeout(function(){
+						 plus.nativeUI.closeWaiting()
+					 },500)
+				 }
+			});
+	  }else if(vm.uid==='untreated'){
+	  	plus.nativeUI.showWaiting( '正在加载' )
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?comfirm=0&startTime='+getPastHalfYear(),{
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			success:function(data){
+				//获得服务器响应,
+				if(data.success==true){
+					vm.items=data.data;
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				alert('错误'+xhr.status+type+errorThrown)
+			},
+			complete :function(){
+				 setTimeout(function(){
+					 plus.nativeUI.closeWaiting()
+				 },500)
+			 }
+		});
+	  }else if(vm.uid==='links'){
+	  	plus.nativeUI.showWaiting( '正在加载' )
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?comfirm=1&startTime='+getPastHalfYear(),{
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			success:function(data){
+				//获得服务器响应,
+				if(data.success==true){
+					vm.items=data.data;
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				alert('错误'+xhr.status+type+errorThrown)
+			},
+			complete :function(){
+				 setTimeout(function(){
+					 plus.nativeUI.closeWaiting()
+				 },500)
+			 }
+		});
+	  }
+
+
+//search
+	document.getElementById('btn').addEventListener('tap',function(){
+		var value=document.getElementById('seach').value
+		var showUserPicker=document.getElementById('showUserPicker')
+		if(showUserPicker.innerText=='告警源名称'){
+				plus.nativeUI.showWaiting( '正在加载' )
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?entity_name="+value+"&startTime="+getPastHalfYear(),{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					if(data.success==true){
+						vm.items=data.data;
+						document.getElementById('seach').value=""
+						 setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+		}else if(showUserPicker.innerText=='告警类型'){
+			plus.nativeUI.showWaiting( '正在加载' )
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?type="+value+"&startTime="+getPastHalfYear(),{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					//获得服务器响应,
+					if(data.success==true){
+						vm.items=data.data;
+						document.getElementById('seach').value=""
+						 setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+		}
+	})
+
+
+
+	})
+   
+   mui('.top').on('tap', '.mui-table-view .mui-table-view-cell', function(e) {
+			
+    	 //触发子窗口变更新闻详情
+		mui.fire(webview_detail, 'detail', {
+		    guid: this.getAttribute('data-id'),
+		});
+		//打开详情页面          
+		 mui.openWindowWithTitle({
+		    url:'warningListDetails.html',
+		    id:'warningListDetails',
+		    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+		    show:{
+		      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+		      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+		      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+		      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+		      extras:{}//窗口动画是否使用图片加速
+		    },
+		    waiting:{
+		      autoShow:true,//自动显示等待框，
+		      title:'正在加载...',//等待对话框上显示的提示内容
+			    }
+		})
+
+   })
+
+	mui.back = function() {
+		plus.webview.currentWebview().hide("auto", 300);
+		var self = plus.webview.currentWebview();
+		self.addEventListener("hide",function (e) {
+			vm.uid='',
+			vm.items=[],
+			document.getElementById("seach").value="";
+			document.getElementById("showUserPicker").innerHTML="告警类型"
+		},false);
+	}
+
+});
+</script>
+</body>
+
+</html>

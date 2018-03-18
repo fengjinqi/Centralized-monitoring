@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../../css/new_file.min.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">待办工单</h1>
+		</header>
+		<ul class="mui-table-view"style="padding-top: 44px;">
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="yjbzgl" field='yjbz.fj'>
+		            <a class="mui-navigate-right ">
+		                应急事件
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1">
+		            <a class="mui-navigate-right">
+		                故障处理
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro">
+		            <a class="mui-navigate-right">
+		                 保障中心联调测试
+		            </a>
+		        </li>
+			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest">
+				<a class="mui-navigate-right">
+					地区公司联调测试
+				</a>
+			</li>
+		        <li class="mui-table-view-cell append" data-type = "queryadd" data-moduleId="jjbgl"field='jjbgl.fj'>
+		            <a class="mui-navigate-right">
+		                 值班日志
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc">
+		            <a class="mui-navigate-right">
+		                 调度终端检查记录
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1">
+		            <a class="mui-navigate-right">
+		                 应急通信车检查记录
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd">
+		            <a class="mui-navigate-right">
+		                 业务咨询
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc">
+		            <a class="mui-navigate-right">
+		                 现场技术支持
+		            </a>
+		        </li>
+		    </ul>
+		<script src="../../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function() {
+				//mui('h1')[0].innerHTML=plus.webview.currentWebview().title;
+				webview_detail = mui.preload({
+			        url: 'commissionListview.html',
+			        id: 'commissionListview',
+		    	});
+				mui(".mui-table-view").on("tap",'.append',function(e){
+					
+					mui.fire(webview_detail, 'get_detail', {
+					    guid: this.innerText,
+					    title:this.getAttribute('data-type'),
+					    author:this.getAttribute('data-moduleId'),
+					    field:this.getAttribute('field'),
+					    cover:'links'
+					});
+					mui.openWindowWithTitle({
+				    url:'commissionListview.html',
+				    id:'commissionListview',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+					 /*plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)*/
+				})
+			})
+		</script>
+	</body>
+
+</html>

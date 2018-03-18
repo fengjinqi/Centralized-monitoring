@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>车辆定位</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.min.css"/>
+<!--<script type="text/javascript" src="../../js/common.js"></script>-->
+ <!--<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=27577c8b802d460140ea7107a9ca3f5c"></script>-->
+</head>
+<style type="text/css">
+	.mui-table-view-cell{
+			padding: 13px 15px;
+		}
+		.mui-table-view-cell>a:not(.mui-btn) {
+		  	color: #333;
+		    margin: -14px -15px;
+		}
+		.mui-switch-blue.mui-active{
+			background: #61ced0;
+			border:2px solid #61ced0
+		}
+</style>
+	<style type="text/css">
+#map {
+	width: 100%;
+	position: fixed;
+	top: 200px;
+	bottom: 0px;
+	line-height: 200px;
+	text-align: center;
+	background: #FFFFFF;
+}
+.mui-switch:before{
+	font-size: 12px;
+	top: 0;
+}
+		</style>
+<body>
+	<header class="mui-bar mui-bar-nav hrader">
+	    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">车辆定位</h1>
+	</header>
+	
+	<div class="mui-content">
+	    <ul class="mui-table-view"style="margin-top: 0;">
+			<li class="mui-table-view-cell">
+				<div class=" serach">
+					<button class="btn form-control "id="showUserPicker"  style="font-size: 16px !important;">请选择车辆</button>
+					<span></span>
+				</div>
+			</li>
+	            <li class="mui-table-view-cell">
+	            	<span style="background: url(../../images/300338791302210939.png)no-repeat;width:2.45em ;height: 2em;display: inline-block;background-size: contain;vertical-align: middle;" ></span>
+	            	<span style="height: 32px;line-height: 32px;display: inline-block;margin-left: 5px;font-size: 16px;">车辆定位</span>
+					<div id="mySwitch" class="mui-switch mui-switch-blue"style="height: 25px;width: 65px;">
+				  		<div class="mui-switch-handle"style="width: 23px;height: 23px;"></div>
+					</div>
+	            </li>
+	           
+	        </ul>
+	</div>
+	<!--获取用户的当前位置信息<br/>
+		<button onclick="getUserLocation()">获取位置</button>-->
+		<div id="map" style="display: none;">地图加载中...</div>
+		<div id="output">
+<!--Geolocation可获取设备位置信息，包括经度、纬度、高度等信息。-->
+		</div>
+<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+var watchId;
+function geoInf( position ) {
+	var str = "";
+	str += "地址："+position.addresses+"\n";//获取地址信息
+	str += "坐标类型："+position.coordsType+"\n";
+	var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
+	str += "时间戳："+timeflag+"\n";
+	var codns = position.coords;//获取地理坐标信息；
+	var lat = codns.latitude;//获取到当前位置的纬度；
+	str += "纬度："+lat+"\n";
+	var longt = codns.longitude;//获取到当前位置的经度
+	str += "经度："+longt+"\n";
+	var alt = codns.altitude;//获取到当前位置的海拔信息；
+	str += "海拔："+alt+"\n";
+	var accu = codns.accuracy;//地理坐标信息精确度信息；
+	str += "精确度："+accu+"\n";
+	var altAcc = codns.altitudeAccuracy;//获取海拔信息的精确度；
+	str += "海拔精确度："+altAcc+"\n";
+	var head = codns.heading;//获取设备的移动方向；
+	str += "移动方向："+head+"\n";
+	var sped = codns.speed;//获取设备的移动速度；
+	str += "移动速度："+sped;
+	console.log(JSON.stringify(position));
+	outLine( str );
+}
+function getPos() {
+	outSet( "获取位置信息:" );
+	plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+		outSet( "获取位置信息失败："+e.message );
+	}, {geocode:false} );
+}
+function watchPos() {
+	if ( watchId ) {
+		return;
+	}
+	watchId = plus.geolocation.watchPosition( function ( p ) {
+		outSet( "监听位置变化信息:" );
+		geoInf( p );
+	}, function ( e ) {
+		outSet( "监听位置变化信息失败："+e.message );
+	}, {geocode:false} );
+}
+function clearWatch() {
+	if ( watchId ) {
+		outSet( "停止监听位置变化信息" );
+		plus.geolocation.clearWatch( watchId );
+		watchId = null;
+	}
+}
+// 通过定位模块获取位置信息
+function getGeocode(){
+	outSet( "获取定位位置信息:" );
+	plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+		outSet( "获取定位位置信息失败："+e.message );
+	},{geocode:true,enableHighAccuracy:true});
+}
+
+
+	//判断用户是否开启gps
+	function getGEO_status(){
+	    var context = plus.android.importClass("android.content.Context");
+	    var locationManager=plus.android.importClass("android.location.LocationManager");
+	    var main=plus.android.runtimeMainActivity();
+	    var mainSvr=main.getSystemService(context.LOCATION_SERVICE);
+	    console.log(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER));
+    }
+	var gps=null;
+
+
+	document.getElementById("mySwitch").addEventListener("toggle",function(event){
+	var att=document.getElementById('showUserPicker').getAttribute('data-id');
+	/*if(att==null){
+		console.log(event)
+		this.className="mui-switch mui-switch-blue"
+
+		return ;
+	}else{*/
+	 if(event.detail.isActive){
+	    console.log("你启动了开关");
+	    //getGEO_status()
+	/*	 var context = plus.android.importClass("android.content.Context");
+	    var locationManager=plus.android.importClass("android.location.LocationManager");
+	    var main=plus.android.runtimeMainActivity();
+	    var mainSvr=main.getSystemService(context.LOCATION_SERVICE);
+	    if(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER)){
+	    	clearInterval(gps)
+	    	outSet( "获取定位位置信息:" );
+			plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+				outSet( "获取定位位置信息失败："+e.message );
+			},{geocode:true,enableHighAccuracy:false});
+	    	gps=setInterval(function(){
+	    		outSet( "获取定位位置信息:" );
+				plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+					outSet( "获取定位位置信息失败："+e.message );
+				},{geocode:true,enableHighAccuracy:true});
+			},1000*60)
+	    }else{
+	    	clearInterval(gps)
+	    	//plus.nativeUI.alert( "亲,不开启GPS会有误差哦O(∩_∩)O!", function(){
+			//	getUserLocation();console.log( "User pressed!" );
+			//}, "", "关闭" );
+			getUserLocation()
+			gps=setInterval(function(){
+				getUserLocation()
+			},1000*60)
+	   }*/
+	  getUserLocation()
+		gps=setInterval(function(){
+			getUserLocation()
+		},1000*60)
+
+}else{
+	    console.log("你关闭了开关"); 
+	    clearInterval(gps)
+	    document.getElementById('output').innerHTML=""
+	}
+	//}
+})
+	mui.plusReady(function() {
+	plus.nativeUI.showWaiting( '正在加载' )
+	var arr=[]
+		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar',{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					//获得服务器响应,
+					if(data.success==true){
+						for(var n in data.data){
+							if(data.data[n].hasOwnProperty('carid')&& data.data[n].carid!==undefined ){
+								arr.push({
+								text:data.data[n].carid,
+								value:data.data[n].id
+							})
+							}
+
+						}
+						 setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+
+document.getElementById('showUserPicker').addEventListener('tap',function(){
+		var picker = new mui.PopPicker();
+		picker.setData(arr)
+		picker.show(function(SelectedItem) {
+		document.getElementById('showUserPicker').innerText = SelectedItem[0].text;
+
+		document.getElementById('showUserPicker').setAttribute('data-id',SelectedItem[0].value)
+		})
+	})
+})
+
+</script>
+<script type="text/javascript">
+	var em=null,map=null;
+	// H5 plus事件处理
+	function plusReady(){
+		// 确保DOM解析完成
+		if(!em||!window.plus||map){return};
+		map = new plus.maps.Map("map");
+			//map.centerAndZoom( new plus.maps.Point(116.3977,39.906016), 12 );
+	}
+	if(window.plus){
+		plusReady();
+	}else{
+		document.addEventListener("plusready",plusReady,false);
+	}
+	// DOMContentloaded事件处理
+	document.addEventListener("DOMContentLoaded",function(){
+		em=document.getElementById("map");
+		plusReady();
+	},false);
+	// 获取用户的当前位置信息
+	function getUserLocation(){
+		var obj={}
+		map.getUserLocation( function ( state, point ){
+			if( 0 == state ){
+
+				obj.jd=String(point.latitude),
+				obj.wd=String(point.longitude),
+				obj.code=document.getElementById('showUserPicker').getAttribute('data-id'),
+				obj.gd="5"
+				  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/instGps',{
+					data:JSON.stringify(obj),
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					headers:{'Content-Type':'application/json'},
+					success:function(data){
+						if(data.success==false){
+							//mui.alert('请选择车辆')
+						}
+					},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+			}else{
+				alert( "获取坐标失败" );
+			}
+		} );
+	}
+</script>
+<!--<script type="text/javascript" src="../../js/immersed.js" ></script>-->
+</body>
+
+</html>

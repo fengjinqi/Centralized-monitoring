@@ -1,0 +1,125 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* proguard.cfg
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:19.1.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\alipaySingle-20161222.jar => app\libs\alipaySingle-20161222.jar
+* libs\alipayutdid.jar => app\libs\alipayutdid.jar
+* libs\aps-igexin.jar => app\libs\aps-igexin.jar
+* libs\aps.jar => app\libs\aps.jar
+* libs\armeabi-v7a\libamapv304.so => app\src\main\jniLibs\armeabi-v7a\libamapv304.so
+* libs\armeabi-v7a\libamapv304ex.so => app\src\main\jniLibs\armeabi-v7a\libamapv304ex.so
+* libs\armeabi-v7a\libgetuiext2.so => app\src\main\jniLibs\armeabi-v7a\libgetuiext2.so
+* libs\armeabi-v7a\libmsc.so => app\src\main\jniLibs\armeabi-v7a\libmsc.so
+* libs\armeabi-v7a\libpl_droidsonroids_gif.so => app\src\main\jniLibs\armeabi-v7a\libpl_droidsonroids_gif.so
+* libs\armeabi-v7a\libweibosdkcore.so => app\src\main\jniLibs\armeabi-v7a\libweibosdkcore.so
+* libs\armeabi\libamapv304.so => app\src\main\jniLibs\armeabi\libamapv304.so
+* libs\armeabi\libamapv304ex.so => app\src\main\jniLibs\armeabi\libamapv304ex.so
+* libs\armeabi\libgetuiext2.so => app\src\main\jniLibs\armeabi\libgetuiext2.so
+* libs\armeabi\libmsc.so => app\src\main\jniLibs\armeabi\libmsc.so
+* libs\armeabi\libpl_droidsonroids_gif.so => app\src\main\jniLibs\armeabi\libpl_droidsonroids_gif.so
+* libs\armeabi\libweibosdkcore.so => app\src\main\jniLibs\armeabi\libweibosdkcore.so
+* libs\audio.jar => app\libs\audio.jar
+* libs\barcode.jar => app\libs\barcode.jar
+* libs\camera.jar => app\libs\camera.jar
+* libs\contacts.jar => app\libs\contacts.jar
+* libs\device.jar => app\libs\device.jar
+* libs\downloader.jar => app\libs\downloader.jar
+* libs\file.jar => app\libs\file.jar
+* libs\gallery.jar => app\libs\gallery.jar
+* libs\geolocation-amap.jar => app\libs\geolocation-amap.jar
+* libs\geolocation-baidu.jar => app\libs\geolocation-baidu.jar
+* libs\geolocation-system.jar => app\libs\geolocation-system.jar
+* libs\geolocation.jar => app\libs\geolocation.jar
+* libs\GetuiSDK2.10.3.5.jar => app\libs\GetuiSDK2.10.3.5.jar
+* libs\gif.jar => app\libs\gif.jar
+* libs\invocation.jar => app\libs\invocation.jar
+* libs\map-baidu.jar => app\libs\map-baidu.jar
+* libs\MapApiLocation_1.3.3.jar => app\libs\MapApiLocation_1.3.3.jar
+* libs\messaging.jar => app\libs\messaging.jar
+* libs\MiPush_SDK_Client_3_1_2.jar => app\libs\MiPush_SDK_Client_3_1_2.jar
+* libs\Msc.jar => app\libs\Msc.jar
+* libs\my-imageloader.jar => app\libs\my-imageloader.jar
+* libs\my-nineoldandroids-2.4.0.jar => app\libs\my-nineoldandroids-2.4.0.jar
+* libs\mysonic.jar => app\libs\mysonic.jar
+* libs\nativeObj.jar => app\libs\nativeObj.jar
+* libs\nativeui.jar => app\libs\nativeui.jar
+* libs\navigatorui.jar => app\libs\navigatorui.jar
+* libs\nopermission.jar => app\libs\nopermission.jar
+* libs\oauth-miui.jar => app\libs\oauth-miui.jar
+* libs\oauth-qq.jar => app\libs\oauth-qq.jar
+* libs\oauth-sina.jar => app\libs\oauth-sina.jar
+* libs\oauth-weixin.jar => app\libs\oauth-weixin.jar
+* libs\oauth.1.5.1.jar => app\libs\oauth.1.5.1.jar
+* libs\oauth.jar => app\libs\oauth.jar
+* libs\payment-alipay.jar => app\libs\payment-alipay.jar
+* libs\payment-weixin.jar => app\libs\payment-weixin.jar
+* libs\payment.jar => app\libs\payment.jar
+* libs\pdr.jar => app\libs\pdr.jar
+* libs\qq_mta-sdk-1.6.2.jar => app\libs\qq_mta-sdk-1.6.2.jar
+* libs\qq_sdk_v3.1.0.jar => app\libs\qq_sdk_v3.1.0.jar
+* libs\sensor.jar => app\libs\sensor.jar
+* libs\share-qq.jar => app\libs\share-qq.jar
+* libs\share-sina.jar => app\libs\share-sina.jar
+* libs\share-tencent.jar => app\libs\share-tencent.jar
+* libs\share-weixin.jar => app\libs\share-weixin.jar
+* libs\share.jar => app\libs\share.jar
+* libs\sinaweibo4.1.jar => app\libs\sinaweibo4.1.jar
+* libs\speech.jar => app\libs\speech.jar
+* libs\speech_ifly.jar => app\libs\speech_ifly.jar
+* libs\statistics-umeng.jar => app\libs\statistics-umeng.jar
+* libs\tx_weibo_sdk-httpclient-3.0.1.jar => app\libs\tx_weibo_sdk-httpclient-3.0.1.jar
+* libs\tx_weibo_sdk.jar => app\libs\tx_weibo_sdk.jar
+* libs\tx_weibo_sdk_component.jar => app\libs\tx_weibo_sdk_component.jar
+* libs\tx_wx.jar => app\libs\tx_wx.jar
+* libs\ui.jar => app\libs\ui.jar
+* libs\umeng-analytics-v6.0.1.jar => app\libs\umeng-analytics-v6.0.1.jar
+* libs\uploader.jar => app\libs\uploader.jar
+* libs\x86\libamapv304.so => app\src\main\jniLibs\x86\libamapv304.so
+* libs\x86\libamapv304ex.so => app\src\main\jniLibs\x86\libamapv304ex.so
+* libs\x86\libgetuiext2.so => app\src\main\jniLibs\x86\libgetuiext2.so
+* libs\x86\libpl_droidsonroids_gif.so => app\src\main\jniLibs\x86\libpl_droidsonroids_gif.so
+* libs\x86\libweibosdkcore.so => app\src\main\jniLibs\x86\libweibosdkcore.so
+* libs\xhr.jar => app\libs\xhr.jar
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

@@ -1,0 +1,212 @@
+* {
+	-webkit-user-select: none;
+	-ms-touch-select: none;
+	font-family: "微软雅黑";
+	color: #333;
+/*
+	-ms-touch-action: none;
+*/
+}
+html {
+	width: 100%;
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font-family: Arial;
+	font-size:16px;
+	color: #6c6c6c;
+	-webkit-touch-callout:none;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-text-size-adjust:none;
+}
+ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+/*
+header {
+	width: 100%;
+	height: 55px;
+	position: fixed;
+	padding-top:10px ;
+	top: 0;
+	left: 0;
+	font-size: 17px;
+	text-align: center;
+	line-height: 55px;
+	background: #61ced0;
+	z-index: 9999;
+	-ms-touch-action: none;
+}
+
+.nvtt {
+	height: 100%;
+	color: #fff;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	padding-right: 20px;
+}*/
+.fl{float: left;}
+.fr{float: right;}
+.mui-title{font-size: 20px;}
+.hrader{
+	background: #519be7;
+}
+.hrader h1{
+	color: #fff;
+}
+.black{
+	margin-right: -10px;
+    margin-left: -10px;
+    padding-right: 10px;
+    padding-left: 20px;
+    color: #fff;
+    font-size: 30px!important;
+    padding-top: 12px;
+}
+.swiper-container{
+	padding-top: 44px;
+}
+.img{
+	width:3em;
+	display: block;
+	height:3em;
+	margin: 0 auto;
+}
+.buss{
+	background: url(../images/buss.png)center;
+	background-size: cover;
+}
+.war{
+	background: url(../images/warning.png)center;
+	background-size: cover;
+}
+.car{
+	background: url(../images/car.png)center;
+	background-size: cover;
+}
+.mes{
+	background: url(../images/message.png)center;
+	background-size: cover;
+}
+.knowledge{
+	background: url(../images/1.png)center;
+	background-size: cover;
+}
+.inf{
+	background: url(../images/2.png)center;
+	background-size: cover;
+}
+
+.form-control{
+    display: block;
+    width: 100% !important;
+    height: 34px !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    color: #555 !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s !important;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
+}
+.form-control:focus {
+    border-color: #66afe9 !important;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6) !important;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    background-color: #eee !important;;
+    opacity: 1;
+}
+.noticeo,.work{
+	margin-top: 17px;
+	padding: 0 15px;
+	background: #fff;
+	overflow: hidden;
+	height: 35px;
+	line-height: 35px;
+}
+.noticeo .notice-time,.work .work-time{color: #666;}
+.flex ul{
+	/*display: flex; 
+	 display: -webkit-flex;
+	 flex-wrap: wrap;
+	 justify-content: space-around;*/
+	 }
+.flex ul li{
+	margin-top: 10px;
+	background: #eeeeee;
+	float: left;
+padding: 5px 10px;
+
+}
+.acti{
+	margin: 0 5px;
+}
+.flex ul li p{	color: #333;}
+.flex ul li>p{border-bottom: 1px solid #dcdcdc;    text-align: center;    height: 30px;
+    line-height: 30px;}
+.flex ul li>div{
+	padding: 0 10px;
+}
+.article li.mui-active{background: #fff !important;}
+.article{border: 1px transparent !important;}
+.article li a{padding: 0 !important;}
+.article li a>div p{text-align: left;padding-left: 5px;line-height: 25px;}
+.article li a>p{border-bottom: 1px solid #dcdcdc;height: 30px;
+    line-height: 30px; }
+.article li{    padding: 5px 3px !important;border: 1px transparent !important;}
+.article li a{background: #eee !important ;}
+.mui-grid-view.mui-grid-9.mui-table-view-cell.article{padding: 0;}
+/*TODO 告警信息*/
+select{
+	-webkit-appearance:menulist;
+	margin-top: 0;
+	
+}
+button[type='button']{
+	margin-bottom:15px;
+}
+/*.top{
+	padding-top: 55px;
+}*/
+.list{
+	padding-top: 44px;
+}
+/*三角形*/
+.serach{
+	position: relative;
+}
+.serach span{
+	width: 0;
+	position: absolute;
+	top: 50%;
+	right: 4%;
+	margin-top: -2px;
+    border: 4px solid transparent;
+    border-top-color: #000;
+}
+/*列表*/
+
+
+
+
+
+.validate::before{content: '*';color: red;}
+textarea.form-control {
+	height: auto!important;
+}

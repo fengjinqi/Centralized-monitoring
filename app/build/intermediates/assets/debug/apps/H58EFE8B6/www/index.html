@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+
+	<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>集中监控管理系统</title>
+    <script src="js/mui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link href="./css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/new_file.css"/>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    
+    <style type="text/css">
+    	.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
+    		height: 18px;
+    		line-height: 18px;
+    	}
+    	.swiper-container {
+        	width: 100%;
+        	height: 255px;
+    	}
+    	.icon{
+    		width: 20px;
+    		height: 20px;
+    		display: inline-block;
+    		background: url(images/icon@2x.png)no-repeat;
+    		background-size: cover;
+    		vertical-align: text-bottom;
+    	}
+    	.work-icon{
+    		width: 20px;
+    		height: 20px;
+    		display: inline-block;
+    		background: url(images/work@2x.png)no-repeat;
+    		background-size: cover;
+    		vertical-align: text-bottom;
+    	}
+    	p{font-size: 15px;}
+    	.mui-table-view .mui-media-object {
+line-height: 20px;
+max-width: 20px;
+height: 20px;
+margin-top: 10px;
+}
+    </style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader" style="box-shadow: none;">
+	    <h1 class="mui-title">集中监控管理系统</h1>
+		</header>
+		<div id="wrapper">
+
+			<div id='root'>
+				<div class="swiper-container"style="padding-top:42px ;">
+				    <div class="swiper-wrapper">
+				        <div class="swiper-slide"><img style="width: 100%;height:100%;background: url(images/banner.png)no-repeat;background-size: cover;" /></div>
+				        <!--<div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=2065752029,946572736&fm=27&gp=0.jpg"/></div>
+				        <div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=720518622,1398976851&fm=27&gp=0.jpg"/></div>
+				  -->  </div>
+				    <!-- 如果需要分页器 -->
+				    <div class="swiper-pagination"></div>
+				</div>
+				<ul class="mui-table-view mui-grid-view mui-grid-9"style="background: #fff;">
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 workIndex">
+					    <a href="#">
+					        <span class='img buss'></span>
+					        <div class="mui-media-body" style="font-size: 16px;">业务填报</div>
+					    </a>
+						<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency>0">{{agency}}</span>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 waring" >
+					    <a href="#">
+					        <span class="img war "></span>
+					        <div class="mui-media-body"style="font-size: 16px;">告警信息</div>
+
+					    </a>
+						<span class="mui-badge mui-badge-red"style="top:15%"v-show="number>0">{{number}}</span>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 notice notice-time fr">
+					    <a href="#">
+					        <span class="img mes"></span>
+					        <div class="mui-media-body"style="font-size: 16px;">通知公告</div>
+					    </a>
+						<span class="mui-badge mui-badge-red"style="top:15%"v-show="notice>0">{{notice}}</span>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 repository">
+					    <a href="#">
+					        <span class="img knowledge"></span>
+					        <div class="mui-media-body"style="font-size: 16px;">知识库</div>
+					    </a>
+						<span class="mui-badge mui-badge-red"style="top:15%"v-show="repository>0">{{repository}}</span>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carMap">
+					    <a href="#">
+					        <span class="img car"></span>
+					        <div class="mui-media-body"style="font-size: 16px;">车辆定位</div>
+					    </a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carList">
+					    <a href="#">
+					        <span class="img inf"></span>
+					        <div class="mui-media-body"style="font-size: 16px;">车辆信息</div>
+					    </a>
+					</li>
+			    </ul>
+				<div class="" v-show='items.length>0'>
+		        <div class="noticeo">
+				    <div class="notice-text fl">
+				    	<span class="icon"></span>
+				    	<span id="">
+				    		通知公告
+				    	</span>
+				    </div>
+				    <div class="notice-time fr">
+				    	更多
+				    </div>
+				</div>
+					<ul class="mui-table-view" :style="items.length>2?'height: 128px;overflow-y: auto;':'height:auto;'" >
+					    <li class="mui-table-view-cell  mui-media"v-for="(item,index) in items">
+					        <a href="javascript:;"class='obj' :data-id=item.id>
+					            <img class="mui-media-object mui-pull-left" src="images/to.png">
+					            <div class="mui-media-body">
+					                {{item.title}}{{item.releaseTime}}
+					                <p class="mui-ellipsis">{{item.category}}</p>
+					            </div>
+					        </a>
+					    </li>
+					</ul>
+				</div>
+				<div class="work">
+				    <div class="work-text fl">
+				    	<span class="work-icon"></span>
+				    	<span id="">
+				    		待办工单
+				    	</span>
+				    </div>
+				    <div class="work-time fr">
+						{{new Date().getFullYear()+ '年' +(new Date().getMonth() + 1)+ '月' +new Date().getDate()+'日'}}
+				    </div>
+				</div>
+				<div class="flex" style="padding: 15px;background: #fff;">
+					<ul class="mui-table-view mui-grid-view mui-grid-9 article"style="background: #fff;">
+						<li data-title='应急事件'data-moduleId="yjbzgl" field='yjbz.fj'v-for="(item,index) in yjbzgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 mui-active":data-id=item.processId>
+							<a>
+						       <p>应急事件</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.yjsjmc}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
+								</div>
+						    </a>
+						</li>
+						<li data-title='故障处理'data-moduleId="gzcllc1" v-for="(item,index) in gzcllc1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						    <a>
+						       <p>故障处理</p>
+								<div class="">
+									<p  class="mui-ellipsis ellipsis">{{item.bizObj.gzsbmc}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.sqrdw}}</p>
+								</div>
+						    </a>
+						</li>
+						<li data-title='保障中心联调测试'data-moduleId="TestPro"v-for="(item,index) in TestPro"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						    <a>
+						       <p>保障中心联调</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.csdw}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.title}}</p>
+								</div>
+						    </a>
+						</li>
+						<li data-title='地区中心联调测试'data-moduleId="dqgsTest"  v-for="(item,index) in dqgsTest"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a>
+								<p>地区中心联调</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.csdw}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.title}}</p>
+								</div>
+							</a>
+						</li>
+						<li data-title='值班日志'data-moduleId="jjbgl"   v-for="(item,index) in jjbgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a>
+						        <p>值班日志</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.zbr}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
+								</div>
+						    </a>
+						</li>
+						<li data-title='调度终端检查记录'data-moduleId="ddzdjc"   v-for="(item,index) in ddzdjc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a href="#">
+						        <p>调度终端</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.jcry}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
+								</div>
+						    </a>
+						</li>
+
+						<li data-title='应急通信车检查记录'data-moduleId="sbxjjl1"   v-for="(item,index) in sbxjjl1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a href="#">
+						        <p>应急通信车</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.jcry}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
+								</div>
+						    </a>
+						</li>
+						<li data-title='业务咨询'data-moduleId="zxgd"   v-for="(item,index) in zxgd"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a href="#">
+						        <p>业务咨询</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.zxry1}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.zxdw}}</p>
+								</div>
+						    </a>
+						</li>
+
+						<li data-title='现场技术支持'data-moduleId="xcjszclc"   v-for="(item,index) in xcjszclc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+							<a href="#">
+						        <p>现场技术支持</p>
+								<div class="">
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.txr}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
+								</div>
+						    </a>
+						</li>
+						<p v-if='xcjszclc.length<1&&zxgd.length<1&&sbxjjl1.length<1&&ddzdjc.length<1&&jjbgl.length<1&&dqgsTest.length<1&&TestPro.length<1&&gzcllc1.length<1&&yjbzgl.length<1'style='text-align:center;font-size:20px;color:#8f8f94'> 暂无代办</p>
+					</ul>
+					
+				</div>
+			</div>
+
+	</div>
+		<button id='getContent' style="margin-top:100px;">获取所有</button>
+		<button id='getLoginId' style="margin-top:100px;">获取用户id</button>
+		<button id='getLoginName' style="margin-top:100px;">获取用户名</button>
+		<button id='getVersion' style="margin-top:100px;">获取大厅版本类型</button>
+		<button id='getSubAccounts' style="margin-top:100px;">获取子账号</button>
+		<button id='getDomain' style="margin-top:100px;">获取域名</button>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		mui.plusReady(function(){
+
+			document.getElementById("getContent").onclick=function(){
+				//alert()
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				//alert(test)
+				//var init=plus.android.invoke(test,'setName','656')
+				var intent=plus.android.invoke(test,'getContent')
+				//alert(init)
+				alert(intent)
+			}
+			document.getElementById("getLoginId").onclick=function(){
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				var intent=plus.android.invoke(test,'getLoginId')
+				alert(intent)
+			}
+			document.getElementById("getLoginName").onclick=function(){
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				var intent=plus.android.invoke(test,'getLoginName')
+				alert(intent)
+			}
+			document.getElementById("getVersion").onclick=function(){
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				var intent=plus.android.invoke(test,'getVersion')
+				alert(intent)
+			}
+			document.getElementById("getSubAccounts").onclick=function(){
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				var intent=plus.android.invoke(test,'getSubAccounts')
+				alert(intent)
+			}
+			document.getElementById("getDomain").onclick=function(){
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				var intent=plus.android.invoke(test,'getDomain')
+				alert(intent)
+			}
+		})
+		</script>
+		<!--<script type="text/javascript">
+		var vm=new Vue({
+				el:'#root',
+				data:{
+					items:[],
+				},
+			})
+			mui.init({
+		     preloadPages:[
+			    {
+			      url:'main/warning/warning.html',
+			      id:'warning',
+			    },
+			    {
+			    	url:'main/repository/repository.html',
+			    	id:'repository',
+			    },
+			    {
+			    	url:'main/car/carMap.html',
+			    	id:'carMap'
+			    },
+			    {
+			    	url:'main/car/carList.html',
+			    	id:'carList'
+			    },
+			    {
+			    	
+			    	url:'main/work/work.html',
+			    	id:'workIndex'
+			    },
+			   
+			  ]
+		  });
+			mui.plusReady(function(){
+				plus.navigator.setStatusBarBackground('#519be7');
+				plus.nativeUI.showWaiting( '正在加载' )
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin',{
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						success:function(data){
+							//获得服务器响应,
+							if(data.success==true){
+								vm.items=data.data;
+								 setTimeout(function(){
+									plus.nativeUI.closeWaiting()
+								},500)
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							alert('错误'+xhr.status+type+errorThrown)
+						}
+					});
+
+
+			})
+			mui.plusReady(function(){
+			
+			mui('.mui-table-view').on('tap', '.waring', function(e){
+					openView('main/warning/warning.html','warning')
+				})
+			
+			
+			
+			mui('.mui-table-view').on('tap', '.carMap', function(e){
+					mui.openWindow({
+					    url:'main/car/carMap.html',
+					    id:'carMap',
+					    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+					    show:{
+					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+					    },
+					    waiting:{
+					      autoShow:true,//自动显示等待框，默认为true
+					      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+					})
+					plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+			})
+	
+				mui('.mui-table-view').on('tap', '.caratrice', function(e){
+					openView('main/car/map.html','caratrice')
+					
+				
+				})
+				mui('.mui-table-view').on('tap', '.workIndex', function(e){
+				    	openView('main/work/work.html','workIndex')
+				})
+				webview_detail = mui.preload({
+			        url: 'main/repository/repository.html',
+			        id: 'repository',
+		    	});
+		    	
+				mui('.mui-table-view').on('tap', '.repository', function(e){
+						mui.fire(webview_detail, 'get_detail', {
+					    guid: this.innerText,
+					    title:'title',
+					    author:'author',
+					    time:'time',
+					    cover:'links'
+					});
+					mui.openWindowWithTitle({
+				    url:'main/repository/repository.html',
+				    id:'repository',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+				 plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+				})
+				
+				/*var tice = mui.preload({
+			        url: 'main/notice/notice.html',
+			        id: 'notice',
+		    	});*/
+				mui('#root').on('tap', '.notice-time.fr', function(e){
+						/*mui.fire(tice, 'get_detail', {
+					    guid: 'no'
+					});*/
+					mui.openWindowWithTitle({
+				    url:'main/notice/notice.html',
+				    id:'notice',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+				})
+
+				var ti = mui.preload({
+			        url: 'main/notice/noticeDetail.html',
+			        id: 'noticeDetail',
+		    	});
+				mui('#root').on('tap', '.obj', function(e){
+
+						mui.fire(ti, 'get_detail', {
+					    guid: this.getAttribute('data-id'),
+					});
+					mui.openWindowWithTitle({
+				    url:'main/notice/noticeDetail.html',
+				    id:'noticeDetail',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+				 plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+				})
+
+
+				mui('.mui-table-view').on('tap', '.carList', function(e){
+					openView('main/car/carList.html','carList')
+				})
+				
+			})
+			function openView(url,id){
+				//打开详情页面          
+				 mui.openWindowWithTitle({
+				    url:url,
+				    id:id,
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+				 plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)
+				
+			}
+			 /* var mySwiper = new Swiper ('.swiper-container', {
+			  	autoplay: 3000,//可选选项，自动滑动
+			  	direction: 'horizontal',
+			    paginationClickable: true,
+			    autoplayStopOnLast : false,
+			    freeMode : false,
+			    pagination: '.swiper-pagination',
+			  	loop : true,
+			  })  */  
+		</script>-->
+	</body>
+
+</html>

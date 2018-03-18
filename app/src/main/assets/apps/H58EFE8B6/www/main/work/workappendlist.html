@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style>
+			.mui-table-view-cell > a:not(.mui-btn){text-align: left;}
+			.img{
+	width:2.3em;
+	display: inline-block;
+	height:2.3em;
+	margin: 0 auto;
+	vertical-align: middle;
+	background: url(../../images/append.png)center;
+	background-size: cover;
+}
+		</style>
+	</head>
+
+	<body >
+	<div id="root">
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">{{title}}</h1>
+		</header>
+		<div class="mui-content top">
+			<ul class="mui-table-view"style="margin: 0;">
+			        <li class="mui-table-view-cell appendTable"style="text-align: center;" v-if="isAppend">
+			            	<span class="img"></span>
+			                新增工单
+			        </li>
+			        <li class="mui-table-view-cell query" data-type="chaxun">
+			            <a class="mui-navigate-right">
+			                 工单查询
+			            </a>
+			        </li>
+			        <li class="mui-table-view-cell query"data-type="canyu">
+			            <a class="mui-navigate-right">
+			                 我参与的工单
+			            </a>
+			        </li>
+			        <li class="mui-table-view-cell query" data-type="chuangjian">
+			            <a class="mui-navigate-right">
+			                 我创建的工单
+			            </a>
+			        </li>
+			       <!-- <li class="mui-table-view-cell">
+			            <a class="mui-navigate-right">
+			                 归档工单查询
+			            </a>
+			        </li>-->
+			   </ul>
+		</div>
+	</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/AddTo.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var vm=new Vue({
+				el:'#root',
+				data:{
+					id:'',
+					isAppend:true,
+					title:'',
+					cover:'',
+					bizClass:'',
+					field:'',
+				}
+			})
+			var author;
+				//添加newId自定义事件监听
+			window.addEventListener('get_detail',function(event){
+			  var id = event.detail.guid;
+			  var query=event.detail.title;
+			  author=event.detail.author;
+			  vm.id=id;
+			  vm.title=id
+			  vm.cover=event.detail.cover;
+			  vm.bizClass=event.detail.bizClass
+			  vm.field=event.detail.field
+			  if(query=='queryadd'){
+			  	vm.isAppend=false;
+			  }
+			   
+			   
+			   
+			   
+			   
+			   
+			  
+			   
+			   
+			   
+			   
+			   
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			  mui.plusReady(function(){
+				webview_detail = mui.preload({
+			        url:'workAddTable.html',
+			        id: 'workAddTable',
+		    	});
+				mui(".mui-table-view").on("tap",'.appendTable',function(e){
+					mui.fire(webview_detail, 'get_detail', {
+					    guid: vm.id,
+					    author:author,
+					    cover:vm.cover,
+					    bizClass:vm.bizClass,
+					    field:vm.field
+
+					});
+					mui.openWindowWithTitle({
+				    url:'workAddTable.html',
+				    id:'workAddTable',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+					/* plus.nativeUI.showWaiting( '正在加载' )
+				 setTimeout(function(){
+			    	plus.nativeUI.closeWaiting()
+			    },500)*/
+				})
+
+				webview= mui.preload({
+			        url:'tableList.html',
+			        id: 'tableList',
+		    	});
+				mui(".mui-table-view").on("tap",'.query',function(e){
+					mui.fire(webview, 'detail', {
+					    guid: vm.id,
+					    title:this.getAttribute('data-type'),
+					    author:author,
+					    time:'time',
+					    cover:'links'
+					});
+					mui.openWindowWithTitle({
+				    url:'tableList.html',
+				    id:'tableList',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+					 //plus.nativeUI.showWaiting( '正在加载' )
+
+				})
+
+
+			})
+			  
+			
+		</script>
+	</body>
+
+</html>

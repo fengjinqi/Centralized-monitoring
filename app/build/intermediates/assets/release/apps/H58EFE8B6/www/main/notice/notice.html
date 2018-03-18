@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui.poppicker.css"/>
+		<style type="text/css">
+			.mui-col-sm-4.mui-col-xs-4{padding-left: 15px;}
+			.mui-col-sm-6.mui-col-xs-6{padding: 0 15px;}
+			.mui-col-sm-2.mui-col-xs-2{padding-right:15px;}
+			.mui-table-view-cell{
+				padding: 13px 15px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn) {
+			  	color: #333;
+			    margin: -14px -15px;
+			}
+			i{font-style: normal;}
+			a{font-size: 16px;}
+				@media (max-width: 375px) {
+				.media{width:47% !important;}
+			}
+			@media (max-width: 320px) {
+				.media{width:44% !important;}
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">通知公告列表</h1>
+		</header>
+		<div id='root' class="mui-content list">
+		    <div class="mui-row"style="padding-top: 20px;background: #fff;">
+		         <div class="mui-col-sm-4 mui-col-xs-4 serach">
+			    	<!--<select name="" class="form-control ">
+				    	<option value="">类别</option>
+				    	<option value="">标题</option>
+			    	</select>-->
+			    	<button class="btn form-control "id="showUserPicker"data='2'style="font-size: 16px !important;">类别 </button>
+			    	<span></span>
+			    </div>
+			    <div class="mui-col-sm-6 mui-col-xs-6 media">
+			        <input type="text" id="seach" style='background-color:#000;' class="form-control ">
+			    </div>
+			    <div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn"id="btn"style="font-size: 16px !important;">查询</button></div>
+		    </div>
+		    <ul class="mui-table-view" v-for='item in items'>
+				<li class="mui-table-view-cell":data-id=item.id>
+					<a class="mui-navigate-right mui-ellipsis">
+						<div class="mui-ellipsis ellipsis">标题:{{item.title}}</div>
+						<div class=" mui-ellipsis ellipsis">类别:{{item.category}}</div>
+					</a>
+				</li>
+		        </ul>
+			<p v-if='items.length<1'style='position:absolute;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
+		</div>
+		
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					/**
+					 * 获取对象属性的值
+					 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+					 * @param {Object} obj 对象
+					 * @param {String} param 属性名
+					 */
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					//普通示例
+					var userPicker = new $.PopPicker();
+					userPicker.setData([{
+				value: '2',
+				text: '类别'
+			}, {
+				value: '1',
+				text: '标题'
+			}]);
+					var showUserPickerButton = doc.getElementById('showUserPicker');
+					var userResult = doc.getElementById('userResult');
+					showUserPickerButton.addEventListener('tap', function(event) {
+						userPicker.show(function(items) {
+							showUserPickerButton.innerText = items[0].text;
+							doc.getElementById('showUserPicker').setAttribute('data',items[0].value)
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					
+				});
+			})(mui, document);
+		</script>
+		<script type="text/javascript">
+			mui.init()
+				var vm=new Vue({
+			el:"#root",
+			data:{
+				items:[],
+			}
+		})
+			mui.plusReady(function() {
+					plus.nativeUI.showWaiting( '正在加载' )
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin',{
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						success:function(data){
+							//获得服务器响应,
+							if(data.success==true){
+									vm.items=data.data;
+
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							alert('错误'+xhr.status+type+errorThrown)
+						},
+						complete :function(){
+							 setTimeout(function(){
+								 plus.nativeUI.closeWaiting()
+							 },500)
+						 }
+					});
+
+
+				document.getElementById('btn').addEventListener('tap',function(){
+
+		var value=document.getElementById('seach').value
+		var showUserPicker=document.getElementById('showUserPicker')
+		if(showUserPicker.innerText=='类别'){
+				plus.nativeUI.showWaiting( '正在加载' )
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin&category="+value,{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					if(data.success==true){
+						vm.items=data.data;
+						document.getElementById('seach').value=""
+						 setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+		}else if(showUserPicker.innerText=='标题'){
+			plus.nativeUI.showWaiting( '正在加载' )
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin&title="+value,{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					//获得服务器响应,
+					if(data.success==true){
+						vm.items=data.data;
+						document.getElementById('seach').value=""
+						 setTimeout(function(){
+							plus.nativeUI.closeWaiting()
+						},500)
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				}
+			});
+		}
+	})
+				
+		    //预加载详情页
+		    webview_detail = mui.preload({
+		        url: 'noticeDetail.html',
+		        id: 'noticeDetail',
+		        
+		    });
+		     mui('#root').on('tap', '.mui-table-view .mui-table-view-cell', function(e) {
+
+
+					mui.fire(webview_detail, 'get_detail', {
+
+						guid: this.getAttribute('data-id')
+					});
+					 mui.openWindowWithTitle({
+						url:'noticeDetail.html',
+						id:'noticeDetail',
+						createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+						show:{
+						  autoShow:true,//页面loaded事件发生后自动显示，默认为true
+						  aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+						  //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+						  event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+						  extras:{}//窗口动画是否使用图片加速
+						},
+						waiting:{
+						  autoShow:true,//自动显示等待框，
+						  title:'正在加载...',//等待对话框上显示的提示内容
+							}
+					})
+			})
+		   
+		});
+		</script>
+	</body>
+
+</html>

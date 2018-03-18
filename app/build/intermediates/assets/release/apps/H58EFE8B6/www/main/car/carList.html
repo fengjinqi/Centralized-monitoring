@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style>
+			.mui-table-view-cell{
+				padding: 13px 15px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn) {
+			  	color: #333;
+			    margin: -14px -15px;
+			}
+		
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">车辆信息</h1>
+		</header>
+		<ul class="mui-table-view list" style="padding-top: 44px;">
+		        <li class="mui-table-view-cell tong" data-type = "tongjian">
+		            <a class="mui-navigate-right">
+		                统建车辆信息
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell oneself"data-type = "zijian">
+		            <a class="mui-navigate-right">
+		                 自建车辆信息
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell carImage"data-type = "links">
+		            <a class="mui-navigate-right">
+		                 全国车辆拓扑图
+		            </a>
+		        </li>
+		    </ul>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/public.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			mui.init({
+				preloadPages:[
+			    {
+			      url:'carImage.html',
+			      id:'carImage',
+			    }
+			  ]
+		})
+			mui.plusReady(function() {
+		    //预加载详情页
+		    webview_detail = mui.preload({
+		        url: 'oneselfLilst.html',
+		        id: 'oneselfLilst',
+		    });
+		    carImage = mui.preload({
+		        url: 'carImage.html',
+		        id: 'carImage',
+		    });
+		   mui('.mui-table-view').on('tap', '.oneself', function(e) {
+		    	 //触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+				    guid: this.innerText,
+				    title:'title',
+				    author:'author',
+				    time:this.getAttribute('data-type'),
+				});
+				mui.openWindowWithTitle({
+				    url:'oneselfLilst.html',
+				    id:'oneselfLilst',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+			   
+		   })
+		   mui('.mui-table-view').on('tap', '.tong', function(e) {
+		    	 //触发子窗口变更新闻详情
+				mui.fire(webview_detail, 'get_detail', {
+				    guid: this.innerText,
+					time:this.getAttribute('data-type'),
+				});
+				mui.openWindowWithTitle({
+				    url:'oneselfLilst.html',
+				    id:'oneselfLilst',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      duration:300,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+		   })
+
+
+
+
+
+		      mui('.mui-table-view').on('tap', '.carImage', function(e) {
+		      	mui.fire(carImage, 'get_detail', {
+				});
+				mui.openWindowWithTitle({
+				    url:'carImage.html',
+				    id:'carImage',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      duration:300,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+				 plus.nativeUI.showWaiting( '正在加载' )
+
+		   })
+		   
+		});
+		</script>
+	</body>
+
+</html>

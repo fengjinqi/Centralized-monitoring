@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style type="text/css">
+			p{color: #333;padding-top: 10px;font-size: 16px;}
+		
+			.liner{
+				border-top: 1px solid #c8c7cc;
+				/*padding-left: 15px;padding-right: 15px;*/
+			}
+		</style>
+	</head>
+	
+	<body>
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">知识库详情列表</h1>
+		</header>
+		<div class="mui-content"id='root' style="background: #fff;">
+			<div v-for="item in items">
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">设备名称</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.sbmc}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">标题</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.title}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">规格</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.pp}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">知识类别</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.category}}</p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;overflow:hidden;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">内容</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner" v-html='item.content'></p>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;overflow:hidden;">
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">附件</p>
+					<div  class="mui-col-sm-8 mui-col-xs-8 liner" >
+						<span style='display:block;overflow:hidden;margin-top:10px;'>
+
+							<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
+								<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-for='it in item.attachfile':url='it.uri'>{{it.name}}</p>
+
+					</span>
+					</div>
+				</div>
+			</div>
+		 <!--   <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">设备名称:</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner"></p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">标题:</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.title}}</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">规格:</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.pp}}</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">知识类别:</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.category}}</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">附近:</p>
+		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">文档 <span class="mui-icon mui-icon-download" style="color: #61ced0;"></span></p>
+		    </div>-->
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm=new Vue({
+				el:'#root',
+				data:{
+					guid:'',
+					items:[]
+				},
+				methods:{
+					   Download: function(obj){
+					    var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
+
+                         var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
+                         alert(JSON.stringify(path))
+						   var dtask = plus.downloader.createDownload(encodeURI(encodeURI(path)), {
+								   method: 'GET',
+								   filename: '_downloads/'
+							   }, function(d, status) {
+									var utf_8=dtask.getResponseHeader("Content-disposition")
+								   alert(JSON.stringify(decodeURI(utf_8)));
+								   if(status == 200) {
+								   watiting.setTitle("下载成功"+ decodeURI(d.filename))
+								   setTimeout(function(){
+									watiting.close()
+								   },2000)
+								   } else {
+									watiting.setTitle("下载失败")
+									  watiting.close()
+								   }
+							   });
+							   dtask.start();
+					},
+				}
+			})
+
+    console.log(vm.items)
+			mui.plusReady(function() {
+				window.addEventListener('get_detail',function(event){
+				  vm.guid= event.detail.guid;
+				  	plus.nativeUI.showWaiting( '正在加载' )
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge',{
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						success:function(data){
+							if(data.success==true){
+								for(var n in data.data){
+									if(data.data[n].id==vm.guid)
+									vm.items.push(data.data[n]);
+								}
+								 setTimeout(function(){
+									plus.nativeUI.closeWaiting()
+								},500)
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							alert('错误'+xhr.status+type+errorThrown)
+						}
+					});
+				})
+
+			})
+			mui.back = function() {
+		plus.webview.currentWebview().hide("auto", 300);
+		var self = plus.webview.currentWebview();
+		self.addEventListener("hide",function (e) {
+			vm.items=[]
+	})
+	}
+		</script>
+	</body>
+
+</html>
