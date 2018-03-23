@@ -57,7 +57,7 @@
 	            <li class="mui-table-view-cell">
 	            	<span style="background: url(../../images/300338791302210939.png)no-repeat;width:2.45em ;height: 2em;display: inline-block;background-size: contain;vertical-align: middle;" ></span>
 	            	<span style="height: 32px;line-height: 32px;display: inline-block;margin-left: 5px;font-size: 16px;">车辆定位</span>
-					<div id="mySwitch" class="mui-switch mui-switch-blue"style="height: 25px;width: 65px;">
+					<div id="mySwitch" class="mui-switch mui-switch-blue" style="height: 25px;width: 65px;display:none;">
 				  		<div class="mui-switch-handle"style="width: 23px;height: 23px;"></div>
 					</div>
 	            </li>
@@ -145,14 +145,16 @@ function getGeocode(){
 
 
 	document.getElementById("mySwitch").addEventListener("toggle",function(event){
-	var att=document.getElementById('showUserPicker').getAttribute('data-id');
-	/*if(att==null){
+	/*var att=document.getElementById('showUserPicker').getAttribute('data-id');
+	if(att==null){
 		console.log(event)
 		this.className="mui-switch mui-switch-blue"
 
 		return ;
-	}else{*/
+	}else{
+		*/
 	 if(event.detail.isActive){
+
 	    console.log("你启动了开关");
 	    //getGEO_status()
 	/*	 var context = plus.android.importClass("android.content.Context");
@@ -181,22 +183,25 @@ function getGeocode(){
 				getUserLocation()
 			},1000*60)
 	   }*/
-	  getUserLocation()
+	  	 getUserLocation()
 		gps=setInterval(function(){
 			getUserLocation()
 		},1000*60)
 
-}else{
-	    console.log("你关闭了开关"); 
-	    clearInterval(gps)
-	    document.getElementById('output').innerHTML=""
-	}
-	//}
+	}else{
+			console.log("你关闭了开关");
+			clearInterval(gps)
+			/*setTimeout(function(){
+				document.getElementById("mySwitch").style.display='none'
+			},1500)*/
+			document.getElementById('output').innerHTML=""
+		}
+		//}
 })
 	mui.plusReady(function() {
 	plus.nativeUI.showWaiting( '正在加载' )
 	var arr=[]
-		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar',{
+		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar?userId=admin',{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -227,7 +232,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 		picker.setData(arr)
 		picker.show(function(SelectedItem) {
 		document.getElementById('showUserPicker').innerText = SelectedItem[0].text;
-
+document.getElementById("mySwitch").style.display='block'
 		document.getElementById('showUserPicker').setAttribute('data-id',SelectedItem[0].value)
 		})
 	})
@@ -263,12 +268,15 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 				obj.wd=String(point.longitude),
 				obj.code=document.getElementById('showUserPicker').getAttribute('data-id'),
 				obj.gd="5"
+				alert(JSON.stringify(obj))
 				  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/instGps',{
 					data:JSON.stringify(obj),
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
 					headers:{'Content-Type':'application/json'},
 					success:function(data){
+						alert(JSON.stringify(data))
+
 						if(data.success==false){
 							//mui.alert('请选择车辆')
 						}

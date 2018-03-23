@@ -1,5 +1,7 @@
 var objData;
 objData={}
+var fd;
+fd = new FormData();
 var vm=new Vue({
         el:"#root",
         data:{
@@ -19,13 +21,57 @@ var vm=new Vue({
         },
         methods:{
             commint:function(item){
-                plus.nativeUI.showWaiting( '提交中...' )
+                  var watiting=plus.nativeUI.showWaiting('提交中...')
                 mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
                 data:item,
                 dataType:'json',
                 type:'post',
                 headers:{'Content-Type':'application/json'},
                 success:function(data){
+                     if(data.success==true){
+                        if(fd.getAll('file').length>0){
+                            this.id=data.id
+                            fd.append("objId",vm.id)
+                            fd.append("field",vm.field)
+                            alert(JSON.stringify(fd.getAll('file')))
+                            alert(JSON.stringify(this.id)+"--"+JSON.stringify(fd.get('file').name)+"--"+JSON.stringify(vm.field))
+                            console.log(JSON.stringify(fd.get('file').name))
+                            watiting.setTitle("正在上传附件请稍后...")
+                            mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
+                                data:fd,
+                                type:'post',
+                                processData: false,
+                                contentType: false,
+                                success:function(data){
+                                    var data=JSON.parse(data)
+                                    alert(JSON.stringify(data))
+                                    if(data.success){
+                                        mui.alert("附件上传成功")
+                                        watiting.close()
+                                       mui.back()
+                                    }else{
+                                        mui.alert("附件上传失败")
+                                        watiting.close()
+                                         mui.back()
+                                    }
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    //异常处理；
+                                    alert(2332);
+                                }
+                            })
+                        }else{
+                            plus.nativeUI.toast( "工单提交成功")
+                            watiting.close()
+                            mui.back()
+                        }
+
+                    }else{
+                         plus.nativeUI.toast( "工单提交失败");
+                         watiting.close()
+                         mui.back()
+                    }
+
                     alert(JSON.stringify(data))
                    // mui.back()
                    mui.back = function() {
@@ -43,8 +89,8 @@ var vm=new Vue({
                                vm.task=[]
                            },false);
                        }
-                       plus.nativeUI.closeWaiting()
-                       mui.back()
+                       //plus.nativeUI.closeWaiting()
+                     //  mui.back()
                 },
                 error:function(xhr,type,errorThrown){
                     //异常处理；
@@ -114,22 +160,22 @@ var vm=new Vue({
                         }
             },
             Download: function(obj){
-
                 var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
                 var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
-              //   alert(JSON.stringify(path+"encoding=utf-8"))
                 alert(JSON.stringify(decodeURIComponent(path+"&encoding=UTF8")));
-
                 var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
                        method: 'post',
                        filename: '_downloads/'
                    }, function(d, status) {
-                        alert(JSON.stringify(dtask.getAllResponseHeaders()))
                    if(status == 200) {
+                        plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+                            alert('打开失败');
+                        })
                        watiting.setTitle("下载成功"+ decodeURIComponent(d.filename))
                        setTimeout(function(){
                             watiting.close()
                        },2000)
+
                    } else {
                         watiting.setTitle("下载失败")
                         watiting.close()
@@ -142,7 +188,27 @@ var vm=new Vue({
                 mui('#popover').popover('show');
             },
             onUploadChange(e){
-                var form = document.getElementById("form2");
+                 var form = document.getElementById("form2");
+                for(var i=0;i<e.target.files.length;i++){
+                   // this.fileArray.push(e.target.files[0])
+                    fd.append('file',e.target.files[0])
+                    var p=document.createElement('p')
+                    /*var span=document.createElement('span')
+                    span.className='mui-icon mui-icon-close remove';
+                    span.style.position='absolute';
+                    span.style.top=0+'px';
+                    span.style.right=0+'px';
+                    span.style.color='red';*/
+                    p.className=" form-control doenload";
+                    p.style.marginBottom=15+'px';
+                    p.style.position='relative';
+                    p.innerHTML=e.target.files[0].name;
+                    e.target.parentNode.parentNode.appendChild(p);
+                    document.querySelectorAll('.mui-btn.mui-btn-danger')[0].style.display='block';
+                    //p.appendChild(span)
+                //console.log(JSON.stringify(fd.get('file').name)+'--'+JSON.stringify(fd.get('objId')))
+                }
+               /* var form = document.getElementById("form2");
                 var fd = new FormData(form);
                 fd.append("objId",vm.id)
                 fd.append("field",vm.field)
@@ -170,7 +236,43 @@ var vm=new Vue({
                         //异常处理；
                         alert(2332);
                     }
-                })
+                })*/
+            },
+             remove(e){
+                        var p=e.target.parentNode.parentNode.querySelectorAll('p')
+                        console.log(e.target.parentNode.parentNode.querySelectorAll('p'))
+                        for (var i = 0; i<p.length; i++){
+                            e.target.parentNode.parentNode.removeChild(p[i])
+                        }
+                        fd.delete('file')
+                        alert(JSON.stringify(fd.getAll('file')))
+                        e.target.style.display='none'
+                     },
+            test(){
+                alert()
+                 plus.runtime.openFile( "/1.png",{},function(e){
+                        alert(e)
+                 } )
+                /* plus.io.requestFileSystem(plus.io.PUBLIC_DOWNLOADS, function( fs ) {
+                        // 可通过fs操作PRIVATE_WWW文件系统
+
+                          var directoryReader = fs.root.createReader();
+                                 directoryReader.readEntries( function( entries )  //遍历该文件夹下的文件
+                                          {
+                                     var i;
+                                     for( i=0; i < entries.length; i++ )
+                                                  {
+                                         alert( entries[i].name );  //获得文件名称
+
+                                     }
+
+                                 }, function ( e )
+                                           {
+                                     alert( "Read entries failed: " + e.message );
+                                 } );
+                    }, function ( e ) {
+                        alert( "Request file system failed: " + e.message );
+                    })*/
             }
         }
     })
@@ -924,7 +1026,12 @@ function getPersonOne(obj,bumen,jianchar){
                  }
              })
              user.show(function(items) {
-                 jianchar.value = items[0].text;
+                 if(items[0].text==undefined){
+                    jianchar.value = ''
+                }else{
+                jianchar.value = items[0].text;
+                }
+                // jianchar.value = items[0].text;
                  document.getElementById('jiancharone').setAttribute('data',items[0].id)
                  //返回 false 可以阻止选择框的关闭
                  //return false;
@@ -1046,36 +1153,36 @@ function confirmone(){
         document.getElementById('danweione').value="";
         alert(JSON.stringify(objData))
           mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
-                        data:objData,
-                        dataType:'json',
-                        type:'post',
-                        headers:{'Content-Type':'application/json'},
-                        success:function(data){
-                            alert(JSON.stringify(data))
-                           // mui.back()
-                           mui.back = function() {
-                                   var list = plus.webview.getWebviewById('commissionListview')||plus.webview.getLaunchWebview();
-                               //触发列表界面的自定义事件（refresh）,从而进行数据刷新
-                               alert(JSON.stringify(list))
-                                   mui.fire(list,'refresh');
-                                   plus.webview.currentWebview().hide("auto", 300);
-                                   var self = plus.webview.currentWebview();
-                                   confirm()
-                                   self.addEventListener("hide",function (e) {
-                                       vm.guid='',
-                                       vm.author='',
-                                       vm.items=[],
-                                       vm.task=[]
-                                   },false);
-                               }
-                               plus.nativeUI.closeWaiting()
-                               mui.back()
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            alert(2332);
-                        }
-                    })
+            data:objData,
+            dataType:'json',
+            type:'post',
+            headers:{'Content-Type':'application/json'},
+            success:function(data){
+                alert(JSON.stringify(data))
+               // mui.back()
+               mui.back = function() {
+                       var list = plus.webview.getWebviewById('commissionListview')||plus.webview.getLaunchWebview();
+                   //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+                   alert(JSON.stringify(list))
+                       mui.fire(list,'refresh');
+                       plus.webview.currentWebview().hide("auto", 300);
+                       var self = plus.webview.currentWebview();
+                       confirm()
+                       self.addEventListener("hide",function (e) {
+                           vm.guid='',
+                           vm.author='',
+                           vm.items=[],
+                           vm.task=[]
+                       },false);
+                   }
+                   plus.nativeUI.closeWaiting()
+                   mui.back()
+            },
+            error:function(xhr,type,errorThrown){
+                //异常处理；
+                alert(2332);
+            }
+        })
     }
 
 }

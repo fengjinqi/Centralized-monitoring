@@ -48,14 +48,16 @@ margin-top: 10px;
 
 	<body>
 		<header class="mui-bar mui-bar-nav hrader" style="box-shadow: none;">
-	    <h1 class="mui-title">集中监控管理系统</h1>
+	    <h1 class="mui-title">应急通信车管理系统</h1>
 		</header>
 		<div id="wrapper">
 
 			<div id='root'>
 				<div class="swiper-container"style="padding-top:42px ;">
 				    <div class="swiper-wrapper">
-				        <div class="swiper-slide"><img style="width: 100%;height:100%;background: url(images/banner.png)no-repeat;background-size: cover;" /></div>
+				        <div class="swiper-slide">
+							<img src="images/banner.png" style="width: 100%;height:100%;" />
+							<!--<img style="width: 100%;height:100%;background: url(images/banner.png)no-repeat;background-size: cover;" />--></div>
 				        <!--<div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=2065752029,946572736&fm=27&gp=0.jpg"/></div>
 				        <div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=720518622,1398976851&fm=27&gp=0.jpg"/></div>
 				  -->  </div>
@@ -151,7 +153,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='故障处理'data-moduleId="gzcllc1" v-for="(item,index) in gzcllc1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='故障处理'data-moduleId="gzcllc1" v-for="(item,index) in gzcllc1"v-if='index==0' field='gzcllc.fj' class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 						    <a>
 						       <p>故障处理</p>
 								<div class="">
@@ -160,7 +162,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='保障中心联调测试'data-moduleId="TestPro"v-for="(item,index) in TestPro"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='保障中心联调测试'field='Test.fj' data-moduleId="TestPro"v-for="(item,index) in TestPro"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 						    <a>
 						       <p>保障中心联调</p>
 								<div class="">
@@ -169,7 +171,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='地区中心联调测试'data-moduleId="dqgsTest"  v-for="(item,index) in dqgsTest"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='地区中心联调测试'field='dqgscs.fj'data-moduleId="dqgsTest"  v-for="(item,index) in dqgsTest"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a>
 								<p>地区中心联调</p>
 								<div class="">
@@ -178,7 +180,7 @@ margin-top: 10px;
 								</div>
 							</a>
 						</li>
-						<li data-title='值班日志'data-moduleId="jjbgl"   v-for="(item,index) in jjbgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='值班日志'field='jjbgl.fj'data-moduleId="jjbgl"   v-for="(item,index) in jjbgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a>
 						        <p>值班日志</p>
 								<div class="">
@@ -187,7 +189,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='调度终端检查记录'data-moduleId="ddzdjc"   v-for="(item,index) in ddzdjc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='调度终端检查记录'field='DDZDJCDX.fj'data-moduleId="ddzdjc"   v-for="(item,index) in ddzdjc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>调度终端</p>
 								<div class="">
@@ -197,7 +199,7 @@ margin-top: 10px;
 						    </a>
 						</li>
 
-						<li data-title='应急通信车检查记录'data-moduleId="sbxjjl1"   v-for="(item,index) in sbxjjl1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='应急通信车检查记录'field='sbxjjl.fj'data-moduleId="sbxjjl1"   v-for="(item,index) in sbxjjl1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>应急通信车</p>
 								<div class="">
@@ -206,7 +208,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='业务咨询'data-moduleId="zxgd"   v-for="(item,index) in zxgd"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='业务咨询'field='zxbd.fj'data-moduleId="zxgd"   v-for="(item,index) in zxgd"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>业务咨询</p>
 								<div class="">
@@ -216,7 +218,7 @@ margin-top: 10px;
 						    </a>
 						</li>
 
-						<li data-title='现场技术支持'data-moduleId="xcjszclc"   v-for="(item,index) in xcjszclc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='现场技术支持'field='xcjszc.fj'data-moduleId="xcjszclc"   v-for="(item,index) in xcjszclc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>现场技术支持</p>
 								<div class="">

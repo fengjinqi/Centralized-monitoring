@@ -82,17 +82,17 @@
 				methods:{
 					   Download: function(obj){
 					    var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
-
                          var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
                          alert(JSON.stringify(path))
-						   var dtask = plus.downloader.createDownload(encodeURI(encodeURI(path)), {
-								   method: 'GET',
+						   var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
+								   method: 'post',
 								   filename: '_downloads/'
 							   }, function(d, status) {
-									var utf_8=dtask.getResponseHeader("Content-disposition")
-								   alert(JSON.stringify(decodeURI(utf_8)));
 								   if(status == 200) {
 								   watiting.setTitle("下载成功"+ decodeURI(d.filename))
+								    plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+                            alert('打开失败');
+                        })
 								   setTimeout(function(){
 									watiting.close()
 								   },2000)
@@ -120,14 +120,17 @@
 									if(data.data[n].id==vm.guid)
 									vm.items.push(data.data[n]);
 								}
-								 setTimeout(function(){
-									plus.nativeUI.closeWaiting()
-								},500)
+
 							}
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
 							alert('错误'+xhr.status+type+errorThrown)
+						},
+						complete :function(){
+							setTimeout(function(){
+								plus.nativeUI.closeWaiting()
+							},500)
 						}
 					});
 				})

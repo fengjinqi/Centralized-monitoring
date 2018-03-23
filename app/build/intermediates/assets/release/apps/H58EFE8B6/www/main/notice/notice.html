@@ -120,7 +120,6 @@
 							//获得服务器响应,
 							if(data.success==true){
 									vm.items=data.data;
-
 							}
 						},
 						error:function(xhr,type,errorThrown){
@@ -133,6 +132,47 @@
 							 },500)
 						 }
 					});
+
+
+
+window.addEventListener('refresh', function(e) {
+//在父页面中添加监听事件，刷新页面
+       plus.nativeUI.showWaiting( '正在加载' )
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin',{
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						success:function(data){
+							//获得服务器响应,
+							if(data.success==true){
+									vm.items=data.data;
+							}
+						},
+						error:function(xhr,type,errorThrown){
+							plus.nativeUI.closeWaiting();
+							alert('错误'+xhr.status+type+errorThrown)
+						},
+						complete :function(){
+							 setTimeout(function(){
+								 plus.nativeUI.closeWaiting()
+							 },500)
+						 }
+					});
+
+
+
+    },false);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 				document.getElementById('btn').addEventListener('tap',function(){
@@ -213,6 +253,17 @@
 			})
 		   
 		});
+
+		mui.back = function() {
+		 var list = plus.webview.getLaunchWebview();
+		   //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+			mui.fire(list,'refresh');
+		plus.webview.currentWebview().hide("auto", 300);
+		var self = plus.webview.currentWebview();
+		self.addEventListener("hide",function (e) {
+
+		})
+	}
 		</script>
 	</body>
 

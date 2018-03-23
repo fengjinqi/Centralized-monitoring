@@ -54,9 +54,7 @@
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">附件</p>
 					<div  class="mui-col-sm-8 mui-col-xs-8 liner" >
 						<span style='display:block;overflow:hidden;margin-top:10px;'>
-
-							<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-								<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-for='it in item.attachfile':url='it.uri'>{{it.name}}</p>
+							<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-for='it in item.attachFile':url='it.uri'>{{it.name}}</p>
 
 					</span>
 					</div>
@@ -83,13 +81,15 @@
 								   method: 'post',
 								   filename: '_downloads/'
 							   }, function(d, status) {
-									var utf_8=dtask.getResponseHeader("Content-disposition")
-								   alert(JSON.stringify(decodeURI(utf_8)));
 								   if(status == 200) {
 								   watiting.setTitle("下载成功"+ decodeURI(d.filename))
+
 								   setTimeout(function(){
 									watiting.close()
 								   },2000)
+								    plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+										alert('打开失败');
+									})
 								   } else {
 									watiting.setTitle("下载失败")
 									  watiting.close()
@@ -111,16 +111,27 @@
 						success:function(data){
 							//获得服务器响应,
 							if(data.success==true){
-
+								alert(vm.guid)
 								for(var n in data.data){
 									if(data.data[n].id==vm.guid){
 									//var n=data.data[n].content
 									vm.items.push(data.data[n]);
+									 mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/readBulletin',{
+										data:{"userId":"admin","bulletinId":vm.guid},
+										dataType:'json',
+										type:'post',
+										headers:{'Content-Type':'application/json'},
+										success:function(data){
+											alert(JSON.stringify(data))
+										},
+										error:function(xhr,type,errorThrown){
+											//异常处理；
+											alert(2332);
+										}
+									})
+
 									}
-
-
 								}
-
 							}
 						},
 						error:function(xhr,type,errorThrown){
@@ -134,13 +145,17 @@
 						 }
 					});
 			})
-				mui.back = function() {
+		mui.back = function() {
+		 var list = plus.webview.getWebviewById('notice')||plus.webview.getLaunchWebview();
+		   //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+			mui.fire(list,'refresh');
 		plus.webview.currentWebview().hide("auto", 300);
 		var self = plus.webview.currentWebview();
 		self.addEventListener("hide",function (e) {
 			vm.items=[]
-	})
+		})
 	}
+
 		</script>
 	</body>
 

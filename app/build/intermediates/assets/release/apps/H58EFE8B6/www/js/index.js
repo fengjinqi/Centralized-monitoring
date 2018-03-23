@@ -384,10 +384,10 @@ mui.plusReady(function(){
 
      window.addEventListener('refresh', function(e) {
     //在父页面中添加监听事件，刷新页面
-            alert()
-            plus.nativeUI.showWaiting( '正在加载' )
+           // alert()
+            //plus.nativeUI.showWaiting( '正在加载' )
              Agency()
-     plus.nativeUI.closeWaiting( '正在加载' )
+    // plus.nativeUI.closeWaiting( '正在加载' )
 
         },false);
 

@@ -76,6 +76,30 @@ var vm=new Vue({
                                                 }
                                             })
                         }
+            },
+            Download: function(obj){
+                var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
+                var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
+                alert(JSON.stringify(decodeURIComponent(path+"&encoding=UTF8")));
+                var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
+                       method: 'post',
+                       filename: '_downloads/'
+                   }, function(d, status) {
+                   if(status == 200) {
+                        plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+                            alert('打开失败');
+                        })
+                       watiting.setTitle("下载成功"+ decodeURIComponent(d.filename))
+                       setTimeout(function(){
+                            watiting.close()
+                       },2000)
+
+                   } else {
+                        watiting.setTitle("下载失败")
+                        watiting.close()
+                   }
+                });
+                           dtask.start();
             }
         }
     })
@@ -720,7 +744,12 @@ mui.plusReady(function(){
                 }
             })
             user.show(function(items) {
+             if(items[0].text==undefined){
+                    jianchar.value = ''
+                }else{
                 jianchar.value = items[0].text;
+                }
+                //jianchar.value = items[0].text;
                 document.getElementById('jianchar').setAttribute('data',items[0].id)
                 //返回 false 可以阻止选择框的关闭
                 //return false;

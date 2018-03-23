@@ -76,25 +76,29 @@ function getVideo(){
 	}, {filename:'_doc/camera/',index:1});
 }
 
-
+var fd;
+fd = new FormData();
 var vm=new Vue({
     el:'#root',
     data:{
-        dataType:'sbxjjl1',
+        dataType:'xcjszclc',
         guid:'',
         validate:'validate',
         author:'zxgd',
         validaTetable:'validaTetable',
         items:[],
         task:[],
+        fileArray:[],
         id:'',
         cover:'',
-        bizClass:''
+        bizClass:'',
+        field:'',
+
     },
      methods:{
          getTask: function(item){
             var obj={};
-              var check;
+            var check;
             obj.moduleId=vm.dataType,
             obj.processName=vm.cover,
             obj.bizClass=vm.bizClass,
@@ -145,47 +149,168 @@ var vm=new Vue({
                 }
             }); //校验通过，继续执行业务逻辑
             if(check){
- plus.nativeUI.showWaiting('提交中。。。')
-                         mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/create',{
-                                data:obj,
-                                dataType:'json',
-                                type:'post',
-                                headers:{'Content-Type':'application/json'},
-                                success:function(data){
-                                    if(vm.dataType=='yjbzgl'||vm.dataType=='gzcllc1'||vm.dataType=='TestPro'||vm.dataType=='zxgd'){
-                                        alert()
-                                    }
+                var watiting=plus.nativeUI.showWaiting('提交中...')
+                   mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/create',{
+                        data:obj,
+                        dataType:'json',
+                        type:'post',
+                        headers:{'Content-Type':'application/json'},
+                        success:function(data){
+                            if(data.success==true){
+                                if(fd.getAll('file').length>0){
+                                    this.id=data.id
+                                    fd.append("objId",this.id)
+                                    fd.append("field",vm.field)
+                                    alert(JSON.stringify(fd.getAll('file')))
+                                    alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
+                                    console.log(JSON.stringify(fd.get('file').name))
+                                    watiting.setTitle("正在上传附件请稍后...")
+                                    mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
+                                        data:fd,
+                                        type:'post',
+                                        processData: false,
+                                        contentType: false,
+                                        success:function(data){
+                                            var data=JSON.parse(data)
+                                            alert(JSON.stringify(data))
+                                            if(data.success){
+                                                mui.alert("附件上传成功")
+                                                watiting.close()
+                                               mui.back()
+                                            }else{
+                                                mui.alert("附件上传失败")
+                                                watiting.close()
+                                                 mui.back()
+                                            }
+                                        },
+                                        error:function(xhr,type,errorThrown){
+                                            //异常处理；
+                                            alert(2332);
+                                        }
+                                    })
 
-                                   // mui.back()
-                                   mui.back = function() {
-                                           plus.webview.currentWebview().hide("auto", 300);
-                                           var self = plus.webview.currentWebview();
-                                           //confirm()
-                                           self.addEventListener("hide",function (e) {
-                                               vm.dataType='',
-                                               vm.cover='',
-                                               vm.guid="",
-                                               vm.items=[],
-                                               vm.task=[]
-                                           },false);
-                                       }
-                                       plus.nativeUI.toast( "创建成功");
-                                         plus.nativeUI.closeWaiting()
-
-                                         mui.back()
-
-
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    //异常处理；
-                                    alert(2332);
+                                }else{
+                                    plus.nativeUI.toast( "工单创建成功")
+                                    watiting.close()
+                                    mui.back()
                                 }
-                         })
+                               /* if(document.querySelectorAll('.uploadfj').length>0){
+                                    var uploadfj=document.querySelectorAll('.uploadfj');
+                                    for(var i=0;i<uploadfj.length;i++){
+                                        alert(JSON.stringify(uploadfj[i].files[0]))
+                                        if(uploadfj[i].files[0]!=undefined){
+                                            this.id=data.id
+                                            fd.append("objId",this.id)
+                                            fd.append("field",vm.field)
+                                            alert(JSON.stringify(fd.getAll('file')))
+                                            alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
+                                            console.log(JSON.stringify(fd.get('file').name))
+                                            watiting.setTitle("正在上传附件请稍后...")
+                                            mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
+                                                data:fd,
+                                                type:'post',
+                                                processData: false,
+                                                contentType: false,
+                                                success:function(data){
+                                                    var data=JSON.parse(data)
+                                                    alert(JSON.stringify(data))
+                                                    if(data.success){
+                                                        mui.alert("附件上传成功")
+                                                        watiting.close()
+                                                       mui.back()
+                                                    }else{
+                                                        mui.alert("附件上传失败")
+                                                        watiting.close()
+                                                         mui.back()
+                                                    }
+                                                },
+                                                error:function(xhr,type,errorThrown){
+                                                    //异常处理；
+                                                    alert(2332);
+                                                }
+                                            })
+                                        }else{
+                                            plus.nativeUI.toast( "工单创建成功")
+                                            watiting.close()
+                                            mui.back()
+                                        }
+                                    }
+                                }else{
+                                alert("554")
+                                     plus.nativeUI.toast( "工单创建成功")
+                                     watiting.close()
+                                     mui.back()
+                                }*/
+                            }else{
+                                 plus.nativeUI.toast( "工单创建失败");
+                                 watiting.close()
+                                 mui.back()
+                            }
+                            alert(JSON.stringify(data))
 
-                    }
-        }
+                           mui.back = function() {
+                                   plus.webview.currentWebview().hide("auto", 300);
+                                   var self = plus.webview.currentWebview();
+                                   //confirm()
+                                   self.addEventListener("hide",function (e) {
+                                       vm.dataType='',
+                                       vm.cover='',
+                                       vm.guid="",
+                                       vm.items=[],
+                                       vm.task=[],
+                                       fd.delete('objId'),
+                                       fd.delete('field'),
+                                       fd.delete('file')
+
+                                   },false);
+                               }
+
+                        },
+                        error:function(xhr,type,errorThrown){
+                            //异常处理；
+                            alert(2332);
+                        }
+                    })
+
+                }
+        },
+         onUploadChange(e){
+            var form = document.getElementById("form2");
+            for(var i=0;i<e.target.files.length;i++){
+               // this.fileArray.push(e.target.files[0])
+                fd.append('file',e.target.files[0])
+                var p=document.createElement('p')
+                /*var span=document.createElement('span')
+                span.className='mui-icon mui-icon-close remove';
+                span.style.position='absolute';
+                span.style.top=0+'px';
+                span.style.right=0+'px';
+                span.style.color='red';*/
+                p.className=" form-control doenload";
+                p.style.marginBottom=15+'px';
+                p.style.position='relative';
+                p.innerHTML=e.target.files[0].name;
+                e.target.parentNode.parentNode.appendChild(p);
+                document.querySelectorAll('.mui-btn.mui-btn-danger')[0].style.display='block';
+                //p.appendChild(span)
+            //console.log(JSON.stringify(fd.get('file').name)+'--'+JSON.stringify(fd.get('objId')))
+            }
+         },
+         remove(e){
+            var p=e.target.parentNode.parentNode.querySelectorAll('p')
+            console.log(e.target.parentNode.parentNode.querySelectorAll('p'))
+            for (var i = 0; i<p.length; i++){
+                e.target.parentNode.parentNode.removeChild(p[i])
+            }
+            fd.delete('file')
+            alert(JSON.stringify(fd.getAll('file')))
+            e.target.style.display='none'
+         }
       }
 })
+
+
+
 function Gareth(){
     mui('#popover').popover('show');
 }
@@ -227,439 +352,323 @@ window.onload=function(){
 
 window.addEventListener('get_detail',function(event){
 
-			  vm.guid= event.detail.guid;
-			  vm.dataType=event.detail.author;
-			  vm.cover=event.detail.cover;
-			  vm.bizClass=event.detail.bizClass
-				//alert(vm.guid)
-				//alert(vm.dataType)
-				//alert(vm.cover)
-				 plus.nativeUI.showWaiting( '正在加载' )
-				  mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/getTicketForm?userId=admin&processName="+vm.cover+"&startNodeId=Start",{
-                dataType:'json',
-                type:'get',
-                success:function(res){
-                /*
-var res={
-          "result": {
-            "success": true
-          },
-          "ticket": {
-            "data": [
-              {
-                "id": "c3fbe75b-bb1c-414c-9cc4-32c1fe77f01a",
-                "row": 1,
-                "col": 1,
-                "title": "业务咨询",
-                "type": "group",
-                "item": [
-                  {
-                    "id": "187366bd-9a0d-4d66-8126-15cc990c3bf2",
-                    "row": 1,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "5756ec72-c4c5-4b50-9466-ce04b96014d2",
-                        "row": 1,
-                        "col": 1,
-                        "title": "保障中心记录人",
-                        "bizClass": "zxbd",
-                        "bizField": "bzzxjlr",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "userSelect"
-                      }
-                    ]
+  vm.guid= event.detail.guid;
+  vm.dataType=event.detail.author;
+  vm.cover=event.detail.cover;
+  vm.bizClass=event.detail.bizClass,
+    //alert(vm.guid)
+    //alert(vm.dataType)
+  vm.field=event.detail.field
+  plus.nativeUI.showWaiting( '正在加载' )
+  mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/getTicketForm?userId=admin&processName="+vm.cover+"&startNodeId=Start",{
+    dataType:'json',
+    type:'get',
+    success:function(res){
+      /*var res={
+                  "result": {
+                      "success": true
                   },
-                  {
-                    "id": "a334021d-fccc-4903-86d2-46575370f8a3",
-                    "row": 2,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "2529a996-69e0-4004-8ea4-b1a3ec58b0c5",
-                        "row": 1,
-                        "col": 1,
-                        "title": "记录时间",
-                        "bizClass": "zxbd",
-                        "bizField": "jlsj1",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "date"
-                      }
-                    ]
+                  "ticket": {
+                      "data": [
+                          {
+                              "id": "e807af0a-899f-4922-9555-ffa798442519",
+                              "row": 1,
+                              "col": 1,
+                              "title": "地区公司填写",
+                              "type": "group",
+                              "item": [
+                                  {
+                                      "id": "44f8a514-d8a8-4b0d-900e-2965fc1368d8",
+                                      "row": 1,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "0d6d0fa1-cdd4-4482-9ba8-c3d7629a7158",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "填写人",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "txr",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "userSelect"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "id": "f66d4774-e2f7-4aef-a1cb-4158d34ff4f6",
+                                      "row": 2,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "52e45437-ba3b-49e7-8653-93cb25a175ae",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "详细地址",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "xxdz",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "id": "639f9b8a-bf8a-45bb-acfd-fb5b70fb5f87",
+                                      "row": 3,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "7cf13fe2-fc03-4479-bffb-69c0bdacbfac",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "联系人",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "lxr",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          },
+                                          {
+                                              "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
+                                              "row": 1,
+                                              "col": 2,
+                                              "title": "联系方式",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "lxfs",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          },
+                                           {
+                                                                                        "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
+                                                                                        "row": 1,
+                                                                                        "col": 2,
+                                                                                        "title": "附件",
+                                                                                        "bizClass": "xcjszc",
+                                                                                        "bizField": "lxfs",
+                                                                                        "displayType": "required",
+                                                                                        "readonly": "false",
+                                                                                        "type": "attachFile"
+                                                                                    }
+                                      ]
+                                  },
+                                  {
+                                      "id": "bc3c7ffb-df60-43c3-b0f2-d86ce062aeb6",
+                                      "row": 4,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "0a83813b-23b4-469e-91b0-cc824c92caff",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "申请事由",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "sqsy",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "textarea"
+                                          },
+                                          {
+                                              "id": "f3ac6109-d19f-461a-a8b2-33f452febac5",
+                                              "row": 2,
+                                              "col": 1,
+                                              "title": "技术服务形式",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "jsfwxs",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "checkbox",
+                                              "defaultValue": "故障处理 $^$故障处理 $?$现场培训$^$现场培训$?$系统维护$^$系统维护$?$安装调试$^$安装调试$?$需求调研$^$需求调研 $?$技术交流$^$技术交流$?$方案设计$^$方案设计$?$其它$^$其它"
+                                          },
+                                          {
+                                              "id": "0169e8a3-730e-441b-b935-21d73d699af5",
+                                              "row": 3,
+                                              "col": 1,
+                                              "title": "故障设备类别",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "gzsblb",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "checkbox",
+                                              "defaultValue": "车载卫星天线子系统$^$车载卫星天线子系统$?$综合接入子系统$^$综合接入子系统$?$视频子系统$^$视频子系统$?$发电子系统$^$发电子系统$?$辅助子系统$^$辅助子系统$?$音频子系统$^$音频子系统$?$其他通信设备$^$其他通信设备$?$其它$^$其它$?$无$^$无"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
                   },
-                  {
-                    "id": "7dc2911a-d422-48dd-8ac7-504d28b8a4d7",
-                    "row": 3,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
+                  "action": [
                       {
-                        "id": "128dd412-3c4c-4595-9c82-a4a508d16700",
-                        "row": 1,
-                        "col": 1,
-                        "title": "咨询单位",
-                        "bizClass": "zxbd",
-                        "bizField": "zxdw1",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "text"
+                          "id": "Link_0",
+                          "name": "提交申请"
                       },
                       {
-                        "id": "1ff8db87-78ec-4fe2-9653-4347c9c81974",
-                        "row": 1,
-                        "col": 2,
-                        "title": "咨询人员",
-                        "bizClass": "zxbd",
-                        "bizField": "zxry1",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "text"
+                          "id": "Link_6",
+                          "name": "保存"
                       }
-                    ]
-                  },
-                  {
-                    "id": "b1765114-af6d-46db-a06a-91765683da40",
-                    "row": 4,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "2e07e28e-da8b-41e7-9c2a-3ad49502360b",
-                        "row": 1,
-                        "col": 1,
-                        "title": "咨询时间",
-                        "bizClass": "zxbd",
-                        "bizField": "zusj1",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "date"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "698e1c41-223a-4829-97c2-c6ffea565e26",
-                    "row": 5,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "3ba0ead3-cf51-4cdc-a4ff-a22dfd1e85ed",
-                        "row": 1,
-                        "col": 1,
-                        "title": "咨询方式",
-                        "bizClass": "zxbd",
-                        "bizField": "zxfs",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "select",
-                        "defaultValue": "1$^$电话$?$2$^$QQ/微信/E-mail$?$3$^$日常测试$?$4$^$其他"
-                      },
-                      {
-                        "id": "338bf285-1797-44bb-86c9-f37118a6185c",
-                        "row": 2,
-                        "col": 1,
-                        "title": "业务咨询类别",
-                        "bizClass": "zxbd",
-                        "bizField": "ywzxlb",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "select",
-                        "defaultValue": "1$^$制度管理类$?$2$^$人员管理类$?$3$^$日常运维类$?$4$^$通信保障类$?$5$^$演练测试类$?$6$^$安全保密类$?$7$^$文件报表类$?$8$^$培训考核类$?$9$^$其它类"
-                      },
-                      {
-                        "id": "173284c3-1404-45de-b369-cdb5f330ab43",
-                        "row": 3,
-                        "col": 1,
-                        "title": "咨询内容描述",
-                        "bizClass": "zxbd",
-                        "bizField": "zxnrms",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "textarea"
-                      },
-                      {
-                        "id": "f1b7a37c-564d-4352-9fe2-279604f0a057",
-                        "row": 4,
-                        "col": 1,
-                        "title": "附件",
-                        "bizClass": "zxbd",
-                        "bizField": "fj",
-                        "displayType": "opitonal",
-                        "readonly": "false",
-                        "type": "attachFile"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "40746b15-f51a-461d-ab94-b22509c8a201",
-                    "row": 6,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "094cb65c-ce45-4ff4-b87c-404dfe47c06e",
-                        "row": 1,
-                        "col": 1,
-                        "title": "处理结果",
-                        "bizClass": "zxbd",
-                        "bizField": "cljg",
-                        "displayType": "required",
-                        "readonly": "false",
-                        "type": "radiogroup",
-                        "defaultValue": "1$^$已完成$?$2$^$任务改派"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "b06fa0fb-e099-46f6-9df4-52a4d91dcb1d",
-                    "row": 7,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "e6dc42d6-292c-4217-9f7d-a79c65c2eb7c",
-                        "row": 1,
-                        "col": 1,
-                        "title": "改派人",
-                        "bizClass": "zxbd",
-                        "bizField": "gpr",
-                        "displayType": "opitonal",
-                        "readonly": "false",
-                        "type": "text"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "3b9c48f6-0824-4c36-bf19-0d49a37877b2",
-                    "row": 8,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "760df5d3-d206-4a26-b6a8-77499215a104",
-                        "row": 1,
-                        "col": 1,
-                        "title": "处理内容及结果",
-                        "bizClass": "zxbd",
-                        "bizField": "gphcljg",
-                        "displayType": "opitonal",
-                        "readonly": "false",
-                        "type": "textarea"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": "cbf4c119-8a57-42c5-910f-308cb1b06b49",
-                "row": 2,
-                "col": 1,
-                "title": "流程信息",
-                "type": "group",
-                "item": [
-                  {
-                    "id": "22b15af4-13f0-4e91-8a17-8604089d2ba6",
-                    "row": 1,
-                    "col": 1,
-                    "type": "group",
-                    "item": [
-                      {
-                        "id": "310b06b1-2fec-4155-9c57-ad9d3e470397",
-                        "row": 1,
-                        "col": 1,
-                        "title": "流程记录",
-                        "bizClass": "processObject",
-                        "bizField": "processRecord",
-                        "displayType": "readonly",
-                        "readonly": "true",
-                        "type": "processRecord"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          "action": [
-            {
-              "id": "Link_2",
-              "name": "保存"
-            },
-            {
-              "id": "Link_1",
-              "name": "关闭"
-            }
-          ]
-        }*/
-        //处理数据格式
-                var ob=[]
-                var n=res.ticket.data
-                for(var obj in n){
-                    if(n[obj].hasOwnProperty('item')&& Array.isArray(n[obj].item)){
-                        ob.push(Recursion(n[obj]))
-                    }
-                }
-                function Recursion(item){
-                    var m = [];
-                    for(var i in item.item){
-                        if(item.item[i].hasOwnProperty('item') && Array.isArray(item.item[i].item)){
-                            m.push(Recursion(item.item[i]))
-                        }else{
-                            if(item.item[i].title!==undefined){
-                                if(item.item[i].value===undefined){
-                                    item.item[i].value=""
-                                }
-                                m.push({
-                                id: item.item[i].id,
-                                title: item.item[i].title,
-                                value: item.item[i].value,
-                                bizClass:item.item[i].bizClass,
-                                bizField:item.item[i].bizField,
-                                bzType:item.item[i].type,
-                                displayType:item.item[i].displayType,
-                                defaultValue:item.item[i].defaultValue
-                            })
-                            }
-                        }
-                    }
-                    return m;
-                }
-                var t = [];
-               function tran(n){
-                    for(var i in n){
-                        if(Array.isArray(n[i])){
-                            tran(n[i])
-                        }else{
-                            t.push(n[i])
-                        }
-                    }
-               }
-            tran(ob)
-
-
-            //解决&？&
-            String.prototype.endWith=function(endStr){
-                  var d=this.length-endStr.length;
-                  return (d>=0&&this.lastIndexOf(endStr)==d)
-                }
-            function GetChinese(strValue,sValue) {
-            	console.log("=="+sValue+"==");
-                if(strValue!= null && strValue!= ""){
-                    //var reg = /[\u4e00-\u9fa5]/g;
-            		var return_strs = new Array();
-            		var strs = new Array();
-            		strs = strValue.split('$?$');
-            		for(var i = 0; i < strs.length; i ++){
-            			var st = new Array();
-            			st = strs[i].split('$^$');
-            			var re_str ;
-            			console.log("=="+st[0]+"==");
-            			if(st[0].endWith(":default")){
-            				if(contains(sValue, st[0].trim().substring(0,(st[0].length - 8)))){
-            					re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : true}';
-            				}else{
-            					re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : false}';
-            				}
-            			}else{
-            				if(contains(sValue, st[0].trim())){
-            					re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
-            				}else{
-            					re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
-            				}
-
-            			}
-            			re_str = eval('(' + re_str + ')');
-            			//console.log(re_str);
-            			return_strs.push(re_str);
-            		}
-            		//console.log(strs);
-                    return return_strs;
-                }
-                else
-                    return "";
-            }
-
-            for(var n in t){
-
-            	if(t[n].value != undefined && t[n].value != "" && t[n].value != null){
-            		if(typeof(t[n].value) == 'string'){
-            			if((t[n].value).indexOf('$?$') >= 0){
-            				var strs = new Array();
-            				strs = (t[n].value).split('$?$');
-            				var return_strs = new Array();
-            				for(var i = 1; i < strs.length; i++){
-            					return_strs.push(strs[i].trim());
-            				}
-            				t[n].value = return_strs;
-            			}
-            			if((t[n].value).indexOf(',') >= 0){
-            				var strs = new Array();
-            				strs = (t[n].value).split(',');
-            				var return_strs = new Array();
-            				for(var i = 0; i < strs.length; i++){
-            					return_strs.push(strs[i].trim());
-            				}
-            				t[n].value = return_strs;
-            			}
-            		}
-            	}
-
-            	if(t[n].defaultValue!=undefined){
-            		t[n].defaultValue = GetChinese(t[n].defaultValue,t[n].value);
-            	}
-
-            }
-        function contains(arr, obj) {
-          var i = arr.length;
-          while (i--) {
-            if (arr[i] === obj) {
-              return true;
-            }
-          }
-          return false;
+                  ]
+              }*/
+//处理数据格式
+    var ob=[]
+    var n=res.ticket.data
+    for(var obj in n){
+        if(n[obj].hasOwnProperty('item')&& Array.isArray(n[obj].item)){
+            ob.push(Recursion(n[obj]))
         }
-        vm.items=t
-       // alert(JSON.stringify(vm.items))
-        console.log(vm.items)
-        //var task=res.task[0];
-        vm.task=res.action
-       /* for(var n in task.action){
-            vm.task.push(task.action[n])
-            if(task.action[n].hasOwnProperty("performer")&&Array.isArray(task.action[n].performer)&&task.action[n].name==='交班'){
-                for(var j in task.action[n].performer){
-                    console.log(task.action[n].performer[j])
+    }
+    function Recursion(item){
+        var m = [];
+        for(var i in item.item){
+            if(item.item[i].hasOwnProperty('item') && Array.isArray(item.item[i].item)){
+                m.push(Recursion(item.item[i]))
+            }else{
+                if(item.item[i].title!==undefined){
+                    if(item.item[i].value===undefined){
+                        item.item[i].value=""
+                    }
+                    m.push({
+                    id: item.item[i].id,
+                    title: item.item[i].title,
+                    value: item.item[i].value,
+                    bizClass:item.item[i].bizClass,
+                    bizField:item.item[i].bizField,
+                    bzType:item.item[i].type,
+                    displayType:item.item[i].displayType,
+                    defaultValue:item.item[i].defaultValue
+                })
                 }
             }
         }
-            vm.taskid=task.id*/
-               // alert(JSON.stringify(vm.items))
-                      /*setTimeout(function(){
-                            plus.nativeUI.closeWaiting()
-                        },800)*/
-                        var btnArray = ['否', '是']; //弹框消息确认是否打开附件
-                                            plus.nativeUI.confirm('是否上传附件?',  function(e) {
-                                                if(e.index == 1) { //打开附件
-                                                    Gareth()
-                                                }
-                                            },'',btnArray);
+        return m;
+    }
+    var t = [];
+    function tran(n){
+        for(var i in n){
+            if(Array.isArray(n[i])){
+                tran(n[i])
+            }else{
+                t.push(n[i])
+            }
+        }
+   }
+    tran(ob)
+//解决&？&
+    String.prototype.endWith=function(endStr){
+      var d=this.length-endStr.length;
+      return (d>=0&&this.lastIndexOf(endStr)==d)
+    }
+    function GetChinese(strValue,sValue) {
+    console.log("=="+sValue+"==");
+    if(strValue!= null && strValue!= ""){
+        //var reg = /[\u4e00-\u9fa5]/g;
+        var return_strs = new Array();
+        var strs = new Array();
+        strs = strValue.split('$?$');
+        for(var i = 0; i < strs.length; i ++){
+            var st = new Array();
+            st = strs[i].split('$^$');
+            var re_str ;
+            console.log("=="+st[0]+"==");
+            if(st[0].endWith(":default")){
+                if(contains(sValue, st[0].trim().substring(0,(st[0].length - 8)))){
+                    re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : true}';
+                }else{
+                    re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : false}';
+                }
+            }else{
+                if(contains(sValue, st[0].trim())){
+                    re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
+                }else{
+                    re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
+                }
 
-                },
-                error:function(xhr,type,errorThrown){
-                    alert('错误'+xhr.status+type+errorThrown)
-                },
-             complete :function(){
-                 setTimeout(function(){
-                     plus.nativeUI.closeWaiting()
-                 },1500)
-             }
-            })
+            }
+            re_str = eval('(' + re_str + ')');
+            //console.log(re_str);
+            return_strs.push(re_str);
+        }
+        //console.log(strs);
+        return return_strs;
+    }
+    else
+        return "";
+}
+
+    for(var n in t){
+
+    if(t[n].value != undefined && t[n].value != "" && t[n].value != null){
+        if(typeof(t[n].value) == 'string'){
+            if((t[n].value).indexOf('$?$') >= 0){
+                var strs = new Array();
+                strs = (t[n].value).split('$?$');
+                var return_strs = new Array();
+                for(var i = 1; i < strs.length; i++){
+                    return_strs.push(strs[i].trim());
+                }
+                t[n].value = return_strs;
+            }
+            if((t[n].value).indexOf(',') >= 0||t[n].value){
+                var strs = new Array();
+                strs = (t[n].value).split(',');
+                var return_strs = new Array();
+                for(var i = 0; i < strs.length; i++){
+                    return_strs.push(strs[i].trim());
+                }
+                t[n].value = return_strs;
+            }
+        }
+    }
+
+    if(t[n].defaultValue!=undefined){
+        t[n].defaultValue = GetChinese(t[n].defaultValue,t[n].value);
+    }
+
+}
+    function contains(arr, obj) {
+        var i = arr.length;
+        while (i--) {
+    if (arr[i] === obj) {
+      return true;
+    }
+    }
+        return false;
+    }
+    vm.items=t
+    alert(JSON.stringify(vm.items))
+    console.log(vm.items)
+    //var task=res.task[0];
+    vm.task=res.action
+    /* for(var n in task.action){
+    vm.task.push(task.action[n])
+    if(task.action[n].hasOwnProperty("performer")&&Array.isArray(task.action[n].performer)&&task.action[n].name==='交班'){
+        for(var j in task.action[n].performer){
+            console.log(task.action[n].performer[j])
+        }
+    }
+    }
+    vm.taskid=task.id*/
+   // alert(JSON.stringify(vm.items))
 
 
-			})
+
+   },
+    error:function(xhr,type,errorThrown){
+        alert('错误'+xhr.status+type+errorThrown)
+    },
+ complete :function(){
+     setTimeout(function(){
+         plus.nativeUI.closeWaiting()
+     },1000)
+ }
+})
+
+})
 
   var showUserPickerButton = document.getElementById('danwei');
     showUserPickerButton.addEventListener('tap', function(event) {
@@ -758,7 +767,12 @@ var res={
                 }
             })
             user.show(function(items) {
-                jianchar.value = items[0].text;
+                if(items[0].text==undefined){
+                    jianchar.value = ''
+                }else{
+                    jianchar.value = items[0].text;
+                }
+                //jianchar.value = items[0].text;
                 document.getElementById('jianchar').setAttribute('data',items[0].id)
                 //返回 false 可以阻止选择框的关闭
                 //return false;
@@ -791,12 +805,15 @@ var res={
 
 
 
-			mui.back = function() {
+mui.back = function() {
 				plus.webview.currentWebview().hide("auto", 300);
 				var self = plus.webview.currentWebview();
 				close()
 				self.addEventListener("hide",function (e) {
 				    vm.items='',
-                    vm.task=''
+                    vm.task='',
+                    fd.delete('objId'),
+                   fd.delete('field'),
+                   fd.delete('file')
 				},false);
 			}

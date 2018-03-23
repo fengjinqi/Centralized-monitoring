@@ -162,7 +162,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 
 	  if(vm.uid==='all'){
  		plus.nativeUI.showWaiting( '正在加载' )
-		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?startTime='+getPastHalfYear(),{
+		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&startTime='+getPastHalfYear(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -184,7 +184,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 			});
 	  }else if(vm.uid==='untreated'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?comfirm=0&startTime='+getPastHalfYear(),{
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&comfirm=0&startTime='+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){
@@ -205,7 +205,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 		});
 	  }else if(vm.uid==='links'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?comfirm=1&startTime='+getPastHalfYear(),{
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&comfirm=1&startTime='+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){

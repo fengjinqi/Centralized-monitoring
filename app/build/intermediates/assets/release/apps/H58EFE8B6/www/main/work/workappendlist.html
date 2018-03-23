@@ -69,8 +69,9 @@
 					isAppend:true,
 					title:'',
 					cover:'',
-					bizClass:''
-					}
+					bizClass:'',
+					field:'',
+				}
 			})
 			var author;
 				//添加newId自定义事件监听
@@ -82,6 +83,7 @@
 			  vm.title=id
 			  vm.cover=event.detail.cover;
 			  vm.bizClass=event.detail.bizClass
+			  vm.field=event.detail.field
 			  if(query=='queryadd'){
 			  	vm.isAppend=false;
 			  }
@@ -116,7 +118,8 @@
 					    guid: vm.id,
 					    author:author,
 					    cover:vm.cover,
-					    bizClass:vm.bizClass
+					    bizClass:vm.bizClass,
+					    field:vm.field
 
 					});
 					mui.openWindowWithTitle({
@@ -135,10 +138,10 @@
 				      title:'正在加载...',//等待对话框上显示的提示内容
 					    }
 				})
-					 plus.nativeUI.showWaiting( '正在加载' )
+					/* plus.nativeUI.showWaiting( '正在加载' )
 				 setTimeout(function(){
 			    	plus.nativeUI.closeWaiting()
-			    },500)
+			    },500)*/
 				})
 
 				webview= mui.preload({
