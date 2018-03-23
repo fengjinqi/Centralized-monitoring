@@ -116,6 +116,7 @@ var vm=new Vue({
             }
             var checked=document.querySelectorAll('#form1 .checked ')
 
+
             for(var i=0;i<checked.length;i++){
                 if(checked[i].checked){
                       if(obj.bizObj.hasOwnProperty(checked[i].name)){
