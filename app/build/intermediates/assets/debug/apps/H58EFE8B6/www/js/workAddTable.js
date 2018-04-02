@@ -416,11 +416,10 @@ window.addEventListener('get_detail',function(event){
     dataType:'json',
     type:'get',
     success:function(res){
-    alert(JSON.stringify(res))
-    if(res.success==false){
-        mui.alert('未查询到用户')
-         plus.nativeUI.closeWaiting()
-    }
+        if(res.success==false){
+            mui.alert('未查询到用户')
+             plus.nativeUI.closeWaiting()
+        }
      /* var res={
                 "result": {
                   "success": true
@@ -847,7 +846,7 @@ window.addEventListener('get_detail',function(event){
 
    },
     error:function(xhr,type,errorThrown){
-        alert('错误'+xhr.status+type+errorThrown)
+        mui.alert("网络错误")
     },
  complete :function(){
      setTimeout(function(){
@@ -887,7 +886,7 @@ window.addEventListener('get_detail',function(event){
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                mui.alert("网络错误")
             }
         })
     }, false);
@@ -916,7 +915,7 @@ window.addEventListener('get_detail',function(event){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
              user.show(function(items) {
@@ -951,7 +950,7 @@ window.addEventListener('get_detail',function(event){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
             user.show(function(items) {

@@ -132,7 +132,8 @@
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							alert('错误'+xhr.status+type+errorThrown)
+
+                        	mui.alert("网络错误")
 						},
 						complete :function(){
 							 setTimeout(function(){
@@ -157,7 +158,8 @@ window.addEventListener('refresh', function(e) {
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							alert('错误'+xhr.status+type+errorThrown)
+
+                        	mui.alert("网络错误")
 						},
 						complete :function(){
 							 setTimeout(function(){
@@ -203,7 +205,8 @@ window.addEventListener('refresh', function(e) {
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
+
+                        	mui.alert("网络错误")
 				}
 			});
 		}else if(showUserPicker.innerText=='标题'){
@@ -223,7 +226,8 @@ window.addEventListener('refresh', function(e) {
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
+
+                        	mui.alert("网络错误")
 				}
 			});
 		}

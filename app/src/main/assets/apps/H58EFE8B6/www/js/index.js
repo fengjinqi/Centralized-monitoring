@@ -97,7 +97,7 @@ getLogin()
         			},
         			error:function(xhr,type,errorThrown){
         				plus.nativeUI.closeWaiting();
-        				alert('错误'+xhr.status+type+errorThrown)
+        				alert("网络错误")
         			}/*,
         			complete :function(){
         				 setTimeout(function(){
@@ -117,7 +117,7 @@ getLogin()
                      },
                      error:function(xhr,type,errorThrown){
                          plus.nativeUI.closeWaiting();
-                         alert('错误'+xhr.status+type+errorThrown)
+                         //alert("网络错误")
                      }/*,
                      complete :function(){
                           setTimeout(function(){
@@ -135,7 +135,7 @@ getLogin()
         					},
         					error:function(xhr,type,errorThrown){
         						plus.nativeUI.closeWaiting();
-        						alert('错误'+xhr.status+type+errorThrown)
+        						//alert("网络错误")
         					}/*,
                              complete :function(){
                                   setTimeout(function(){
@@ -176,7 +176,7 @@ getLogin()
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                //alert("网络错误")
             },
              /*complete :function(){
                   setTimeout(function(){
@@ -205,7 +205,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -235,7 +235,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -263,7 +263,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -292,7 +292,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -320,7 +320,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -348,7 +348,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                        //alert("网络错误")
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -376,7 +376,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                      /* alert("网络错误")*/
                     },
                      complete :function(){
                           setTimeout(function(){
@@ -404,7 +404,7 @@ getLogin()
                     },
                     error:function(xhr,type,errorThrown){
                         plus.nativeUI.closeWaiting();
-                        alert('错误'+xhr.status+type+errorThrown)
+                       /* mui.alert("网络错误")*/
                     },
                      complete :function(){
                           setTimeout(function(){
