@@ -68,7 +68,7 @@ var vm=new Vue({
                                                 type:'post',
                                                 headers:{'Content-Type':'application/json'},
                                                 success:function(data){
-                                                    alert(JSON.stringify(data))
+                                                    //alert(JSON.stringify(data))
                                                     mui.back()
                                                 },
                                                 error:function(xhr,type,errorThrown){
@@ -1152,7 +1152,7 @@ mui.plusReady(function(){
 
            },
             error:function(xhr,type,errorThrown){
-                alert('错误'+xhr.status+type+errorThrown)
+               mui.alert("网络错误")
             },
              complete:function(){
                  plus.nativeUI.closeWaiting()
@@ -1208,7 +1208,7 @@ mui.plusReady(function(){
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                mui.alert("网络错误")
             }
         })
     }, false);
@@ -1237,7 +1237,7 @@ mui.plusReady(function(){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
              user.show(function(items) {
@@ -1272,7 +1272,7 @@ mui.plusReady(function(){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
             user.show(function(items) {

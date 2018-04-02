@@ -83,7 +83,7 @@ objData={}
 var vm=new Vue({
     el:'#root',
     data:{
-        dataType:'yjbzgl',
+        dataType:'xcjszclc',
         guid:'',
         validate:'validate',
         author:'zxgd',
@@ -290,12 +290,15 @@ var vm=new Vue({
                check[i] = v[i].querySelectorAll(".checked");
                 for(var j=0,length=check[i].length;j<length;j++){
                     if(check[i][j].checked==true){
+                    console.log(check[i][j])
                         count++;
                         b = true;
                     }
                 }
             }
-            if(v.length==count){
+            console.log(v.length)
+            console.log(count)
+            if(v.length==count||v.length<=count){
                 yjbzgl=true
             }else{
                 mui.alert("必填项不允许为空");
@@ -416,280 +419,148 @@ window.addEventListener('get_detail',function(event){
     dataType:'json',
     type:'get',
     success:function(res){
-     /* var res={
-                "result": {
-                  "success": true
-                },
-                "ticket": {
-                  "data": [
-                    {
-                      "id": "0cde48bc-d074-4b32-b7e1-6400671ab0e0",
-                      "row": 1,
-                      "col": 1,
-                      "title": "应急事件记录单",
-                      "type": "group",
-                      "item": [
-                        {
-                          "id": "6727ced7-888f-473f-ad8c-a4599616e287",
-                          "row": 1,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "d5db2581-6c37-4390-b2f5-d9af0f7e7322",
-                              "row": 1,
-                              "col": 1,
-                              "title": "应急事件名称",
-                              "bizClass": "yjbz",
-                              "bizField": "yjsjmc",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "text"
-                            },
-                            {
-                              "id": "dc734d63-c17f-4f87-a74c-62f39648d5db",
-                              "row": 2,
-                              "col": 1,
-                              "title": "申请人",
-                              "bizClass": "yjbz",
-                              "bizField": "sqr",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "userSelect"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "e17bde6b-207d-4ded-b4e1-5214ef9fa815",
-                          "row": 2,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "f4f347af-1d6a-4ef6-9307-212c7de787eb",
-                              "row": 1,
-                              "col": 1,
-                              "title": "事件发生时间",
-                              "bizClass": "yjbz",
-                              "bizField": "sjfssj",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "date"
-                            },
-                            {
-                              "id": "5c69c0ba-221c-4d68-a011-513031509c76",
-                              "row": 1,
-                              "col": 2,
-                              "title": "事件发生地点",
-                              "bizClass": "yjbz",
-                              "bizField": "sjfsdd",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "text"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "fd352408-3258-4294-a87e-01ac111e5ffb",
-                          "row": 3,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "e39931f5-c0de-4679-bf55-5a4aa0d15a5f",
-                              "row": 1,
-                              "col": 1,
-                              "title": "调派车辆信息",
-                              "bizClass": "yjbz",
-                              "bizField": "dpclxx",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "text"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "8900e00c-be36-4ff4-b5df-0db4f005c8c4",
-                          "row": 4,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "79f15974-a992-41ea-8c12-b25d687027c9",
-                              "row": 1,
-                              "col": 1,
-                              "title": "其他设备调派情况",
-                              "bizClass": "yjbz",
-                              "bizField": "qtsbdpqk",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "text"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "356d3f64-6674-4530-8eaf-9346862d753f",
-                          "row": 5,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "910f1885-908b-4d84-9fe8-9ad0245a12e3",
-                              "row": 1,
-                              "col": 1,
-                              "title": "事件级别",
-                              "bizClass": "yjbz",
-                              "bizField": "sjjb",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "select",
-                              "defaultValue": "集团级:default$^$集团级$?$企业级$^$企业级"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "968e34bc-0715-41f4-b707-b36c819d096e",
-                          "row": 6,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "c935fdf4-57db-4cd4-9ad9-5305075bb4e0",
-                              "row": 1,
-                              "col": 1,
-                              "title": "事件描述",
-                              "bizClass": "yjbz",
-                              "bizField": "sjms",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "textarea"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "a31ca54f-6337-481d-b500-1a1b90634fed",
-                          "row": 7,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "d751ec17-8da3-4848-9e93-69e167ff6662",
-                              "row": 1,
-                              "col": 1,
-                              "title": "附件",
-                              "bizClass": "yjbz",
-                              "bizField": "fj",
-                              "displayType": "opitonal",
-                              "readonly": "false",
-                              "type": "attachFile"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "aa69a315-f896-4039-acf6-eeea5f9f6d4c",
-                          "row": 8,
-                          "col": 1,
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "45541cbd-7cf1-4e77-b971-172ce382f6ed",
-                              "row": 1,
-                              "col": 1,
-                              "title": "申请事项",
-                              "bizClass": "yjbz",
-                              "bizField": "sqsx",
-                              "displayType": "required",
-                              "readonly": "false",
-                              "type": "textarea"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "c2e9ced0-d6ea-4e56-a4e4-56252ee14f24",
-                          "row": 9,
-                          "col": 1,
-                          "type": "group"
-                        }
-                      ]
-                    },
-                    {
-                      "id": "0564593c-cc7d-4b93-9557-6b88023e0493",
-                      "row": 2,
-                      "col": 1,
-                      "type": "group",
-                      "item": [
-                        {
-                          "id": "50c532ea-33c6-4ff0-8f7e-c15f1a1206fa",
-                          "row": 1,
-                          "col": 1,
-                          "title": "保障中心审批",
-                          "type": "group",
-                          "item": [
-                            {
-                              "id": "dcc6530b-cb7b-441d-8e31-bddc97dfd9a4",
-                              "row": 1,
-                              "col": 1,
-                              "type": "group",
-                              "item": [
-                                {
-                                  "id": "38593ea0-9d81-41e8-87f8-ca61485eca07",
-                                  "row": 1,
-                                  "col": 1,
-                                  "title": "保障中心审批人",
-                                  "bizClass": "yjbz",
-                                  "bizField": "spr",
-                                  "displayType": "readonly",
-                                  "readonly": "false",
-                                  "type": "text"
-                                },
-                                {
-                                  "id": "4f494c15-febe-4212-95ac-407c8c97e8ea",
-                                  "row": 1,
-                                  "col": 2,
-                                  "title": "审批时间",
-                                  "bizClass": "yjbz",
-                                  "bizField": "sptime",
-                                  "displayType": "readonly",
-                                  "readonly": "false",
-                                  "type": "date"
-                                }
-                              ]
-                            },
-                            {
-                              "id": "db7bd523-a444-48bb-8319-305f0eac8935",
-                              "row": 2,
-                              "col": 1,
-                              "type": "group",
-                              "item": [
-                                {
-                                  "id": "0ee4ac66-5a33-460c-a66e-da156b2a92ab",
-                                  "row": 1,
-                                  "col": 1,
-                                  "title": "审批意见",
-                                  "bizClass": "yjbz",
-                                  "bizField": "spyj",
-                                  "displayType": "readonly",
-                                  "readonly": "false",
-                                  "type": "textarea"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "action": [
-                  {
-                    "id": "Link_3",
-                    "name": "保存"
+        if(res.success==false){
+            mui.alert('未查询到用户')
+             plus.nativeUI.closeWaiting()
+        }
+      /*var res={
+                  "result": {
+                      "success": true
                   },
-                  {
-                    "id": "Link_5",
-                    "name": "提交"
-                  }
-                ]
+                  "ticket": {
+                      "data": [
+                          {
+                              "id": "e807af0a-899f-4922-9555-ffa798442519",
+                              "row": 1,
+                              "col": 1,
+                              "title": "地区公司填写",
+                              "type": "group",
+                              "item": [
+                                  {
+                                      "id": "44f8a514-d8a8-4b0d-900e-2965fc1368d8",
+                                      "row": 1,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "0d6d0fa1-cdd4-4482-9ba8-c3d7629a7158",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "填写人",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "txr",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "userSelect"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "id": "f66d4774-e2f7-4aef-a1cb-4158d34ff4f6",
+                                      "row": 2,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "52e45437-ba3b-49e7-8653-93cb25a175ae",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "详细地址",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "xxdz",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "id": "639f9b8a-bf8a-45bb-acfd-fb5b70fb5f87",
+                                      "row": 3,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "7cf13fe2-fc03-4479-bffb-69c0bdacbfac",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "联系人",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "lxr",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          },
+                                          {
+                                              "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
+                                              "row": 1,
+                                              "col": 2,
+                                              "title": "联系方式",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "lxfs",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "text"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "id": "bc3c7ffb-df60-43c3-b0f2-d86ce062aeb6",
+                                      "row": 4,
+                                      "col": 1,
+                                      "type": "group",
+                                      "item": [
+                                          {
+                                              "id": "0a83813b-23b4-469e-91b0-cc824c92caff",
+                                              "row": 1,
+                                              "col": 1,
+                                              "title": "申请事由",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "sqsy",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "textarea"
+                                          },
+                                          {
+                                              "id": "f3ac6109-d19f-461a-a8b2-33f452febac5",
+                                              "row": 2,
+                                              "col": 1,
+                                              "title": "技术服务形式",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "jsfwxs",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "checkbox",
+                                              "defaultValue": "故障处理 $^$故障处理 $?$现场培训$^$现场培训$?$系统维护$^$系统维护$?$安装调试$^$安装调试$?$需求调研$^$需求调研 $?$技术交流$^$技术交流$?$方案设计$^$方案设计$?$其它$^$其它"
+                                          },
+                                          {
+                                              "id": "0169e8a3-730e-441b-b935-21d73d699af5",
+                                              "row": 3,
+                                              "col": 1,
+                                              "title": "故障设备类别",
+                                              "bizClass": "xcjszc",
+                                              "bizField": "gzsblb",
+                                              "displayType": "required",
+                                              "readonly": "false",
+                                              "type": "checkbox",
+                                              "defaultValue": "车载卫星天线子系统$^$车载卫星天线子系统$?$综合接入子系统$^$综合接入子系统$?$视频子系统$^$视频子系统$?$发电子系统$^$发电子系统$?$辅助子系统$^$辅助子系统$?$音频子系统$^$音频子系统$?$其他通信设备$^$其他通信设备$?$其它$^$其它$?$无$^$无"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
+                  },
+                  "action": [
+                      {
+                          "id": "Link_0",
+                          "name": "提交申请"
+                      },
+                      {
+                          "id": "Link_6",
+                          "name": "保存"
+                      }
+                  ]
               }*/
 //处理数据格式
     var ob=[]
@@ -842,7 +713,7 @@ window.addEventListener('get_detail',function(event){
 
    },
     error:function(xhr,type,errorThrown){
-        alert('错误'+xhr.status+type+errorThrown)
+        mui.alert("网络错误")
     },
  complete :function(){
      setTimeout(function(){
@@ -882,7 +753,7 @@ window.addEventListener('get_detail',function(event){
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                mui.alert("网络错误")
             }
         })
     }, false);
@@ -911,7 +782,7 @@ window.addEventListener('get_detail',function(event){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
              user.show(function(items) {
@@ -946,7 +817,7 @@ window.addEventListener('get_detail',function(event){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    mui.alert("网络错误")
                 }
             })
             user.show(function(items) {

@@ -83,7 +83,7 @@ objData={}
 var vm=new Vue({
     el:'#root',
     data:{
-        dataType:'yjbzgl',
+        dataType:'xcjszclc',
         guid:'',
         validate:'validate',
         author:'zxgd',
@@ -399,7 +399,7 @@ window.onload=function(){
      })*/
 }
 
-
+/*
 window.addEventListener('get_detail',function(event){
 
   vm.guid= event.detail.guid;
@@ -419,8 +419,8 @@ window.addEventListener('get_detail',function(event){
         if(res.success==false){
             mui.alert('未查询到用户')
              plus.nativeUI.closeWaiting()
-        }
-     /* var res={
+        }*/
+      var res={
                 "result": {
                   "success": true
                 },
@@ -694,7 +694,7 @@ window.addEventListener('get_detail',function(event){
                     "name": "提交"
                   }
                 ]
-              }*/
+              }
 //处理数据格式
     var ob=[]
     var n=res.ticket.data
@@ -843,7 +843,7 @@ window.addEventListener('get_detail',function(event){
    // alert(JSON.stringify(vm.items))
 
 
-
+/*
    },
     error:function(xhr,type,errorThrown){
         mui.alert("网络错误")
@@ -1003,4 +1003,4 @@ mui.back = function() {
                    fd.delete('field'),
                    fd.delete('file')
 				},false);
-			}
+			}*/

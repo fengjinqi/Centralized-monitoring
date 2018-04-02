@@ -24,7 +24,7 @@ var vm=new Vue({
         methods:{
             commint:function(item){
                 //alert(fd.has('file'))
-                //alert(fd.getAll('file'))
+                alert(JSON.stringify(item))
                 var wat=plus.nativeUI.showWaiting('提交中...')
                 mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
                 data:item,
@@ -51,7 +51,7 @@ var vm=new Vue({
                            vm.task=[]
                        },false);
                    }
-                     //alert(JSON.stringify(data))
+                     alert(JSON.stringify(data))
 
                      if(data.success==true){
                         //alert(fd.has("file"))
