@@ -126,7 +126,8 @@ function getPastHalfYear() {
 		el:'#root1',
 		data:{
 			items:[],
-			uid:''
+			uid:'',
+			getLogin:''
 		},
 
 	})
@@ -158,11 +159,12 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 
 	  var id = event.detail.cover;
 	  var author=event.detail.author;
-	  vm.uid=author
-
+	  vm.uid=author;
+	 vm.getLogin=event.detail.getLogin
+alert(vm.getLogin)
 	  if(vm.uid==='all'){
  		plus.nativeUI.showWaiting( '正在加载' )
-		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&startTime='+getPastHalfYear(),{
+		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&startTime='+getPastHalfYear(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -184,7 +186,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 			});
 	  }else if(vm.uid==='untreated'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&comfirm=0&startTime='+getPastHalfYear(),{
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&comfirm=0&startTime='+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){
@@ -205,7 +207,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 		});
 	  }else if(vm.uid==='links'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId=admin&comfirm=1&startTime='+getPastHalfYear(),{
+		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&comfirm=1&startTime='+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){
@@ -282,6 +284,7 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
     	 //触发子窗口变更新闻详情
 		mui.fire(webview_detail, 'detail', {
 		    guid: this.getAttribute('data-id'),
+		    getLogin:vm.getLogin
 		});
 		//打开详情页面          
 		 mui.openWindowWithTitle({

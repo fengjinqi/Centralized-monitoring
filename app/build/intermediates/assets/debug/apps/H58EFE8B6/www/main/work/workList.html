@@ -10,27 +10,28 @@
 	</head>
 
 	<body>
+		<div id="root">
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">工单填报</h1>
 		</header>
 		<ul class="mui-table-view"style="padding-top: 44px;">
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="yjbzgl" moduleId="yjbz"bizClass="yjbz"field='yjbz.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="yjbzgl" moduleId="yjbz"bizClass="yjbz"field='yjbz.'>
 		            <a class="mui-navigate-right ">
 		                应急事件
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1" moduleId="gzcllc"bizClass="gzcllc"field='gzcllc.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1" moduleId="gzcllc"bizClass="gzcllc"field='gzcllc.'>
 		            <a class="mui-navigate-right">
 		                故障处理
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro"moduleId="bzzxltcsprocess"bizClass="Test"field='Test.fj'>
+		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro"moduleId="bzzxltcsprocess"bizClass="Test"field='Test.'>
 		            <a class="mui-navigate-right">
 		                 保障中心联调测试
 		            </a>
 		        </li>
-			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest"moduleId="dqgscsprocess1"bizClass="dqgscs"field='dqgscs.fj'>
+			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest"moduleId="dqgscsprocess1"bizClass="dqgscs"field='dqgscs.'>
 				<a class="mui-navigate-right">
 					地区公司联调测试
 				</a>
@@ -40,31 +41,48 @@
 		                 值班日志
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc" moduleId="DDZDJCLC" bizClass="DDZDJCDX"field='DDZDJCDX.fj'>
+		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc" moduleId="DDZDJCLC" bizClass="DDZDJCDX"field='DDZDJCDX.'>
 		            <a class="mui-navigate-right">
 		                 调度终端检查记录
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1"moduleId="sbxjlc"bizClass="sbxjjl"field='sbxjjl.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1"moduleId="sbxjlc"bizClass="sbxjjl"field='sbxjjl.'>
 		            <a class="mui-navigate-right">
 		                 应急通信车检查记录
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd"moduleId="zxgdlc"bizClass="zxbd"field='zxbd.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd"moduleId="zxgdlc"bizClass="zxbd"field='zxbd.'>
 		            <a class="mui-navigate-right">
 		                 业务咨询
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc"moduleId="xcjszclc"bizClass="xcjszc"field='xcjszc.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc"moduleId="xcjszclc"bizClass="xcjszc"field='xcjszc.'>
 		            <a class="mui-navigate-right">
 		                 现场技术支持
 		            </a>
 		        </li>
 		    </ul>
+		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
+		var vm=new Vue({
+			el:'#root',
+			data:{
+
+				getLogin:''
+			}
+		})
 			mui.init()
 			mui.plusReady(function() {
+				getLogin()
+				function getLogin(){
+					var name=""
+					var test=plus.android.newObject("io.dcloud.GetUserMessage");
+					name=plus.android.invoke(test,'getLoginId')
+					vm.getLogin=name.toLowerCase()
+
+				}
 				webview_detail = mui.preload({
 			        url: 'workappendlist.html',
 			        id: 'workappendlist',
@@ -78,6 +96,7 @@
 					    cover:this.getAttribute('moduleId'),
 					    bizClass:this.getAttribute("bizClass"),
 					    field:this.getAttribute('field'),
+					    getLogin:vm.getLogin
 
 					});
 					mui.openWindowWithTitle({

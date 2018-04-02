@@ -103,6 +103,19 @@
 			    	plus.nativeUI.closeWaiting()
 			    },500)
 				})
+				  mui.back = function() {
+                       var list =plus.webview.getLaunchWebview();
+                        //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+
+                       mui.fire(list,'refresh');
+                       plus.webview.currentWebview().hide("auto", 300);
+                       var self = plus.webview.currentWebview();
+
+                       self.addEventListener("hide",function (e) {
+
+                       },false);
+                   }
+
 		</script>
 	</body>
 

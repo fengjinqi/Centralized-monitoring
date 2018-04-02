@@ -112,8 +112,16 @@
 			}
 		})
 			mui.plusReady(function() {
+			function getLogin(){
+				var name=""
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				name=plus.android.invoke(test,'getLoginId')
+				return name.toLowerCase()
+
+			}
+
 					plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin',{
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
@@ -138,7 +146,7 @@
 window.addEventListener('refresh', function(e) {
 //在父页面中添加监听事件，刷新页面
        plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin',{
+					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
@@ -181,7 +189,7 @@ window.addEventListener('refresh', function(e) {
 		var showUserPicker=document.getElementById('showUserPicker')
 		if(showUserPicker.innerText=='类别'){
 				plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin&category="+value,{
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&category="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -200,7 +208,7 @@ window.addEventListener('refresh', function(e) {
 			});
 		}else if(showUserPicker.innerText=='标题'){
 			plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId=admin&title="+value,{
+			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&title="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){

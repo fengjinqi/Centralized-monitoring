@@ -25,6 +25,7 @@
 			<div class="nvtt">
 				告警信息</div>
 		</header>-->
+		<div id="root">
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">告警信息</h1>
@@ -51,10 +52,18 @@
 		            </a>
 		        </li>
 		    </ul>
+		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/public.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
+			var vm=new Vue({
+				el:'#root',
+				data:{
+
+					getLogin:''
+				}
+    		})
 			mui.init({
 		})
 			//B页面onload从服务器获取列表数据；
@@ -73,6 +82,14 @@
 			//}
 			mui.plusReady(function() {
 		    //预加载详情页
+		    getLogin()
+		     function getLogin(){
+				var name=""
+				var test=plus.android.newObject("io.dcloud.GetUserMessage");
+				name=plus.android.invoke(test,'getLoginId')
+				vm.getLogin=name.toLowerCase()
+
+			}
 		    webview_detail = mui.preload({
 		        url: 'warningList.html',
 		        id: 'warningList',
@@ -95,7 +112,8 @@
 				    title:'title',
 				    author:this.getAttribute('data-type'),
 				    time:'time',
-				    cover:'links'
+				    cover:'links',
+				    getLogin:vm.getLogin
 				});
 				mui.openWindowWithTitle({
 				    url:'warningList.html',

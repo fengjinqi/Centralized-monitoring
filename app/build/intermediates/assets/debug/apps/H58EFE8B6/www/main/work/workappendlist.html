@@ -33,11 +33,11 @@
 			            	<span class="img"></span>
 			                新增工单
 			        </li>
-			        <li class="mui-table-view-cell query" data-type="chaxun">
+			       <!-- <li class="mui-table-view-cell query" data-type="chaxun">
 			            <a class="mui-navigate-right">
 			                 工单查询
 			            </a>
-			        </li>
+			        </li>-->
 			        <li class="mui-table-view-cell query"data-type="canyu">
 			            <a class="mui-navigate-right">
 			                 我参与的工单
@@ -71,6 +71,7 @@
 					cover:'',
 					bizClass:'',
 					field:'',
+					getLogin:''
 				}
 			})
 			var author;
@@ -84,6 +85,8 @@
 			  vm.cover=event.detail.cover;
 			  vm.bizClass=event.detail.bizClass
 			  vm.field=event.detail.field
+			  vm.getLogin=event.detail.getLogin
+
 			  if(query=='queryadd'){
 			  	vm.isAppend=false;
 			  }
@@ -119,7 +122,8 @@
 					    author:author,
 					    cover:vm.cover,
 					    bizClass:vm.bizClass,
-					    field:vm.field
+					    field:vm.field,
+					    getLogin:vm.getLogin
 
 					});
 					mui.openWindowWithTitle({
@@ -154,7 +158,8 @@
 					    title:this.getAttribute('data-type'),
 					    author:author,
 					    time:'time',
-					    cover:'links'
+					    cover:'links',
+					    getLogin:vm.getLogin
 					});
 					mui.openWindowWithTitle({
 				    url:'tableList.html',

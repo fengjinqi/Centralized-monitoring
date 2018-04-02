@@ -70,7 +70,7 @@ margin-top: 10px;
 					        <span class='img buss'></span>
 					        <div class="mui-media-body" style="font-size: 16px;">业务填报</div>
 					    </a>
-						<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency>0">{{agency}}</span>
+						<span class="mui-badge mui-badge-red"style="top:15%" v-show="agency>0">{{agenc}}</span>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 waring" >
 					    <a href="#">
@@ -144,7 +144,8 @@ margin-top: 10px;
 				</div>
 				<div class="flex" style="padding: 15px;background: #fff;">
 					<ul class="mui-table-view mui-grid-view mui-grid-9 article"style="background: #fff;">
-						<li data-title='应急事件'data-moduleId="yjbzgl" field='yjbz.fj'v-for="(item,index) in yjbzgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 mui-active":data-id=item.processId>
+
+						<li data-title='应急事件'data-moduleId="yjbzgl" field='yjbz.'v-for="(item,index) in yjbzgl"v-if='yjbzgl.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3 mui-active":data-id=item.processId>
 							<a>
 						       <p>应急事件</p>
 								<div class="">
@@ -153,7 +154,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='故障处理'data-moduleId="gzcllc1" v-for="(item,index) in gzcllc1"v-if='index==0' field='gzcllc.fj' class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='故障处理'data-moduleId="gzcllc1" v-for="(item,index) in gzcllc1"v-if='gzcllc1.length>0&&index==0' field='gzcllc.' class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 						    <a>
 						       <p>故障处理</p>
 								<div class="">
@@ -162,7 +163,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='保障中心联调测试'field='Test.fj' data-moduleId="TestPro"v-for="(item,index) in TestPro"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='保障中心联调测试'field='Test.' data-moduleId="TestPro"v-for="(item,index) in TestPro"v-if='TestPro.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 						    <a>
 						       <p>保障中心联调</p>
 								<div class="">
@@ -171,7 +172,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='地区中心联调测试'field='dqgscs.fj'data-moduleId="dqgsTest"  v-for="(item,index) in dqgsTest"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='地区中心联调测试'field='dqgscs.'data-moduleId="dqgsTest"  v-for="(item,index) in dqgsTest"v-if='dqgsTest.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a>
 								<p>地区中心联调</p>
 								<div class="">
@@ -180,7 +181,7 @@ margin-top: 10px;
 								</div>
 							</a>
 						</li>
-						<li data-title='值班日志'field='jjbgl.fj'data-moduleId="jjbgl"   v-for="(item,index) in jjbgl"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='值班日志'field='jjbgl.'data-moduleId="jjbgl"   v-for="(item,index) in jjbgl"v-if='jjbgl.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a>
 						        <p>值班日志</p>
 								<div class="">
@@ -189,7 +190,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='调度终端检查记录'field='DDZDJCDX.fj'data-moduleId="ddzdjc"   v-for="(item,index) in ddzdjc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='调度终端检查记录'field='DDZDJCDX.'data-moduleId="ddzdjc"   v-for="(item,index) in ddzdjc"v-if='ddzdjc.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>调度终端</p>
 								<div class="">
@@ -199,7 +200,7 @@ margin-top: 10px;
 						    </a>
 						</li>
 
-						<li data-title='应急通信车检查记录'field='sbxjjl.fj'data-moduleId="sbxjjl1"   v-for="(item,index) in sbxjjl1"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='应急通信车检查记录'field='sbxjjl.'data-moduleId="sbxjjl1"   v-for="(item,index) in sbxjjl1"v-if='sbxjjl1.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>应急通信车</p>
 								<div class="">
@@ -208,7 +209,7 @@ margin-top: 10px;
 								</div>
 						    </a>
 						</li>
-						<li data-title='业务咨询'field='zxbd.fj'data-moduleId="zxgd"   v-for="(item,index) in zxgd"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='业务咨询'field='zxbd.'data-moduleId="zxgd"   v-for="(item,index) in zxgd"v-if='zxgd.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>业务咨询</p>
 								<div class="">
@@ -218,7 +219,7 @@ margin-top: 10px;
 						    </a>
 						</li>
 
-						<li data-title='现场技术支持'field='xcjszc.fj'data-moduleId="xcjszclc"   v-for="(item,index) in xcjszclc"v-if='index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
+						<li data-title='现场技术支持'field='xcjszc.'data-moduleId="xcjszclc"   v-for="(item,index) in xcjszclc"v-if='xcjszclc.length>0&&index==0'  class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3":data-id=item.processId>
 							<a href="#">
 						        <p>现场技术支持</p>
 								<div class="">
@@ -234,12 +235,12 @@ margin-top: 10px;
 			</div>
 
 	</div>
-		<button id='getContent' style="margin-top:100px;">获取所有</button>
-		<button id='getLoginId' style="margin-top:100px;">获取用户id</button>
+		<!--<button id='getContent' style="margin-top:100px;">获取所有</button>
+		<button id='getLoginId'onclick="getLogin()" style="margin-top:100px;">获取用户id</button>
 		<button id='getLoginName' style="margin-top:100px;">获取用户名</button>
 		<button id='getVersion' style="margin-top:100px;">获取大厅版本类型</button>
 		<button id='getSubAccounts' style="margin-top:100px;">获取子账号</button>
-		<button id='getDomain' style="margin-top:100px;">获取域名</button>
+		<button id='getDomain' style="margin-top:100px;">获取域名</button>-->
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 		<script>
@@ -254,11 +255,11 @@ margin-top: 10px;
 				//alert(init)
 				alert(intent)
 			}
-			document.getElementById("getLoginId").onclick=function(){
+			/*document.getElementById("getLoginId").onclick=function(){
 				var test=plus.android.newObject("io.dcloud.GetUserMessage");
 				var intent=plus.android.invoke(test,'getLoginId')
 				alert(intent)
-			}
+			}*/
 			document.getElementById("getLoginName").onclick=function(){
 				var test=plus.android.newObject("io.dcloud.GetUserMessage");
 				var intent=plus.android.invoke(test,'getLoginName')

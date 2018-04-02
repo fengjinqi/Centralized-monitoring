@@ -58,7 +58,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="sqr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="sqr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -68,13 +68,13 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue">
 										<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
 										<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
@@ -92,7 +92,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
@@ -113,7 +113,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 							<div class="mui-input-row" v-if="item.bizField === 'zbr'" key="zbr">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<span v-if="item.bzType === 'text'|| item.bzType === 'date' || item.bzType === 'userSelect'">
-										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" :data-id="item.value.id"class="form-control person" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" :data-id="item.value.id"class="form-control person" v-model="item.value.name" :name="item.bizField":data-id="item.value.id">
 										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
 								</span>
 								<button v-else-if="item.bzType === 'attachFile'" key="input">{{item.title}}</button>
@@ -122,9 +122,14 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="zbr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="zb" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
-								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+								<span  v-if="item.bzType === 'text'||  item.bzType === 'userSelect'">
+
+									<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-if="item.bizField === 'jbry'"@click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+									<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else key="text" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+
+								</span>
 								<span v-else-if="item.bzType === 'date'">
 									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
 										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
@@ -132,7 +137,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -144,7 +149,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
                                         </span-->
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
@@ -162,7 +167,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
@@ -197,7 +202,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -208,7 +213,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
 
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -220,7 +225,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
                                         </span-->
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 							<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked  :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
@@ -237,7 +242,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textarea"  rows="3" v-model="item.value" :name="item.bizField"
@@ -274,7 +279,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="gzsgr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="gzsgr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -284,13 +289,13 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -349,7 +354,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="bzzxjlr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -360,7 +365,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
 
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -372,7 +377,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
                                         </span-->
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
@@ -427,7 +432,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="jcry" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="jcry" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -438,7 +443,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
 
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -450,7 +455,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
                                         </span-->
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 							<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
@@ -493,16 +498,21 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 							<div class="mui-input-row" v-if="item.bizField === 'txr'" key="txr">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<span v-if=" item.bzType === 'userSelect'">
-										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
-										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name":data-id="item.value.id" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text":data-id="item.value.id" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
 										<input type="hidden" id="hiddeen" value="">
 								</span>
 							</div>
-							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"
 									   v-if="item.bzType === 'text'" key="input" type="text" class="form-control text " v-model="item.value" :name="item.bizField">
+							<!--	<span  v-if="item.bzType === 'text'||  item.bzType === 'userSelect'">
 
+									<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-if="item.bizField === 'jbry'"@click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+									<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else key="text" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+
+								</span>-->
 								<span v-else-if="item.bzType === 'date'">
 									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
 										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
@@ -510,13 +520,13 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
-								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
+									<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'":class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 							<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
 									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
@@ -533,7 +543,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
@@ -545,7 +555,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 					<ul class="mui-table-view" v-show="items.length>0">
 						<li class="mui-table-view-cell"style="padding-left:0;padding-right:0;text-align:center;">
 
-							<button class="task" v-on:click="getTask(item)" v-if="item.name=='保存'" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
+							<button class="task" v-on:click="getTask(item)" v-if="item.name!='发布计划'" :data-id="item.id" v-for="item in task" type="button" style="margin:0 10px;">{{item.name}}</button>
 						</li>
 					</ul>
 				</form>
@@ -559,16 +569,21 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 							<div class="mui-input-row" v-if="item.bizField === 'txr'" key="txr">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<span v-if=" item.bzType === 'userSelect'">
-										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField">
-										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+										<input :class="item.displayType == 'required'?validaTetable:''" v-if="item.displayType == 'readonly'" readonly key="input" type="text" class="form-control person" v-model="item.value.name" :name="item.bizField" :data-id="item.value.id">
+										<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''" v-else @click='show()' key="input" readonly type="text":data-id="item.value.id" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
 										<input type="hidden" id="hiddeen" value="">
 								</span>
 							</div>
-							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
-								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"
+							<!--	<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"
 									   v-if="item.bzType === 'text'" key="input" type="text" class="form-control text " v-model="item.value" :name="item.bizField">
+-->								<span  v-if="item.bzType === 'text'||  item.bzType === 'userSelect'">
 
+									<input :class="item.displayType == 'required'?validaTetable:''" :style="item.displayType == 'required'?'background:white!important':''":data-id="item.value.id" v-if="item.bizField === 'spr'"@click='show()' key="input" readonly type="text" class="form-control person obj" v-model="item.value.name" :name="item.bizField">
+									<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else key="text" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
+
+								</span>
 								<span v-else-if="item.bzType === 'date'">
 									<input :class="item.displayType == 'required'?validaTetable:''"  type="text" v-if="item.displayType=='readonly'"readonly
 										   class="form-control text" v-model="item.value" :name="item.bizField" key='date'>
@@ -576,17 +591,17 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
-							<span v-for="it in item.defaultValue">
-								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
+								<div  v-else-if="item.bzType === 'checkbox'":class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
+								<span v-for="it in item.defaultValue">
+									<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
 									<input type="checkbox":disabled="item.displayType == 'readonly'? true:false" :value="it.name"v-else='it.selected==false':name="item.bizField" class="checked"/>{{it.name}}
-										</span>
+								</span>
 								</div>
 								<select class="form-control"v-else-if="item.bzType==='select'":disabled="item.displayType == 'readonly'? true:false":name="item.bizField">
 									<option :value="it.name" v-for='it in item.defaultValue'>{{it.name}}</option>
@@ -599,7 +614,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="input"  rows="3" v-model="item.value" :name="item.bizField"
@@ -634,7 +649,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 								</select>
 								<textarea :readonly="item.displayType == 'readonly'? true:false"  v-else  rows="3"  key="input" class="form-control" :value="item.value.name" :name="item.bizField"></textarea>
 							</div>
-							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''">
+							<div class="mui-input-row" v-else key="txr" :style="item.bzType==='textarea'?'height:auto':''||item.bzType==='checkbox'?'height:auto':''||item.bzType==='attachFile'?'height:auto':''||item.bzType==='radiogroup'?'height:auto':''">
 								<label :class="item.displayType == 'required'?validate:''">{{item.title}}:</label>
 								<input :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false"   v-if="item.bzType === 'text'||  item.bzType === 'userSelect'" key="input" type="text" class="form-control text" v-model="item.value" :name="item.bizField">
 								<span v-else-if="item.bzType === 'date'">
@@ -644,13 +659,13 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 										   class="form-control text" v-model="item.value" :name="item.bizField"
 										   :style="item.displayType == 'required'?'background:white!important':''" key='date'>
 								</span>
-								<div  v-else-if="item.bzType === 'radiogroup'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'radiogroup'":class="item.displayType == 'required'? 'radiogroup':''"  style="overflow: hidden; padding-right: 15px;">
 									<span v-for="it in item.defaultValue" class=" dan mui-input-row mui-radio" style="    padding: 5px 0;display: inline-block;padding-right:29px;">
 								<input  type="radio":value="it.value":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked "/>
 									<input type="radio":disabled="item.displayType == 'readonly'? true:false" :value="it.value"v-else='it.selected==false':name="item.bizField" class="checked "/>{{it.name}}
 										</span>
 								</div>
-								<div  v-else-if="item.bzType === 'checkbox'" style="overflow: hidden; padding-right: 15px;">
+								<div  v-else-if="item.bzType === 'checkbox'" :class="item.displayType == 'required'? 'radiogroup':''" style="overflow: hidden; padding-right: 15px;">
 								<!--<span v-if="item.displayType == 'required'">-->
 									<span v-for="it in item.defaultValue">
 								<input  type="checkbox":value="it.name":disabled="item.displayType == 'readonly'? true:false" v-if='it.selected==true'checked="checked" :name="item.bizField" class="checked"/>
@@ -673,7 +688,7 @@ input[type='radio'], .mui-checkbox input[type='checkbox']{ right: 0px!important;
 
 									</form>
 									<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
-									<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</p>
+									<a style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-if='item.value.length>0'v-for='it in item.value':url='it.uri'>{{it.name}}</a>
 
 								</span>
 								<textarea :class="item.displayType == 'required'?validaTetable:''"  :readonly="item.displayType == 'readonly'? true:false" v-else-if="item.bzType==='textarea'" key="textareaa"  rows="3" v-model="item.value" :name="item.bizField"

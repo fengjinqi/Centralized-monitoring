@@ -78,10 +78,12 @@ function getVideo(){
 
 var fd;
 fd = new FormData();
+var objData;
+objData={}
 var vm=new Vue({
     el:'#root',
     data:{
-        dataType:'xcjszclc',
+        dataType:'yjbzgl',
         guid:'',
         validate:'validate',
         author:'zxgd',
@@ -93,36 +95,164 @@ var vm=new Vue({
         cover:'',
         bizClass:'',
         field:'',
-
+        fieIdCode:'',
+        getLogin:''
     },
      methods:{
+         commintData:function(item){
+            var watiting=plus.nativeUI.showWaiting('提交中...')
+            mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/create',{
+                 data:item,
+                 dataType:'json',
+                 type:'post',
+                 headers:{'Content-Type':'application/json'},
+                 success:function(data){
+                     if(data.success==true){
+                         if(fd.getAll('file').length>0){
+                             this.id=data.id
+                             fd.append("objId",this.id)
+                             fd.append("field",vm.field+vm.fieIdCode)
+                             //alert(JSON.stringify(fd.getAll('file')))
+                             //alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
+                             console.log(JSON.stringify(fd.get('file').name))
+                             watiting.setTitle("正在上传附件请稍后...")
+                             mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
+                                 data:fd,
+                                 type:'post',
+                                 processData: false,
+                                 contentType: false,
+                                 success:function(data){
+                                     var data=JSON.parse(data)
+                                    // alert(JSON.stringify(data))
+                                     if(data.success){
+                                         mui.alert("附件上传成功")
+                                         watiting.close()
+                                        mui.back()
+                                     }else{
+                                         mui.alert("附件上传失败")
+                                         watiting.close()
+                                          mui.back()
+                                     }
+                                 },
+                                 error:function(xhr,type,errorThrown){
+                                     //异常处理；
+                                     alert(2332);
+                                 }
+                             })
+
+                         }else{
+                             plus.nativeUI.toast( "工单创建成功")
+                             watiting.close()
+                             mui.back()
+                         }
+                        /* if(document.querySelectorAll('.uploadfj').length>0){
+                             var uploadfj=document.querySelectorAll('.uploadfj');
+                             for(var i=0;i<uploadfj.length;i++){
+                                 alert(JSON.stringify(uploadfj[i].files[0]))
+                                 if(uploadfj[i].files[0]!=undefined){
+                                     this.id=data.id
+                                     fd.append("objId",this.id)
+                                     fd.append("field",vm.field)
+                                     alert(JSON.stringify(fd.getAll('file')))
+                                     alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
+                                     console.log(JSON.stringify(fd.get('file').name))
+                                     watiting.setTitle("正在上传附件请稍后...")
+                                     mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
+                                         data:fd,
+                                         type:'post',
+                                         processData: false,
+                                         contentType: false,
+                                         success:function(data){
+                                             var data=JSON.parse(data)
+                                             alert(JSON.stringify(data))
+                                             if(data.success){
+                                                 mui.alert("附件上传成功")
+                                                 watiting.close()
+                                                mui.back()
+                                             }else{
+                                                 mui.alert("附件上传失败")
+                                                 watiting.close()
+                                                  mui.back()
+                                             }
+                                         },
+                                         error:function(xhr,type,errorThrown){
+                                             //异常处理；
+                                             alert(2332);
+                                         }
+                                     })
+                                 }else{
+                                     plus.nativeUI.toast( "工单创建成功")
+                                     watiting.close()
+                                     mui.back()
+                                 }
+                             }
+                         }else{
+                         alert("554")
+                              plus.nativeUI.toast( "工单创建成功")
+                              watiting.close()
+                              mui.back()
+                         }*/
+                     }else{
+                          plus.nativeUI.toast( "工单创建失败");
+                          watiting.close()
+                          mui.back()
+                     }
+                     //alert(JSON.stringify(data))
+
+                    mui.back = function() {
+                            plus.webview.currentWebview().hide("auto", 300);
+                            var self = plus.webview.currentWebview();
+                            //confirm()
+                            self.addEventListener("hide",function (e) {
+                                vm.dataType='',
+                                vm.cover='',
+                                vm.guid="",
+                                vm.items=[],
+                                vm.task=[],
+                                fd.delete('objId'),
+                                fd.delete('field'),
+                                fd.delete('file')
+
+                            },false);
+                        }
+
+                 },
+                 error:function(xhr,type,errorThrown){
+                     //异常处理；
+                     alert(2332);
+                 }
+             })
+
+         },
          getTask: function(item){
             var obj={};
             var check;
-            obj.moduleId=vm.dataType,
-            obj.processName=vm.cover,
-            obj.bizClass=vm.bizClass,
-            obj.transitionId=item.id,
-            obj.startNodeId="Start",
-            obj.creator='admin',
-            obj.bizObj={};
+            var checkArr;
+            var yjbzgl=false;
+            objData.moduleId=vm.dataType,
+            objData.processName=vm.cover,
+            objData.bizClass=vm.bizClass,
+            objData.transitionId=item.id,
+            objData.startNodeId="Start",
+            objData.creator=vm.getLogin,
+            objData.bizObj={};
             var input=document.querySelectorAll('#form1 .text ')
             for(var i=0;i<input.length;i++){
-                obj.bizObj[input[i].name]=input[i].value
+                objData.bizObj[input[i].name]=input[i].value
             }
             var person=document.querySelectorAll('#form1 .person ')
             for(var i=0;i<person.length;i++){
-                obj.bizObj[person[i].name]=person[i].getAttribute('data-id')
+                objData.bizObj[person[i].name]=person[i].getAttribute('data-id')
             }
             var checked=document.querySelectorAll('#form1 .checked ')
 
 
             for(var i=0;i<checked.length;i++){
                 if(checked[i].checked){
-                      if(obj.bizObj.hasOwnProperty(checked[i].name)){
-                        obj.bizObj[checked[i].name] += ',' + checked[i].value;
+                      if(objData.bizObj.hasOwnProperty(checked[i].name)){
+                        objData.bizObj[checked[i].name] += ',' + checked[i].value;
                       }else{
-                        obj.bizObj[checked[i].name] = checked[i].value;
+                        objData.bizObj[checked[i].name] = checked[i].value;
                       }
                 }
             }
@@ -130,150 +260,69 @@ var vm=new Vue({
             var select=document.querySelectorAll('#form1 select ')
             for(var i=0;i<select.length;i++){
                 select[i].disabled=false
-                 obj.bizObj[select[i].name]=select[i].value
+                 objData.bizObj[select[i].name]=select[i].value
             }
             var textare=document.querySelectorAll('#form1 textarea ')
             for(var i=0;i<textare.length;i++){
-                 obj.bizObj[textare[i].name]=textare[i].value
+                 objData.bizObj[textare[i].name]=textare[i].value
             }
 
-                    alert(JSON.stringify(obj))
+                    //alert(JSON.stringify(objData))
+                    var a = false;
+                     var b = false;
            mui("#form1 .validaTetable").each(function() {
                 //若当前input为空，则alert提醒
+                 a = true;
                 if(!this.value || this.value.trim() == "") {
                     var label = this.previousElementSibling;
                     mui.alert("必填项不允许为空");
-                    check = false;
+                    checkArr = false;
                     return false;
                 }else{
-                    check=true
+                    checkArr=true
                 }
             }); //校验通过，继续执行业务逻辑
-            if(check){
-                var watiting=plus.nativeUI.showWaiting('提交中...')
-                   mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/create',{
-                        data:obj,
-                        dataType:'json',
-                        type:'post',
-                        headers:{'Content-Type':'application/json'},
-                        success:function(data){
-                            if(data.success==true){
-                                if(fd.getAll('file').length>0){
-                                    this.id=data.id
-                                    fd.append("objId",this.id)
-                                    fd.append("field",vm.field)
-                                    alert(JSON.stringify(fd.getAll('file')))
-                                    alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
-                                    console.log(JSON.stringify(fd.get('file').name))
-                                    watiting.setTitle("正在上传附件请稍后...")
-                                    mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
-                                        data:fd,
-                                        type:'post',
-                                        processData: false,
-                                        contentType: false,
-                                        success:function(data){
-                                            var data=JSON.parse(data)
-                                            alert(JSON.stringify(data))
-                                            if(data.success){
-                                                mui.alert("附件上传成功")
-                                                watiting.close()
-                                               mui.back()
-                                            }else{
-                                                mui.alert("附件上传失败")
-                                                watiting.close()
-                                                 mui.back()
-                                            }
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            //异常处理；
-                                            alert(2332);
-                                        }
-                                    })
 
-                                }else{
-                                    plus.nativeUI.toast( "工单创建成功")
-                                    watiting.close()
-                                    mui.back()
-                                }
-                               /* if(document.querySelectorAll('.uploadfj').length>0){
-                                    var uploadfj=document.querySelectorAll('.uploadfj');
-                                    for(var i=0;i<uploadfj.length;i++){
-                                        alert(JSON.stringify(uploadfj[i].files[0]))
-                                        if(uploadfj[i].files[0]!=undefined){
-                                            this.id=data.id
-                                            fd.append("objId",this.id)
-                                            fd.append("field",vm.field)
-                                            alert(JSON.stringify(fd.getAll('file')))
-                                            alert(JSON.stringify(this.id)+"--"+JSON.stringify(this.field)+"--"+JSON.stringify(vm.field))
-                                            console.log(JSON.stringify(fd.get('file').name))
-                                            watiting.setTitle("正在上传附件请稍后...")
-                                            mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
-                                                data:fd,
-                                                type:'post',
-                                                processData: false,
-                                                contentType: false,
-                                                success:function(data){
-                                                    var data=JSON.parse(data)
-                                                    alert(JSON.stringify(data))
-                                                    if(data.success){
-                                                        mui.alert("附件上传成功")
-                                                        watiting.close()
-                                                       mui.back()
-                                                    }else{
-                                                        mui.alert("附件上传失败")
-                                                        watiting.close()
-                                                         mui.back()
-                                                    }
-                                                },
-                                                error:function(xhr,type,errorThrown){
-                                                    //异常处理；
-                                                    alert(2332);
-                                                }
-                                            })
-                                        }else{
-                                            plus.nativeUI.toast( "工单创建成功")
-                                            watiting.close()
-                                            mui.back()
-                                        }
-                                    }
-                                }else{
-                                alert("554")
-                                     plus.nativeUI.toast( "工单创建成功")
-                                     watiting.close()
-                                     mui.back()
-                                }*/
-                            }else{
-                                 plus.nativeUI.toast( "工单创建失败");
-                                 watiting.close()
-                                 mui.back()
-                            }
-                            alert(JSON.stringify(data))
-
-                           mui.back = function() {
-                                   plus.webview.currentWebview().hide("auto", 300);
-                                   var self = plus.webview.currentWebview();
-                                   //confirm()
-                                   self.addEventListener("hide",function (e) {
-                                       vm.dataType='',
-                                       vm.cover='',
-                                       vm.guid="",
-                                       vm.items=[],
-                                       vm.task=[],
-                                       fd.delete('objId'),
-                                       fd.delete('field'),
-                                       fd.delete('file')
-
-                                   },false);
-                               }
-
-                        },
-                        error:function(xhr,type,errorThrown){
-                            //异常处理；
-                            alert(2332);
-                        }
-                    })
+            var check = [];
+             var count = 0;
+            var v = document.querySelectorAll(".radiogroup");
+            for(var i=0,len=v.length;i<len;i++){
+               check[i] = v[i].querySelectorAll(".checked");
+                for(var j=0,length=check[i].length;j<length;j++){
+                    if(check[i][j].checked==true){
+                        count++;
+                        b = true;
+                    }
+                }
+            }
+            if(v.length==count){
+                yjbzgl=true
+            }else{
+                mui.alert("必填项不允许为空");
+                yjbzgl=false;
+                return;
+            }
+            console.log(yjbzgl)
+            console.log(checkArr)
+            console.log(a)
+            console.log(b)
+            if(a && b){
+                if(yjbzgl&&checkArr){
+                //alert('都执行')
+                   this.commintData(objData);
 
                 }
+            }else if(a){
+               if(checkArr){
+                //alert('执行文本')
+                       this.commintData(objData)
+               }
+            }else if(b){
+                if(yjbzgl){
+                // alert('执行复选')
+                        this.commintData(objData)
+                }
+             }
         },
          onUploadChange(e){
             var form = document.getElementById("form2");
@@ -304,7 +353,7 @@ var vm=new Vue({
                 e.target.parentNode.parentNode.removeChild(p[i])
             }
             fd.delete('file')
-            alert(JSON.stringify(fd.getAll('file')))
+            //alert(JSON.stringify(fd.getAll('file')))
             e.target.style.display='none'
          }
       }
@@ -357,163 +406,294 @@ window.addEventListener('get_detail',function(event){
   vm.dataType=event.detail.author;
   vm.cover=event.detail.cover;
   vm.bizClass=event.detail.bizClass,
+ vm.getLogin=event.detail.getLogin
+ //alert(vm.getLogin)
     //alert(vm.guid)
     //alert(vm.dataType)
   vm.field=event.detail.field
   plus.nativeUI.showWaiting( '正在加载' )
-  mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/getTicketForm?userId=admin&processName="+vm.cover+"&startNodeId=Start",{
+  mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/getTicketForm?userId="+vm.getLogin+"&processName="+vm.cover+"&startNodeId=Start",{
     dataType:'json',
     type:'get',
     success:function(res){
-      /*var res={
-                  "result": {
-                      "success": true
-                  },
-                  "ticket": {
-                      "data": [
-                          {
-                              "id": "e807af0a-899f-4922-9555-ffa798442519",
+        if(res.success==false){
+            mui.alert('未查询到用户')
+             plus.nativeUI.closeWaiting()
+        }
+     /* var res={
+                "result": {
+                  "success": true
+                },
+                "ticket": {
+                  "data": [
+                    {
+                      "id": "0cde48bc-d074-4b32-b7e1-6400671ab0e0",
+                      "row": 1,
+                      "col": 1,
+                      "title": "应急事件记录单",
+                      "type": "group",
+                      "item": [
+                        {
+                          "id": "6727ced7-888f-473f-ad8c-a4599616e287",
+                          "row": 1,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "d5db2581-6c37-4390-b2f5-d9af0f7e7322",
                               "row": 1,
                               "col": 1,
-                              "title": "地区公司填写",
+                              "title": "应急事件名称",
+                              "bizClass": "yjbz",
+                              "bizField": "yjsjmc",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "text"
+                            },
+                            {
+                              "id": "dc734d63-c17f-4f87-a74c-62f39648d5db",
+                              "row": 2,
+                              "col": 1,
+                              "title": "申请人",
+                              "bizClass": "yjbz",
+                              "bizField": "sqr",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "userSelect"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "e17bde6b-207d-4ded-b4e1-5214ef9fa815",
+                          "row": 2,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "f4f347af-1d6a-4ef6-9307-212c7de787eb",
+                              "row": 1,
+                              "col": 1,
+                              "title": "事件发生时间",
+                              "bizClass": "yjbz",
+                              "bizField": "sjfssj",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "date"
+                            },
+                            {
+                              "id": "5c69c0ba-221c-4d68-a011-513031509c76",
+                              "row": 1,
+                              "col": 2,
+                              "title": "事件发生地点",
+                              "bizClass": "yjbz",
+                              "bizField": "sjfsdd",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "fd352408-3258-4294-a87e-01ac111e5ffb",
+                          "row": 3,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "e39931f5-c0de-4679-bf55-5a4aa0d15a5f",
+                              "row": 1,
+                              "col": 1,
+                              "title": "调派车辆信息",
+                              "bizClass": "yjbz",
+                              "bizField": "dpclxx",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "8900e00c-be36-4ff4-b5df-0db4f005c8c4",
+                          "row": 4,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "79f15974-a992-41ea-8c12-b25d687027c9",
+                              "row": 1,
+                              "col": 1,
+                              "title": "其他设备调派情况",
+                              "bizClass": "yjbz",
+                              "bizField": "qtsbdpqk",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "356d3f64-6674-4530-8eaf-9346862d753f",
+                          "row": 5,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "910f1885-908b-4d84-9fe8-9ad0245a12e3",
+                              "row": 1,
+                              "col": 1,
+                              "title": "事件级别",
+                              "bizClass": "yjbz",
+                              "bizField": "sjjb",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "select",
+                              "defaultValue": "集团级:default$^$集团级$?$企业级$^$企业级"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "968e34bc-0715-41f4-b707-b36c819d096e",
+                          "row": 6,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "c935fdf4-57db-4cd4-9ad9-5305075bb4e0",
+                              "row": 1,
+                              "col": 1,
+                              "title": "事件描述",
+                              "bizClass": "yjbz",
+                              "bizField": "sjms",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "textarea"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "a31ca54f-6337-481d-b500-1a1b90634fed",
+                          "row": 7,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "d751ec17-8da3-4848-9e93-69e167ff6662",
+                              "row": 1,
+                              "col": 1,
+                              "title": "附件",
+                              "bizClass": "yjbz",
+                              "bizField": "fj",
+                              "displayType": "opitonal",
+                              "readonly": "false",
+                              "type": "attachFile"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "aa69a315-f896-4039-acf6-eeea5f9f6d4c",
+                          "row": 8,
+                          "col": 1,
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "45541cbd-7cf1-4e77-b971-172ce382f6ed",
+                              "row": 1,
+                              "col": 1,
+                              "title": "申请事项",
+                              "bizClass": "yjbz",
+                              "bizField": "sqsx",
+                              "displayType": "required",
+                              "readonly": "false",
+                              "type": "textarea"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "c2e9ced0-d6ea-4e56-a4e4-56252ee14f24",
+                          "row": 9,
+                          "col": 1,
+                          "type": "group"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "0564593c-cc7d-4b93-9557-6b88023e0493",
+                      "row": 2,
+                      "col": 1,
+                      "type": "group",
+                      "item": [
+                        {
+                          "id": "50c532ea-33c6-4ff0-8f7e-c15f1a1206fa",
+                          "row": 1,
+                          "col": 1,
+                          "title": "保障中心审批",
+                          "type": "group",
+                          "item": [
+                            {
+                              "id": "dcc6530b-cb7b-441d-8e31-bddc97dfd9a4",
+                              "row": 1,
+                              "col": 1,
                               "type": "group",
                               "item": [
-                                  {
-                                      "id": "44f8a514-d8a8-4b0d-900e-2965fc1368d8",
-                                      "row": 1,
-                                      "col": 1,
-                                      "type": "group",
-                                      "item": [
-                                          {
-                                              "id": "0d6d0fa1-cdd4-4482-9ba8-c3d7629a7158",
-                                              "row": 1,
-                                              "col": 1,
-                                              "title": "填写人",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "txr",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "userSelect"
-                                          }
-                                      ]
-                                  },
-                                  {
-                                      "id": "f66d4774-e2f7-4aef-a1cb-4158d34ff4f6",
-                                      "row": 2,
-                                      "col": 1,
-                                      "type": "group",
-                                      "item": [
-                                          {
-                                              "id": "52e45437-ba3b-49e7-8653-93cb25a175ae",
-                                              "row": 1,
-                                              "col": 1,
-                                              "title": "详细地址",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "xxdz",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "text"
-                                          }
-                                      ]
-                                  },
-                                  {
-                                      "id": "639f9b8a-bf8a-45bb-acfd-fb5b70fb5f87",
-                                      "row": 3,
-                                      "col": 1,
-                                      "type": "group",
-                                      "item": [
-                                          {
-                                              "id": "7cf13fe2-fc03-4479-bffb-69c0bdacbfac",
-                                              "row": 1,
-                                              "col": 1,
-                                              "title": "联系人",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "lxr",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "text"
-                                          },
-                                          {
-                                              "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
-                                              "row": 1,
-                                              "col": 2,
-                                              "title": "联系方式",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "lxfs",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "text"
-                                          },
-                                           {
-                                                                                        "id": "796da686-8ec7-4a87-9f14-3c4846a1bbc4",
-                                                                                        "row": 1,
-                                                                                        "col": 2,
-                                                                                        "title": "附件",
-                                                                                        "bizClass": "xcjszc",
-                                                                                        "bizField": "lxfs",
-                                                                                        "displayType": "required",
-                                                                                        "readonly": "false",
-                                                                                        "type": "attachFile"
-                                                                                    }
-                                      ]
-                                  },
-                                  {
-                                      "id": "bc3c7ffb-df60-43c3-b0f2-d86ce062aeb6",
-                                      "row": 4,
-                                      "col": 1,
-                                      "type": "group",
-                                      "item": [
-                                          {
-                                              "id": "0a83813b-23b4-469e-91b0-cc824c92caff",
-                                              "row": 1,
-                                              "col": 1,
-                                              "title": "申请事由",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "sqsy",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "textarea"
-                                          },
-                                          {
-                                              "id": "f3ac6109-d19f-461a-a8b2-33f452febac5",
-                                              "row": 2,
-                                              "col": 1,
-                                              "title": "技术服务形式",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "jsfwxs",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "checkbox",
-                                              "defaultValue": "故障处理 $^$故障处理 $?$现场培训$^$现场培训$?$系统维护$^$系统维护$?$安装调试$^$安装调试$?$需求调研$^$需求调研 $?$技术交流$^$技术交流$?$方案设计$^$方案设计$?$其它$^$其它"
-                                          },
-                                          {
-                                              "id": "0169e8a3-730e-441b-b935-21d73d699af5",
-                                              "row": 3,
-                                              "col": 1,
-                                              "title": "故障设备类别",
-                                              "bizClass": "xcjszc",
-                                              "bizField": "gzsblb",
-                                              "displayType": "required",
-                                              "readonly": "false",
-                                              "type": "checkbox",
-                                              "defaultValue": "车载卫星天线子系统$^$车载卫星天线子系统$?$综合接入子系统$^$综合接入子系统$?$视频子系统$^$视频子系统$?$发电子系统$^$发电子系统$?$辅助子系统$^$辅助子系统$?$音频子系统$^$音频子系统$?$其他通信设备$^$其他通信设备$?$其它$^$其它$?$无$^$无"
-                                          }
-                                      ]
-                                  }
+                                {
+                                  "id": "38593ea0-9d81-41e8-87f8-ca61485eca07",
+                                  "row": 1,
+                                  "col": 1,
+                                  "title": "保障中心审批人",
+                                  "bizClass": "yjbz",
+                                  "bizField": "spr",
+                                  "displayType": "readonly",
+                                  "readonly": "false",
+                                  "type": "text"
+                                },
+                                {
+                                  "id": "4f494c15-febe-4212-95ac-407c8c97e8ea",
+                                  "row": 1,
+                                  "col": 2,
+                                  "title": "审批时间",
+                                  "bizClass": "yjbz",
+                                  "bizField": "sptime",
+                                  "displayType": "readonly",
+                                  "readonly": "false",
+                                  "type": "date"
+                                }
                               ]
-                          }
+                            },
+                            {
+                              "id": "db7bd523-a444-48bb-8319-305f0eac8935",
+                              "row": 2,
+                              "col": 1,
+                              "type": "group",
+                              "item": [
+                                {
+                                  "id": "0ee4ac66-5a33-460c-a66e-da156b2a92ab",
+                                  "row": 1,
+                                  "col": 1,
+                                  "title": "审批意见",
+                                  "bizClass": "yjbz",
+                                  "bizField": "spyj",
+                                  "displayType": "readonly",
+                                  "readonly": "false",
+                                  "type": "textarea"
+                                }
+                              ]
+                            }
+                          ]
+                        }
                       ]
-                  },
-                  "action": [
-                      {
-                          "id": "Link_0",
-                          "name": "提交申请"
-                      },
-                      {
-                          "id": "Link_6",
-                          "name": "保存"
-                      }
+                    }
                   ]
+                },
+                "action": [
+                  {
+                    "id": "Link_3",
+                    "name": "保存"
+                  },
+                  {
+                    "id": "Link_5",
+                    "name": "提交"
+                  }
+                ]
               }*/
 //处理数据格式
     var ob=[]
@@ -641,7 +821,13 @@ window.addEventListener('get_detail',function(event){
         return false;
     }
     vm.items=t
-    alert(JSON.stringify(vm.items))
+    for(var i=0;i<vm.items.length;i++){
+
+            if(vm.items[i].title.indexOf("附件")>=0){
+                   vm.fieIdCode=vm.items[i].bizField
+            }
+        }
+    //alert(JSON.stringify(vm.items))
     console.log(vm.items)
     //var task=res.task[0];
     vm.task=res.action

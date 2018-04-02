@@ -42,12 +42,13 @@ var vm=new Vue({
         activeFixed:{
             position:'fixed',
             paddingTop: '20px',
-            background: '#fff',
+            background: '#519be7',
             zIndex:99
         },
         activeMargin:{
             marginTop:'128px'
-        }
+        },
+        getLogin:''
     }
 })
 mui.plusReady(function(){
@@ -150,6 +151,7 @@ mui.plusReady(function(){
             user.show(function(items) {
                 if(items[0].text==undefined){
                     jianchar.value = ''
+                    return false;
                 }else{
                 jianchar.value = items[0].text;
                 }
@@ -167,7 +169,7 @@ var sear=document.getElementById('sear')
         evt.stopPropagation()
         var name=jianchar.getAttribute('data')||"";
         plus.nativeUI.showWaiting( '正在加载' )
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId=admin&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
+        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -194,7 +196,7 @@ var sear=document.getElementById('sear')
         vm.items="";
         plus.nativeUI.showWaiting( '正在加载' )
 
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId=admin&moduleId="+vm.author,{
+        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -221,9 +223,10 @@ var sear=document.getElementById('sear')
         vm.guid=event.detail.guid;
         var author=event.detail.author;
         vm.author=author;
-        vm.field=event.detail.field
+        vm.field=event.detail.field;
+        vm.getLogin=event.detail.getLogin
         plus.nativeUI.showWaiting( '正在加载' )
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId=admin&moduleId="+vm.author,{
+        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -251,7 +254,8 @@ var sear=document.getElementById('sear')
             title:this.getAttribute('data-type'),
             author:vm.author,
             id:this.getAttribute('data-id'),
-            field:vm.field
+            field:vm.field,
+            getLogin:vm.getLogin
         });
         mui.openWindowWithTitle({
         url:'commissioneditor.html',

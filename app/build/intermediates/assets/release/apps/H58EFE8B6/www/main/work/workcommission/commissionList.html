@@ -10,61 +10,81 @@
 	</head>
 
 	<body>
+	<div id="root">
+
+
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">待办工单</h1>
 		</header>
 		<ul class="mui-table-view"style="padding-top: 44px;">
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="yjbzgl" field='yjbz.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="yjbzgl" field='yjbz.'>
 		            <a class="mui-navigate-right ">
 		                应急事件
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1"field='gzcllc.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1"field='gzcllc.'>
 		            <a class="mui-navigate-right">
 		                故障处理
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro"field='Test.fj'>
+		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro"field='Test.'>
 		            <a class="mui-navigate-right">
 		                 保障中心联调测试
 		            </a>
 		        </li>
-			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest"field='dqgscs.fj'>
+			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest"field='dqgscs.'>
 				<a class="mui-navigate-right">
 					地区公司联调测试
 				</a>
 			</li>
-		        <li class="mui-table-view-cell append" data-type = "queryadd" data-moduleId="jjbgl"field='jjbgl.fj'>
+		        <li class="mui-table-view-cell append" data-type = "queryadd" data-moduleId="jjbgl"field='jjbgl.'>
 		            <a class="mui-navigate-right">
 		                 值班日志
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc"field='DDZDJCDX.fj'>
+		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc"field='DDZDJCDX.'>
 		            <a class="mui-navigate-right">
 		                 调度终端检查记录
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1"field='sbxjjl'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1"field='sbxjjl.'>
 		            <a class="mui-navigate-right">
 		                 应急通信车检查记录
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd"field='zxbd.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd"field='zxbd.'>
 		            <a class="mui-navigate-right">
 		                 业务咨询
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc"field='xcjszc.fj'>
+		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc"field='xcjszc.'>
 		            <a class="mui-navigate-right">
 		                 现场技术支持
 		            </a>
 		        </li>
 		    </ul>
+	</div>
 		<script src="../../../js/mui.min.js"></script>
+		<script src="../../../js/vue.min.js"></script>
 		<script type="text/javascript">
+		var vm=new Vue({
+			el:'#root',
+			data:{
+
+				getLogin:''
+			}
+		})
 			mui.init()
 			mui.plusReady(function() {
+				getLogin()
+				function getLogin(){
+					var name=""
+					var test=plus.android.newObject("io.dcloud.GetUserMessage");
+					name=plus.android.invoke(test,'getLoginId')
+					vm.getLogin=name.toLowerCase()
+
+				}
 				//mui('h1')[0].innerHTML=plus.webview.currentWebview().title;
 				webview_detail = mui.preload({
 			        url: 'commissionListview.html',
@@ -77,7 +97,8 @@
 					    title:this.getAttribute('data-type'),
 					    author:this.getAttribute('data-moduleId'),
 					    field:this.getAttribute('field'),
-					    cover:'links'
+					    cover:'links',
+					    getLogin:vm.getLogin
 					});
 					mui.openWindowWithTitle({
 				    url:'commissionListview.html',

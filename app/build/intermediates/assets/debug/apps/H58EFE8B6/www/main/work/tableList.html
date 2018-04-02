@@ -50,11 +50,11 @@
 						</div>
 					</div>
 					<div class="mui-row">
-						<div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-left: 15px;padding-right: 15px;margin-top: 10px;">
+						<div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-left: 15px;margin-top: 10px;">
 							<input type="text"data-options='{}'
 								   onclick='getTime(this)'readonly='readonly'  class="datatime form-control time"style="background:#fff !important;" placeholder="请选择开始时间" id="startTime">
 						</div>
-						<div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-left: 15px;padding-right: 15px;margin-top: 10px;">
+						<div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-right: 15px;margin-top: 10px;">
 							<input type="text"data-options='{}'
 								   onclick='getTime(this)'readonly='readonly'  class="datatime form-control time"style="background:#fff !important;" placeholder="请选择结束时间" id="endTime">
 						</div>
@@ -197,7 +197,7 @@
 					activeFixed:{
 						position:'fixed',
 						paddingTop: '20px',
-						background: '#fff',
+						background: '#519be7',
 						zIndex:99
 					},
 					activeMargin:{
@@ -206,7 +206,8 @@
 					author:'gzcllc1',
 					title:'',
 					type:'',
-					items:''
+					items:'',
+					getLogin:''
 
 				}
 			})
@@ -342,7 +343,12 @@ var jianchar = document.getElementById('jianchar');
 								}
 							})
 								user.show(function(items) {
-									jianchar.value = items[0].text;
+									 if(items[0].text==undefined){
+											jianchar.value = ''
+											return false;
+										}else{
+										jianchar.value = items[0].text;
+										}
 									document.getElementById('jianchar').setAttribute('data',items[0].id)
 									//返回 false 可以阻止选择框的关闭
 									//return false;
@@ -360,7 +366,7 @@ var sear=document.getElementById('sear')
         evt.stopPropagation()
 plus.nativeUI.showWaiting( '正在加载' )
 var name=jianchar.getAttribute('data')||"";
-            mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId=admin&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
+            mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -378,20 +384,21 @@ var name=jianchar.getAttribute('data')||"";
     }, false);
 
 
-			})
+
 
 
 			window.addEventListener('detail',function(event){
 			  vm.title= event.detail.guid;
 			  var author=event.detail.author;
 			  vm.author=author;
-			  vm.type=event.detail.title
+			  vm.type=event.detail.title;
+			  vm.getLogin=event.detail.getLogin
 			  alert(author)
 			  alert(vm.type)
 			  //参与
 			  if(vm.type==='canyu'){
 					plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/part?userId=admin&moduleId="+vm.author,{
+					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/part?userId="+vm.getLogin+"&moduleId="+vm.author,{
 						dataType:'json',
 						type:'get',
 						success:function(res){
@@ -407,7 +414,7 @@ var name=jianchar.getAttribute('data')||"";
 					})
 			  }else if(vm.type==='chuangjian'){//创建
 			  	plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/create?userId=admin&moduleId="+vm.author,{
+					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/create?userId="+vm.getLogin+"&moduleId="+vm.author,{
 						dataType:'json',
 						type:'get',
 						success:function(res){
@@ -424,7 +431,7 @@ var name=jianchar.getAttribute('data')||"";
 
 			  }else if(vm.type=='chaxun'){
 			  			plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId=admin&moduleId="+vm.author,{
+					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
 						dataType:'json',
 						type:'get',
 						success:function(res){
@@ -450,7 +457,8 @@ var name=jianchar.getAttribute('data')||"";
         mui.fire(webview_detail, 'get_detail', {
             guid:vm.title,
             author:vm.author,
-            id:this.getAttribute('data-id')
+            id:this.getAttribute('data-id'),
+            getLogin:vm.getLogin
         });
         mui.openWindowWithTitle({
         url:'tableView.html',
@@ -468,8 +476,8 @@ var name=jianchar.getAttribute('data')||"";
           title:'正在加载...',//等待对话框上显示的提示内容
             }
     })
-        /* plus.nativeUI.showWaiting( '正在加载' )
-     setTimeout(function(){
+         plus.nativeUI.showWaiting( '正在加载' )
+    /* setTimeout(function(){
         plus.nativeUI.closeWaiting()
     },500)*/
     })
@@ -491,6 +499,7 @@ var name=jianchar.getAttribute('data')||"";
 				},false);
 			}
 			})
+		})
 		</script>
 	</body>
 

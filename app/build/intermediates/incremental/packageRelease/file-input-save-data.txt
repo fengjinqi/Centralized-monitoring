@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Fri Mar 23 11:11:44 CST 2018
+#Thu Mar 29 12:36:53 CST 2018
 210.set=ASSET
 14.set=JAVA_RESOURCE
 180.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\miui_push_version
@@ -445,7 +445,7 @@ count=240
 135.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\wear_zoom_in.png
 84.set=ANDROID_RESOURCE
 187.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\resources-release.ap_\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml
-110.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\cfg\\a\\DVVersion.cfg
+110.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\cfg\\idrres\\DVIndoor.cfg
 162.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\Icon_road_green_arrow.png
 193.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\assets\\release
 182.set=ANDROID_RESOURCE
@@ -478,7 +478,7 @@ count=240
 16.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\resources-release.ap_
 20.set=ANDROID_RESOURCE
 47.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\resources-release.ap_\\res\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml
-22.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\Icon_mark6.png
+22.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\Icon_walk_route.png
 124.set=JAVA_RESOURCE
 99.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\getui_popup_bg.9.png
 205.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\assets\\release
@@ -499,7 +499,7 @@ count=240
 55.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\resources-release.ap_
 30.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\assets\\release
 185.set=ASSET
-109.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\cfg\\idrres\\DVIndoor.cfg
+109.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\cfg\\a\\DVVersion.cfg
 48.set=ANDROID_RESOURCE
 82.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar
 238.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\cfg\\a\\DVDirectory.cfg
@@ -541,7 +541,7 @@ count=240
 127.set=DEX
 30.set=ASSET
 48.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\resources-release.ap_\\res\\anim\\dcloud_slide_out_to_top.xml
-23.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\Icon_walk_route.png
+23.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar\\assets\\Icon_mark6.png
 134.set=ASSET
 206.base=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\mergeJavaRes\\release\\jars\\2\\1f\\main.jar
 75.file=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\assets\\release\\apps\\H58EFE8B6\\www\\main\\work\\tableList.html
