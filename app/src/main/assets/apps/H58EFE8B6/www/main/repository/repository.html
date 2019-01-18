@@ -58,6 +58,7 @@
 		                <a class="mui-navigate-right mui-ellipsis">
 							<div class="mui-ellipsis ellipsis">标题:{{item.title}}</div>
 							<div class=" mui-ellipsis ellipsis">知识类别:{{item.category}}</div>
+							<div class=" mui-ellipsis ellipsis">创建时间:{{item.create_time}}</div>
 		                </a>
 		            </li>
 
@@ -110,27 +111,56 @@
 			var vm=new Vue({
 				el:"#root",
 				data:{
-					items:[]
+					items:[],
+					total:''
 				}
 			})
 			mui.init()
 			mui.plusReady(function() {
 				//添加newId自定义事件监听
 			window.addEventListener('get_detail',function(event){
-
-					plus.nativeUI.showWaiting( '正在加载' )
-				mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge',{
+				var data=new Date().getTime()
+				var fuller=7*24*60*60*1000
+				var time=data-new Date(fuller).getTime()
+					plus.nativeUI.showWaiting( '正在加载...请稍后' )
+				mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge',{
 					dataType:'json',//服务器返回json格式数据
 					type:'get',//HTTP请求类型
 					success:function(data){
 						if(data.success==true){
-							vm.items=data.data;
+						vm.total=data.total
+
+							for(var i=0;i<data.data.length;i++){
+							vm.items.push(data.data[i]);
+									var timget=new Date(data.data[i].create_time).getTime();
+									if(timget>time){
+
+									}
+								}
+								//总条数
+								var num=vm.total;
+								//总共多少页；
+								var pageSize=num/20
+								//第几页
+								pageStatr=1
+					window.onscroll=function(){
+								 if(scrollTop() + windowHeight() >= documentHeight()){
+								pageStatr++;
+								if(pageStatr<=Math.ceil(pageSize)){
+
+								waterallowData(pageStatr);
+								}else{
+									 plus.nativeUI.toast( "没有更多数据了")
+								}
+
+							  }
+							}
 						}
 					},
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 					},
                      complete :function(){
                           setTimeout(function(){
@@ -138,6 +168,58 @@
                           },500)
                       }
 				});
+				 function windowHeight(){
+				  return (document.compatMode == "CSS1Compat")?
+				  document.documentElement.clientHeight:
+				  document.body.clientHeight;
+				 }
+				  //获取页面文档的总高度
+				 function documentHeight(){
+				  //现代浏览器（IE9+和其他浏览器）和IE8的document.body.scrollHeight和document.documentElement.scrollHeight都可以
+				  return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+				 }
+				  //获取页面顶部被卷起来的高度
+				 function scrollTop(){
+				  return Math.max(
+				   //chrome
+				   document.body.scrollTop,
+				   //firefox/IE
+				   document.documentElement.scrollTop);
+				 }
+
+
+
+
+				function waterallowData(pageStatr){
+
+					 plus.nativeUI.showWaiting( '正在加载...请稍后' )
+					 mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge?pageNum='+pageStatr,{
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(data.success==true){
+							for(var i=0;i<data.data.length;i++){
+							vm.items.push(data.data[i]);
+
+							}
+
+
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						plus.nativeUI.closeWaiting();
+
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+					},
+
+                     complete :function(){
+                          setTimeout(function(){
+                              plus.nativeUI.closeWaiting()
+                          },500)
+                      }
+
+				});
+				}
 
 			  })
 document.getElementById('btn').addEventListener('tap',function(){
@@ -146,37 +228,76 @@ document.getElementById('btn').addEventListener('tap',function(){
 		var showUserPicker=document.getElementById('showUserPicker')
 		if(showUserPicker.innerText=='类别'){
 				plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge?category="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge?category="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
 					if(data.success==true){
 						vm.items=data.data;
+						vm.total=data.total
 						document.getElementById('seach').value=""
-						 setTimeout(function(){
+						 //setTimeout(function(){
 							plus.nativeUI.closeWaiting()
-						},500)
+						//},500)
+						//总条数
+								var num=vm.total;
+								//总共多少页；
+								var pageSize=num/20
+								//第几页
+								pageStatr=1
+
+							window.onscroll=function(){
+								 if(scrollTop() + windowHeight() >= documentHeight()){
+									pageStatr++;
+									if(pageStatr<=Math.ceil(pageSize)){
+
+									waterallowData(pageStatr);
+									}else{
+										 plus.nativeUI.toast( "没有更多数据了")
+									}
+
+								  }
+							}
 					}
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				}
 			});
 		}else if(showUserPicker.innerText=='标题'){
 			plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge?title="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge?title="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
 					//获得服务器响应,
 					if(data.success==true){
 						vm.items=data.data;
+							vm.total=data.total
 						document.getElementById('seach').value=""
-						 setTimeout(function(){
+						 //setTimeout(function(){
 							plus.nativeUI.closeWaiting()
-						},500)
+						//},500)
+						//总条数
+								var num=vm.total;
+								//总共多少页；
+								var pageSize=num/20
+								//第几页
+								pageStatr=1
+							window.onscroll=function(){
+								 if(scrollTop() + windowHeight() >= documentHeight()){
+									pageStatr++;
+									if(pageStatr<=Math.ceil(pageSize)){
+
+									waterallowData(pageStatr);
+									}else{
+										 plus.nativeUI.toast( "没有更多数据了")
+									}
+
+								  }
+							}
 					}
 				},
 				error:function(xhr,type,errorThrown){
@@ -202,6 +323,7 @@ document.getElementById('btn').addEventListener('tap',function(){
 		    	 //触发子窗口变更新闻详情
 				mui.fire(webview_detail, 'get_detail', {
 				    guid: this.getAttribute('data-id'),
+				    item:vm.items
 				});
 				//打开详情页面
 					mui.openWindowWithTitle({
@@ -228,6 +350,16 @@ document.getElementById('btn').addEventListener('tap',function(){
 		   })
 
 		});
+		mui.back = function() {
+		 var list = plus.webview.getLaunchWebview();
+		   //触发列表界面的自定义事件（refresh）,从而进行数据刷新
+			mui.fire(list,'refresh');
+		plus.webview.currentWebview().hide("auto", 300);
+		var self = plus.webview.currentWebview();
+		self.addEventListener("hide",function (e) {
+vm.items=[]
+		})
+	}
 		</script>
 	</body>
 

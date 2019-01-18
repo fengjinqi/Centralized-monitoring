@@ -7,6 +7,12 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../../css/new_file.min.css"/>
+		<style>
+			.mui-badge.mui-badge-red{
+				top: 48%!important;
+    right: 10%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -22,47 +28,63 @@
 		            <a class="mui-navigate-right ">
 		                应急事件
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency>0">{{agency}}</span>
+				</li>
 		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="gzcllc1"field='gzcllc.'>
 		            <a class="mui-navigate-right">
 		                故障处理
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency1>0">{{agency1}}</span>
+
+				</li>
 		        <li class="mui-table-view-cell append"data-type="query"data-moduleId="TestPro"field='Test.'>
 		            <a class="mui-navigate-right">
 		                 保障中心联调测试
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency2>0">{{agency2}}</span>
+
+				</li>
 			<li class="mui-table-view-cell append"data-type="query"data-moduleId="dqgsTest"field='dqgscs.'>
 				<a class="mui-navigate-right">
 					地区公司联调测试
 				</a>
+				<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency3>0">{{agency3}}</span>
+
 			</li>
 		        <li class="mui-table-view-cell append" data-type = "queryadd" data-moduleId="jjbgl"field='jjbgl.'>
 		            <a class="mui-navigate-right">
 		                 值班日志
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency4>0">{{agency4}}</span>
+
+				</li>
 		        <li class="mui-table-view-cell append"data-type = "query"data-moduleId="ddzdjc"field='DDZDJCDX.'>
 		            <a class="mui-navigate-right">
 		                 调度终端检查记录
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency5>0">{{agency5}}</span>
+
+				</li>
 		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="sbxjjl1"field='sbxjjl.'>
 		            <a class="mui-navigate-right">
 		                 应急通信车检查记录
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency6>0">{{agency6}}</span>
+
+				</li>
 		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="zxgd"field='zxbd.'>
 		            <a class="mui-navigate-right">
 		                 业务咨询
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency7>0">{{agency7}}</span>
+
+				</li>
 		        <li class="mui-table-view-cell append" data-type = "query"data-moduleId="xcjszclc"field='xcjszc.'>
 		            <a class="mui-navigate-right">
 		                 现场技术支持
 		            </a>
-		        </li>
+					<span class="mui-badge mui-badge-red"style="top:15%"v-show="agency8>0">{{agency8}}</span>
+				</li>
 		    </ul>
 	</div>
 		<script src="../../../js/mui.min.js"></script>
@@ -71,13 +93,31 @@
 		var vm=new Vue({
 			el:'#root',
 			data:{
-
-				getLogin:''
+				yjbzgl:[],
+				gzcllc1:[],
+				TestPro:[],
+				dqgsTest:[],
+				jjbgl:[],
+				sbxjjl1:[],
+				xcjszclc:[],
+				ddzdjc:[],
+				zxgd:[],
+				getLogin:'',
+				agency:'',
+				agency1:'',
+				agency2:'',
+				agency3:'',
+				agency4:'',
+				agency5:'',
+				agency6:'',
+				agency7:'',
+				agency8:'',
 			}
 		})
 			mui.init()
 			mui.plusReady(function() {
 				getLogin()
+				Agency()
 				function getLogin(){
 					var name=""
 					var test=plus.android.newObject("io.dcloud.GetUserMessage");
@@ -85,6 +125,265 @@
 					vm.getLogin=name.toLowerCase()
 
 				}
+				 setInterval(function(){
+					 Agency();
+				},10000)
+				  function Agency(){
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=yjbzgl&startTime=2017-01-01 01:01:01",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+            var items = res.ticket;
+            var currentData = [];
+            vm.agency=items.length
+            vm.yjbzgl=[]
+            if(items.length>0){
+                for(var i in items){
+                   // if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                        currentData.push(items[i]);
+
+                       vm.$set(vm.$data,'yjbzgl',currentData);
+                     //}
+                }
+             }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             /*complete :function(){
+                  setTimeout(function(){
+                      //plus.nativeUI.closeWaiting()
+                  },500)
+              }*/
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=gzcllc1&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			 var items = res.ticket;
+			var currentData = [];
+			vm.agency1=items.length
+			vm.gzcllc1=[]
+			if(items.length>0){
+				for(var i in items){
+					//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+						currentData.push(items[i]);
+						vm.$set(vm.$data,'gzcllc1',currentData);
+				   //  }
+				}
+			}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					  //plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=TestPro&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			  var items = res.ticket;
+				var currentData = [];
+				vm.agency2=items.length
+				vm.TestPro=[]
+				if(items.length>0){
+					for(var i in items){
+						//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'TestPro',currentData);
+						 //}
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					 // plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=dqgsTest&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			  var items = res.ticket;
+				var currentData = [];
+				vm.agency3=items.length
+				vm.dqgsTest=[]
+				if(items.length>0){
+					for(var i in items){
+						//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'dqgsTest',currentData);
+						 //}
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					 // plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=jjbgl&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			var items = res.ticket;
+			var currentData = [];
+			vm.agency4=items.length
+			vm.jjbgl=[]
+			if(items.length>0){
+				for(var i in items){
+					//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+						currentData.push(items[i]);
+						vm.$set(vm.$data,'jjbgl',currentData);
+					// }
+				}
+			}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					 // plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=ddzdjc&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+				var items = res.ticket;
+				var currentData = [];
+				vm.agency5=items.length
+				vm.ddzdjc=[]
+				if(items.length>0){
+					for(var i in items){
+					   // if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'ddzdjc',currentData);
+						 //}
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					 // plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=sbxjjl1&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			 var items = res.ticket;
+				var currentData = [];
+				vm.agency6=items.length
+				vm.sbxjjl1=[]
+				if(items.length>0){
+					for(var i in items){
+						//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'sbxjjl1',currentData);
+						// }
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+				//alert("网络错误")
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					 // plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=zxgd&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			 var items = res.ticket;
+				var currentData = [];
+				vm.agency7=items.length
+				vm.zxgd=[]
+				if(items.length>0){
+					for(var i in items){
+						//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'zxgd',currentData);
+						 //}
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+			  /* alert("网络错误")*/
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					  //plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=xcjszclc&startTime=2017-01-01 01:01:01",{
+			dataType:'json',
+			type:'get',
+			success:function(res){
+			var items = res.ticket;
+				var currentData = [];
+				vm.agency8=items.length
+				 vm.xcjszclc=[]
+				if(items.length>0){
+					for(var i in items){
+						//if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+							currentData.push(items[i]);
+							vm.$set(vm.$data,'xcjszclc',currentData);
+						 //}
+					}
+				}
+			},
+			error:function(xhr,type,errorThrown){
+				plus.nativeUI.closeWaiting();
+			   /* mui.alert("网络错误")*/
+			},
+			 complete :function(){
+				  setTimeout(function(){
+					  //plus.nativeUI.closeWaiting()
+				  },500)
+			  }
+		})
+    }
+
+
+
+
+
+
+
+
+
+
 				//mui('h1')[0].innerHTML=plus.webview.currentWebview().title;
 				webview_detail = mui.preload({
 			        url: 'commissionListview.html',
@@ -93,7 +392,7 @@
 				mui(".mui-table-view").on("tap",'.append',function(e){
 					
 					mui.fire(webview_detail, 'get_detail', {
-					    guid: this.innerText,
+					    guid: this.querySelector('a').innerText,
 					    title:this.getAttribute('data-type'),
 					    author:this.getAttribute('data-moduleId'),
 					    field:this.getAttribute('field'),

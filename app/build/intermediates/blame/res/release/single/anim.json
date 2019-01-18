@@ -4,15 +4,23 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\anim\\dcloud_slide_out_to_top.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_out_to_top.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\anim\\dcloud_slide_out_to_top.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_out_to_top.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\anim\\dcloud_slide_out_to_top.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_in_from_top.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\anim\\dcloud_slide_in_from_top.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_in_from_top.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\anim\\dcloud_slide_in_from_top.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_in_from_top.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\anim\\dcloud_slide_in_from_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_out_to_top.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\anim\\dcloud_slide_out_to_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\anim\\dcloud_slide_in_from_top.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\anim\\dcloud_slide_in_from_top.xml"
     }
 ]

@@ -4,6 +4,10 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_normal.9.png"
     },
     {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_normal.9.png"
+    },
+    {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\push.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\push.png"
     },
@@ -12,16 +16,16 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_bg_ios6.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_bg_ios6.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_mask.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_mask.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_normal.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_normal.9.png"
-    },
-    {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_pressed.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_other_bt_bg.9.png",
@@ -32,6 +36,14 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\as_bg_ios6.9.png"
     },
     {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_normal.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png"
+    },
+    {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_cancel_bt_bg.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\as_cancel_bt_bg.9.png"
     },
@@ -40,52 +52,76 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\icon.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\icon.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_pressed.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_mask.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_mask.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_other_bt_bg.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_other_bt_bg.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_bg_ios6.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\as_bg_ios6.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_no_media.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_no_media.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\push.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\push.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_mask.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_mask.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_no_media.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_no_media.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_cancel_bt_bg.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_cancel_bt_bg.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_other_bt_bg.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\as_other_bt_bg.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_cancel_bt_bg.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_cancel_bt_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\icon.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png",
@@ -96,16 +132,28 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_normal.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_bg_ios6.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_bg_ios6.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_normal.9.png",
@@ -116,24 +164,36 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\icon.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\icon.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\splash.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\splash.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_no_media.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_no_media.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_other_bt_bg.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\as_other_bt_bg.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png",
@@ -148,36 +208,56 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_pressed.9.png"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_normal.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_pressed.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_single_pressed.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\push.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\push.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_no_media.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_no_media.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_normal.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_mask.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_mask.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\push.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\push.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_mask.9.png",
@@ -188,24 +268,48 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_no_media.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_no_media.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_normal.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\as_cancel_bt_bg.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\as_cancel_bt_bg.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_bottom_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_middle_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_top_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_top_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_no_media.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_no_media.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_no_media.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_no_media.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_mask.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_image_pick_mask.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_cancel_bt_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_bg_ios6.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\icon.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\icon.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_middle_pressed.9.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_middle_pressed.9.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\splash.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\splash.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_image_pick_no_media.png",
@@ -220,12 +324,24 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\splash.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\splash.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\splash.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_as_other_bt_bg.9.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_single_normal.9.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\actionsheet_single_normal.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_top_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\dcloud_actionsheet_bottom_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\image_pick_mask.9.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-xhdpi\\image_pick_mask.9.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi\\actionsheet_bottom_normal.9.png",

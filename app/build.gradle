@@ -1,9 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 19
     buildToolsVersion '27'
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "petrochina.zj.txc"
         minSdkVersion 8
@@ -99,4 +103,5 @@ dependencies {
     compile files('libs/BaiduLBS_Android_geolocation_v7.1.jar')
     compile files('libs/BaiduLBS_Android_v4.3.1.jar')
     compile files('libs/BSMCPBaseUtils.jar')
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 }

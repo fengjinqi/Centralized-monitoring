@@ -44,7 +44,7 @@
 		    <span type="button" id='sear' class="mui-icon mui-icon-search mui-pull-right"style="color: #fff;font-weight: bold;"></span>
 		</header>
 		<div class="mui-content top">
-			<div :style='activeFixed'>
+			<div :style='activeFixed'style="    width: 100%;">
 				<div class="mui-row">
 					<div class="mui-col-sm-4 mui-col-xs-4 serach"style="padding-left: 15px;">
 						<input type="text" id='danwei' class="form-control" placeholder="单位"readonly style="background:#fff!important;">
@@ -60,7 +60,7 @@
 
 					<div class="mui-col-sm-6 mui-col-xs-6"style="margin-top:10px;padding-left:15px;">
 						<input type="text"data-options='{}'
-							   onclick='getTime(this)'readonly='readonly' id="startTime" class="datatime form-control time"style="background:#fff !important;" placeholder="请选择开始时间">
+							   onclick='getTime(this)'readonly='readonly' id="startTime"value="2017-01-01 01:01:01" class="datatime form-control time"style="background:#fff !important;" placeholder="请选择开始时间">
 					</div>
 					<div class="mui-col-sm-6 mui-col-xs-6"style="padding-right: 15px;margin-top:10px;">
 						<input type="text"data-options='{}'
@@ -73,7 +73,7 @@
 			<ul class="mui-table-view":style='activeMargin'>
 			        <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 			            <a class="mui-navigate-right">
-			            	<p class="mui-ellipsis ellipsis">应急事件名称:{{item.bizObj.yjsjmc}}</p>
+			            	<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
 			                <p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 		    				
 			            </a>
@@ -84,8 +84,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 			        <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 			            <a class="mui-navigate-right">
-			                <p  class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
-		    				<p class="mui-ellipsis ellipsis">值班员:{{item.bizObj.zbr}}</p>
+			                <p  class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+		    				<p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 			            </a>
 			        </li>
 			    </ul>
@@ -95,7 +95,7 @@
 			<ul class="mui-table-view":style='activeMargin'>
 			        <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 			            <a class="mui-navigate-right">
-			            	<p class="mui-ellipsis ellipsis">咨询单位:{{item.bizObj.zxdw1}}</p>
+			            	<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
 			                <p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 			            </a>
 			        </li>
@@ -105,8 +105,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 		        <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 		            <a class="mui-navigate-right">
-		            	<p class="mui-ellipsis ellipsis">故障设备名称:{{item.bizObj.gzsbmc}}</p>
-		                <p class="mui-ellipsis ellipsis">申告人部门:{{item.bizObj.sgrbm}}</p>
+		            	<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+		                <p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 	    				
 		            </a>
 		        </li>
@@ -117,9 +117,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 				<li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 					<a class="mui-navigate-right">
-						<p class="mui-ellipsis ellipsis">检查人员:{{item.bizObj.jcry}}</p>
-						<p class="mui-ellipsis ellipsis">检查日期:{{item.bizObj.jcrq}}</p>
-						<p class="mui-ellipsis ellipsis">单位:{{item.bizObj.dw}}</p>
+						<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+						<p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 					</a>
 				</li>
 			</ul>
@@ -129,9 +128,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 		        <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 		            <a class="mui-navigate-right">
-		            	<p class="mui-ellipsis ellipsis">检查人员:{{item.bizObj.jcry}}</p>
+		            	<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
 		                <p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
-	    				 <p class="mui-ellipsis ellipsis">单位名称:{{item.bizObj.dw}}</p>
 		            </a>
 		        </li>
 			</ul>
@@ -141,8 +139,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 				<li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 					<a class="mui-navigate-right">
-						<p  class="mui-ellipsis ellipsis">测试单位:{{item.bizObj.csdw}}</p>
-						<p class="mui-ellipsis ellipsis">测试时间:{{item.bizObj.Time_Start}}</p>
+						<p  class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+						<p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 					</a>
 				</li>
 			</ul>
@@ -152,8 +150,8 @@
 				<ul class="mui-table-view":style='activeMargin'>
 					<li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 						<a class="mui-navigate-right">
-							<p  class="mui-ellipsis ellipsis">测试单位:{{item.bizObj.csdw}}</p>
-							<p class="mui-ellipsis ellipsis">测试时间:{{item.bizObj.Time_Start}}</p>
+							<p  class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+							<p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 						</a>
 					</li>
 				</ul>
@@ -162,8 +160,8 @@
 			<ul class="mui-table-view":style='activeMargin'>
 				<li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
 					<a class="mui-navigate-right">
-						<p class="mui-ellipsis ellipsis">单位名称:{{item.bizObj.sqrdw}}</p>
-						<p class="mui-ellipsis ellipsis">技术人员:{{item.bizObj.txr}}</p>
+						<p class="mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+						<p class="mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
 					</a>
 				</li>
 			</ul>

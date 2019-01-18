@@ -4,7 +4,7 @@ var vm=new Vue({
         data:{
             guid:'',
             validate:'validate',
-            author:'dqgsTest',
+            author:'yjbzgl',
             validaTetable:'validaTetable',
             items:[],
             task:[],
@@ -48,7 +48,7 @@ var vm=new Vue({
                 for(var i=0;i<textare.length;i++){
                      obj.bizObj[textare[i].name]=textare[i].value
                 }
-                        alert(JSON.stringify(obj))
+                       // alert(JSON.stringify(obj))
                mui("#form1 .validaTetable").each(function() {
                         //若当前input为空，则alert提醒
                         if(!this.value || this.value.trim() == "") {
@@ -62,7 +62,7 @@ var vm=new Vue({
                         }); //校验通过，继续执行业务逻辑
                         if(check){
                             mui.alert('验证通过!')
-                             mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
+                             mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/progressing',{
                                                 data:obj,
                                                 dataType:'json',
                                                 type:'post',
@@ -79,9 +79,9 @@ var vm=new Vue({
                         }
             },
             Download: function(obj){
-                var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
+                var path=obj.uri.replace(/http:\/\/11.55.0.68:8890/gi,'http:\/\/127.0.0.1:10332');
                 var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
-                alert(JSON.stringify(decodeURIComponent(path+"&encoding=UTF8")));
+                //alert(JSON.stringify(decodeURIComponent(path+"&encoding=UTF8")));
                 var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
                        method: 'post',
                        filename: '_downloads/'
@@ -112,862 +112,609 @@ mui.plusReady(function(){
         vm.author=event.detail.author;
         vm.getLogin=event.detail.getLogin
         plus.nativeUI.showWaiting( '正在加载' )
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/queryByForm?userId="+vm.getLogin+"&processId="+vm.id,{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/queryByForm?userId="+vm.getLogin+"&processId="+vm.id,{
             dataType:'json',
             type:'get',
             success:function(res){
-
-          /* var res={
-                       "result": {
-                           "success": true
-                       },
-                       "ticket": {
-                           "id": "91b671d8-58b7-413d-a2f7-94450f8cbe86",
-                           "data": [
-                               {
-                                   "id": "954ca47b-cfe2-4cb1-8988-da464c101fc1",
-                                   "row": 1,
-                                   "col": 1,
-                                   "title": "地区公司测试记录",
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "6a1c78d7-7844-47f7-a9df-47277799e2f6",
-                                           "row": 1,
-                                           "col": 1,
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "85265b19-1b56-486e-a8bc-0cbb38929b07",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "title": "填写人",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "txr",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "userSelect",
-                                                   "value": {
-                                                       "id": "8662a9e5-4d42-4df3-81be-a5efaec862a0",
-                                                       "name": "贺宝山",
-                                                       "dept": "武汉维抢修中心",
-                                                       "mobile": "13545771995"
-                                                   }
-                                               }
-                                           ]
-                                       },
-                                       {
-                                           "id": "f7a10905-4cc9-4121-bca1-ae188d133b9e",
-                                           "row": 2,
-                                           "col": 1,
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "82272be4-6db8-43d9-bf5c-ad4bcaa4dfbd",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "title": "地区公司测试人员",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "dqgscsy",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "text",
-                                                   "value": "冯雪松"
-                                               },
-                                               {
-                                                   "id": "fa4469ca-b154-433f-8734-930d359c0df1",
-                                                   "row": 1,
-                                                   "col": 2,
-                                                   "title": "测试开始时间",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "Time_Start",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "date",
-                                                   "value": "2018-03-25 09:27",
-                                                   "dataType": "Date",
-                                                   "dataFormat": "yyyy-MM-dd HH:mm"
-                                               }
-                                           ]
-                                       },
-                                       {
-                                           "id": "ef263246-e091-41f9-8de7-943e416e92c4",
-                                           "row": 3,
-                                           "col": 1,
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "30069600-5431-413b-8824-e6be4e648305",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "title": "测试内容",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "csnr",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "textarea",
-                                                   "value": "测试一下"
-                                               },
-                                               {
-                                                   "id": "7f844c59-afb1-4958-a3a4-6b9f4275081d",
-                                                   "row": 2,
-                                                   "col": 1,
-                                                   "title": "测试车辆",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "cscl",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "textarea",
-                                                   "value": "的125"
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "1e964d2c-c4c9-497e-9343-f155bcceb447",
-                                   "row": 2,
-                                   "col": 1,
-                                   "title": "审批意见",
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "be2ec02b-21ce-46f8-82fd-cf5ca76fa70f",
-                                           "row": 1,
-                                           "col": 1,
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "ccf9c7f1-de38-418b-93ed-69bb1c7a34db",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "title": "审批人",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "sprname",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "text",
-                                                   "value": "肖健"
-                                               },
-                                               {
-                                                   "id": "662d2105-74d9-4796-9585-0da3236a9217",
-                                                   "row": 1,
-                                                   "col": 2,
-                                                   "title": "审批时间",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "spsj",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "date",
-                                                   "value": "2018-03-25 09:28",
-                                                   "dataType": "Date",
-                                                   "dataFormat": "yyyy-MM-dd HH:mm"
-                                               }
-                                           ]
-                                       },
-                                       {
-                                           "id": "10b296a0-24a7-4a5b-bdaa-5bf9574c3e37",
-                                           "row": 2,
-                                           "col": 1,
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "743cd475-9752-4bb2-a388-f9142bfb4bfd",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "title": "审批意见",
-                                                   "bizClass": "dqgscs",
-                                                   "bizField": "spyj",
-                                                   "displayType": "readonly",
-                                                   "readonly": "false",
-                                                   "type": "element",
-                                                   "bzType": "textarea",
-                                                   "value": "通过"
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "400dea46-c4b3-46b0-81b1-7c906a0e0b51",
-                                   "row": 4,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "16792b89-92a1-42c1-90ff-973df27dd117",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:网络延时",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "9b255fb4-1745-4453-8029-80e64fff9e4c",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "1d896ca4-9251-4327-a2e7-37495a446d7e",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wlys",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试"
-                                                       },
-                                                       {
-                                                           "id": "bf52406d-d550-4576-ad8e-fbc9fdcef526",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms1",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "5f569f56-9e41-4363-8f90-8baa17b1bf0c",
-                                   "row": 5,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "ac88a2a5-12d5-4626-aa4d-56644d8fa77c",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:视频会议",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "a7de8bfb-1ab8-46c6-af56-fdb41e36c1a9",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "edc9773b-10bd-458a-8f56-703d47f8cf97",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "sphy",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "812b7833-f75b-4680-b32a-97dedcfafa78",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms2",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "86647306-a7d3-4d12-9af4-e3b57251a203",
-                                   "row": 6,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "afde3fc5-7cc9-4d1a-8942-654cb30f53cf",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:车顶图像",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "838d7b02-672d-4f13-aede-7e580908c479",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "dd737af6-4d52-4863-9d65-027166c33955",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "cdtx",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "9c050212-12a6-45f2-9483-ab8fa7fcf701",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms3",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "fbcfd5ae-e0e1-476b-b4b2-2ff2f3b06109",
-                                   "row": 7,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "428eb9de-1986-420b-bce6-a69cab0db7c0",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:单兵图像",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "86202170-bcac-4cad-b3c3-03a994bbdf9b",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "dad8df50-9a9d-4b58-8dde-496b807e77ee",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "dbtx",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "e52bf127-8973-465a-bd99-0e24c0a61882",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms4",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "c0ab94cd-7e30-4e59-94f3-4d24aeb2553a",
-                                   "row": 8,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "0c9d5c14-a258-456e-8f53-5397f10dfe1e",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:车载电话",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "6682157c-5e32-49a7-be74-a6c5f6bfab47",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "307f93fe-04fb-49e8-a848-ff9b1960e11d",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "czdh",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "198bde5d-2069-4c4d-b471-2b0c1ea78f29",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms5",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "9fa447b2-d20d-4d01-bd71-fd25c967ff0c",
-                                   "row": 9,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "7c82b933-f961-41d2-9fae-c5b3a2c5825b",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:对讲机",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "863c594a-903d-4c1f-986a-01d188e89994",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "266a5dbf-5410-4783-8e21-8015554dd9ff",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "djj",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "12680ead-6c50-45f6-885a-f3f1f4488798",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms6",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "c9ca3b0b-4f4c-4ba2-a8d9-c9d52416eb49",
-                                   "row": 10,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "682b8e1a-3ce2-4755-a873-3a3e39e133c8",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:PBX防爆手机",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "cdd9ec85-ff28-4415-8b80-a488acd6ef29",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "a4751702-611a-4d57-8315-5cc809e73aa6",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "PBXFBSJ",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "03724a0f-5c09-4cd4-99eb-f4f525d70e4e",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms7",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "f5011a43-cf73-40fe-ba70-6bbf6b798fda",
-                                   "row": 11,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "5b7df1e3-e430-44ad-81ce-892dc3ac57fa",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:北斗数据",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "3a783959-2a13-4ccc-ab0e-17e6a47c952c",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "e08630d0-625d-4bd1-b031-e6477ef6df20",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "bdsj",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "d1042139-017b-431e-9a5f-4ee62ed55ea3",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms8",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "85f4bcb1-50ed-4d9b-9458-c726042ce5a1",
-                                   "row": 12,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "9a0efdaa-f63f-4e1a-bae4-b8921dbab16f",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:集中监控单元",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "8ddd4f71-1254-452c-b7af-d4063f9c551a",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "7289b7ba-8722-4d50-a5f7-f03ef1bb4eda",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "jzjkdy",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "1d4ddc18-d621-46d2-b1b4-e7c0128be425",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms9",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "10b54ffc-c411-4b17-8bee-dfcf8c3b750a",
-                                   "row": 13,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "6d7f3746-35fa-4044-a74b-51b1296a3c89",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:激光夜视仪",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "de87604a-253a-431d-be93-bdbe47113348",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "22d34699-dc60-4583-9380-c980a8015c35",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "jgysy",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "b20587ec-09fd-4826-b854-849809733786",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms10",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "efab858a-3614-429e-931c-7b7f1b64d392",
-                                   "row": 14,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "a4bb61ed-9337-482b-b059-a4fb831b179b",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:调度台",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "bdc9f195-d422-4f93-b0c0-9bdf5fc1e1c7",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "440d9287-c6e4-46e9-8445-1170345c4ee6",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "ddt",
-                                                           "displayType": "required",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "c6148379-cddb-4270-9ac2-d0071743c55c",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms11",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "48731752-da7d-43ed-ad4c-0c2719d499f4",
-                                   "row": 15,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "978720cf-4f5a-49e8-8f07-d15657c68d37",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "测试项:其它",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "6c76c9c8-6d25-4608-a16a-4de22f011571",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "83371f95-94b5-4bed-bc67-9ddba7226880",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试内容",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "dqgsqtnr",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               },
-                                               {
-                                                   "id": "4b9bae48-9215-49d4-a568-b01e7b1572ed",
-                                                   "row": 2,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "1c8b46dc-3e75-4bf4-827d-d52b71054338",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "测试结果",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "qt",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "radiogroup",
-                                                           "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                                       },
-                                                       {
-                                                           "id": "11b015dc-193f-4747-9c1e-e521c1e318cf",
-                                                           "row": 1,
-                                                           "col": 2,
-                                                           "title": "问题描述",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "wtms12",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "textarea"
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               },
-                               {
-                                   "id": "51af2986-9483-42ad-9e9a-fcff69e7ad07",
-                                   "row": 16,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                       {
-                                           "id": "16ad9f6c-976d-421f-a294-ea208e1751f8",
-                                           "row": 1,
-                                           "col": 1,
-                                           "title": "附件",
-                                           "type": "group",
-                                           "item": [
-                                               {
-                                                   "id": "c2baa399-0f8b-4718-8219-949baa935300",
-                                                   "row": 1,
-                                                   "col": 1,
-                                                   "type": "group",
-                                                   "item": [
-                                                       {
-                                                           "id": "b7687918-d5ee-4dea-99a5-3f0044123bb0",
-                                                           "row": 1,
-                                                           "col": 1,
-                                                           "title": "附件",
-                                                           "bizClass": "dqgscs",
-                                                           "bizField": "dqgsfj",
-                                                           "displayType": "opitonal",
-                                                           "readonly": "false",
-                                                           "type": "element",
-                                                           "bzType": "attachFile",
-                                                           "value": []
-                                                       }
-                                                   ]
-                                               }
-                                           ]
-                                       }
-                                   ]
-                               }
-                           ]
-                       },
-                       "task": [
-                           {
-                               "id": 45246,
-                               "name": "地区公司测试报告填写",
-                               "action": [
-                                   {
-                                       "id": "Link_4",
-                                       "name": "测试反馈"
-                                   }
-                               ]
-                           }
-                       ]
-                   }*/
+/*var res={
+            "result": {
+                "success": true
+            },
+            "ticket": {
+                "id": "917c1bc6-3255-499a-9ff7-b30ea269ace2",
+                "data": [
+                    {
+                        "id": "0cde48bc-d074-4b32-b7e1-6400671ab0e0",
+                        "row": 1,
+                        "col": 1,
+                        "title": "应急事件记录单",
+                        "type": "group",
+                        "item": [
+                            {
+                                "id": "6727ced7-888f-473f-ad8c-a4599616e287",
+                                "row": 1,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "d5db2581-6c37-4390-b2f5-d9af0f7e7322",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "应急事件名称",
+                                        "bizClass": "yjbz",
+                                        "bizField": "yjsjmc",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "556ca7fc-4a84-450b-8338-3d22fb0cff1b",
+                                "row": 2,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "a3f3f115-ed07-481a-a957-24af2a31280e",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "申请人",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sqr",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "tx_peixf"
+                                    },
+                                    {
+                                        "id": "81b7f1eb-c406-4060-94a7-6dbfb2e5fbe1",
+                                        "row": 1,
+                                        "col": 2,
+                                        "title": "单位名称",
+                                        "bizClass": "yjbz",
+                                        "bizField": "dw",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "兰州石化"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "25f1f953-5852-4638-af6e-7a40da9b376d",
+                                "row": 3,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "eb678c0f-3df2-4e3e-b6bf-cb067c69e2d3",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "部门名称",
+                                        "bizClass": "yjbz",
+                                        "bizField": "bm",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "安全处"
+                                    },
+                                    {
+                                        "id": "6551873b-f065-4373-8837-e2fde7151943",
+                                        "row": 1,
+                                        "col": 2,
+                                        "title": "联系方式",
+                                        "bizClass": "yjbz",
+                                        "bizField": "lxfs",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "a7058a65-7afe-4bc3-b07a-2125b1aa355e",
+                                "row": 4,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "f4f347af-1d6a-4ef6-9307-212c7de787eb",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "事件发生时间",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sjfssj",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "date",
+                                        "value": "2018-05-09 09:43",
+                                        "dataType": "Date",
+                                        "dataFormat": "yyyy-MM-dd HH:mm"
+                                    },
+                                    {
+                                        "id": "e4b42b37-cb25-4854-9a0b-0a7e8562298c",
+                                        "row": 1,
+                                        "col": 2,
+                                        "title": "事件发生地点",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sjfsdd",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "fe33e89f-6967-45d8-ba57-52c425b6e5a2",
+                                "row": 5,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "e39931f5-c0de-4679-bf55-5a4aa0d15a5f",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "调派车辆信息",
+                                        "bizClass": "yjbz",
+                                        "bizField": "dpclxx",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "68c877b5-05b9-4b1a-8868-500e4a574c60",
+                                "row": 6,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "79f15974-a992-41ea-8c12-b25d687027c9",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "其他设备调派情况",
+                                        "bizClass": "yjbz",
+                                        "bizField": "qtsbdpqk",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "text",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "c3dfece2-9093-45bd-b8cb-e795203e6217",
+                                "row": 7,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "910f1885-908b-4d84-9fe8-9ad0245a12e3",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "事件级别",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sjjb",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "select",
+                                        "defaultValue": "集团级:default$^$集团级$?$企业级$^$企业级",
+                                        "value": "集团级"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "5b0db857-ff64-45cc-a9a3-ea4b61cad7e6",
+                                "row": 8,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "c935fdf4-57db-4cd4-9ad9-5305075bb4e0",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "事件描述",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sjms",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "textarea",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "a0037a89-50a9-4ce5-b34d-10cc9d8ad747",
+                                "row": 9,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "45541cbd-7cf1-4e77-b971-172ce382f6ed",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "申请事项",
+                                        "bizClass": "yjbz",
+                                        "bizField": "sqsx",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "textarea",
+                                        "value": "测试"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "86a047a0-0d53-40c7-98a4-61f4697c2e6b",
+                                "row": 10,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "d751ec17-8da3-4848-9e93-69e167ff6662",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "附件",
+                                        "bizClass": "yjbz",
+                                        "bizField": "fj",
+                                        "displayType": "readonly",
+                                        "readonly": "false",
+                                        "type": "element",
+                                        "bzType": "attachFile",
+                                        "value": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "6584f9f7-c679-44f8-8cb4-e195bfe09e8f",
+                        "row": 2,
+                        "col": 1,
+                        "type": "group",
+                        "item": [
+                            {
+                                "id": "f6ebca82-0175-4a1b-9191-57c0eb03e070",
+                                "row": 1,
+                                "col": 1,
+                                "title": "保障中心审批",
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "d0a49b15-357c-400d-a74e-db76d7676701",
+                                        "row": 1,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "e343d84f-fe63-46a8-93ac-3122a6e092af",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "审批人",
+                                                "bizClass": "yjbz",
+                                                "bizField": "spr",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "tx_cxb"
+                                            },
+                                            {
+                                                "id": "c0aeee5a-c05b-46a5-bf3f-5efba2d06dc6",
+                                                "row": 1,
+                                                "col": 2,
+                                                "title": "审批部门",
+                                                "bizClass": "yjbz",
+                                                "bizField": "spbm",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "应急通信保障中心"
+                                            },
+                                            {
+                                                "id": "9b288aaf-71f5-4e3c-bf2d-4542a813ba24",
+                                                "row": 1,
+                                                "col": 3,
+                                                "title": "审批时间",
+                                                "bizClass": "yjbz",
+                                                "bizField": "sptime",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "date",
+                                                "value": "2018-05-09 09:42",
+                                                "dataType": "Date",
+                                                "dataFormat": "yyyy-MM-dd HH:mm"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "d8b33bb4-a768-4237-8437-e08ca6cb197b",
+                                        "row": 2,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "17d572b6-9b65-4590-af6d-77df2333670a",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "审批意见",
+                                                "bizClass": "yjbz",
+                                                "bizField": "spyj",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "textarea",
+                                                "value": "aggGDSGg"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "f19dcfae-7413-4c20-b851-f31365a88858",
+                        "row": 3,
+                        "col": 1,
+                        "type": "group",
+                        "item": [
+                            {
+                                "id": "20b73a3d-798f-4535-aef3-12e031f648ac",
+                                "row": 1,
+                                "col": 1,
+                                "title": "地区公司总结",
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "c830962c-80e6-49ab-806c-5bd27cf176ed",
+                                        "row": 1,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "bf8447e1-95d6-4820-9eda-cf5daebad3c3",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "处理人",
+                                                "bizClass": "yjbz",
+                                                "bizField": "dqgsclr",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "tx_peixf"
+                                            },
+                                            {
+                                                "id": "761011e4-0292-47db-802b-542913384ece",
+                                                "row": 1,
+                                                "col": 2,
+                                                "title": "单位",
+                                                "bizClass": "yjbz",
+                                                "bizField": "dqgsclrdw",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "兰州石化"
+                                            },
+                                            {
+                                                "id": "422ee0cf-49cf-4254-bf9e-79abc4f49578",
+                                                "row": 1,
+                                                "col": 3,
+                                                "title": "时间",
+                                                "bizClass": "yjbz",
+                                                "bizField": "dqgsclsj",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "date",
+                                                "value": "2018-05-09 09:43",
+                                                "dataType": "Date",
+                                                "dataFormat": "yyyy-MM-dd HH:mm"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "c97d1d41-833c-4b65-af39-e5e9687ab520",
+                                        "row": 2,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "3ac24543-6908-4ad5-a000-96a8341726e1",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "应急保障任务完成情况",
+                                                "bizClass": "yjbz",
+                                                "bizField": "yjbzrwwcqk",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "select",
+                                                "defaultValue": "0$^$任务完成$?$1$^$任务未完成",
+                                                "value": "0",
+                                                "dispValue": "任务完成"
+                                            },
+                                            {
+                                                "id": "4a183761-68e4-463a-b465-edab98c2e469",
+                                                "row": 1,
+                                                "col": 2,
+                                                "title": "事件结束时间",
+                                                "bizClass": "yjbz",
+                                                "bizField": "sjjssj",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "date",
+                                                "value": "2018-05-09 09:43",
+                                                "dataType": "Date",
+                                                "dataFormat": "yyyy-MM-dd HH:mm"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "bef97e93-bcf4-4987-a672-5e7125802805",
+                                        "row": 3,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "39670329-e1eb-4bfa-8abf-2993ff4ea7d7",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "应急事件总结",
+                                                "bizClass": "yjbz",
+                                                "bizField": "dqgsyjsjzj",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "textarea",
+                                                "value": "测试"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "6c371f01-49e8-41a9-9553-7b0488a87ae5",
+                                        "row": 4,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "b503f4cc-41a2-4e15-aee6-f7b6ed9bc541",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "附件",
+                                                "bizClass": "yjbz",
+                                                "bizField": "fj1",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "attachFile",
+                                                "value": []
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "b81e496b-64a0-4ce7-a9b0-323e67179cc6",
+                        "row": 4,
+                        "col": 1,
+                        "type": "group",
+                        "item": [
+                            {
+                                "id": "bc675d18-368f-4f2d-beee-7efaffaeaa16",
+                                "row": 1,
+                                "col": 1,
+                                "title": "保障中心归档",
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "c03b8769-65cd-4c44-90b0-2c04ee210ecf",
+                                        "row": 1,
+                                        "col": 1,
+                                        "type": "group",
+                                        "item": [
+                                            {
+                                                "id": "0ed9b00b-3462-408a-8192-1ffc870b9162",
+                                                "row": 1,
+                                                "col": 1,
+                                                "title": "归档人",
+                                                "bizClass": "yjbz",
+                                                "bizField": "gdr",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "tx_cxb"
+                                            },
+                                            {
+                                                "id": "eda49f6e-cc4c-4009-922e-2a576556a366",
+                                                "row": 1,
+                                                "col": 2,
+                                                "title": "部门",
+                                                "bizClass": "yjbz",
+                                                "bizField": "gdbm",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "text",
+                                                "value": "应急通信保障中心"
+                                            },
+                                            {
+                                                "id": "300c3f12-ccd0-4eaf-af56-6917923e6613",
+                                                "row": 1,
+                                                "col": 3,
+                                                "title": "时间",
+                                                "bizClass": "yjbz",
+                                                "bizField": "gdsj",
+                                                "displayType": "readonly",
+                                                "readonly": "false",
+                                                "type": "element",
+                                                "bzType": "date",
+                                                "value": "2018-05-09 09:43",
+                                                "dataType": "Date",
+                                                "dataFormat": "yyyy-MM-dd HH:mm"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "80390574-5d46-494d-9e30-7a528faf18f4",
+                        "row": 5,
+                        "col": 1,
+                        "title": "流程信息",
+                        "type": "group",
+                        "item": [
+                            {
+                                "id": "f0cc48d7-edf6-4b14-bafa-d1e2f65d878a",
+                                "row": 1,
+                                "col": 1,
+                                "type": "group",
+                                "item": [
+                                    {
+                                        "id": "c3230c57-cca1-420a-9473-0782dfd1fcb3",
+                                        "row": 1,
+                                        "col": 1,
+                                        "title": "流程记录",
+                                        "bizClass": "processObject",
+                                        "bizField": "processRecord",
+                                        "displayType": "readonly",
+                                        "readonly": "true",
+                                        "type": "element",
+                                        "bzType": "processObject"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "task": []
+        }*/
             var ob=[]
             var n=res.ticket.data
             for(var obj in n){
@@ -993,7 +740,8 @@ mui.plusReady(function(){
                             bizField:item.item[i].bizField,
                             bzType:item.item[i].bzType,
                             displayType:item.item[i].displayType,
-                            defaultValue:item.item[i].defaultValue
+                            defaultValue:item.item[i].defaultValue,
+                            dispValue:item.item[i].dispValue
                         })
                         }
                     }
@@ -1011,12 +759,13 @@ mui.plusReady(function(){
                 }
            }
             tran(ob)
+
             String.prototype.endWith=function(endStr){
               var d=this.length-endStr.length;
               return (d>=0&&this.lastIndexOf(endStr)==d)
             }
             function GetChinese(strValue,sValue) {
-            console.log("=="+sValue+"==");
+            //console.log("=="+sValue+"==");
             if(strValue!= null && strValue!= ""){
                 //var reg = /[\u4e00-\u9fa5]/g;
                 var return_strs = new Array();
@@ -1026,22 +775,32 @@ mui.plusReady(function(){
                     var st = new Array();
                     st = strs[i].split('$^$');
                     var re_str ;
-                    console.log("=="+st[0]+"==");
+                    //console.log("=="+st[0]+"==");
                     if(st[0].endWith(":default")){
+
                         if(contains(sValue, st[0].trim().substring(0,(st[0].length - 8)))){
                             re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : true}';
                         }else{
                             re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : false}';
                         }
                     }else{
-                        if(contains(sValue, st[0].trim())){
-                            re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
-                        }else{
-                            re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
-                        }
+
+                       // if(t[n].bzType=='radiogroup'){
+                         // re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
+
+                       // }else{
+                            if(contains(sValue, st[0].trim())){
+
+                                re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
+                            }else{
+
+                                re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
+                            }
+                      //  }
+
                     }
                     re_str = eval('(' + re_str + ')');
-                    //console.log(re_str);
+
                     return_strs.push(re_str);
                 }
                 //console.log(strs);
@@ -1134,10 +893,10 @@ mui.plusReady(function(){
               return false;
             }
             vm.items=t
-  setTimeout(function(){
+console.log(vm.items)
                 plus.nativeUI.closeWaiting()
-            },500)
-           // alert(vm.items)
+
+
 
            /* var task=res.task[0];
             for(var n in task.action){
@@ -1153,11 +912,7 @@ mui.plusReady(function(){
            },
             error:function(xhr,type,errorThrown){
                mui.alert("网络错误")
-            },
-             complete:function(){
-                 plus.nativeUI.closeWaiting()
-                 //alert()
-              }
+            }
         })
 
 
@@ -1179,6 +934,8 @@ mui.plusReady(function(){
             vm.task=[]
         },false);
     }
+
+  /*
   var showUserPickerButton = document.getElementById('danwei');
     showUserPickerButton.addEventListener('tap', function(event) {
         var evt=event ||window.event
@@ -1289,9 +1046,6 @@ mui.plusReady(function(){
             });
         }
     }, false);
-    function gettPerson(obj){
-
-    }
 
 
 function close(){
@@ -1314,4 +1068,4 @@ function confirm(){
         document.getElementById('danwei').value="";
     }
 
-}
+}*/

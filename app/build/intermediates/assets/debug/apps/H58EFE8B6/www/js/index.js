@@ -56,10 +56,12 @@ var vm=new Vue({
         xcjszclc:[],
         ddzdjc:[],
         zxgd:[],
+        hah:[],
         agency:0,
         notice:'',
         repository:'',
-        getLogin:''
+        getLogin:'',
+        getName:''
     },
     computed:{
         agenc:function(){
@@ -72,20 +74,32 @@ var vm=new Vue({
 })
 
 mui.plusReady(function(){
+var main = plus.android.runtimeMainActivity();
+var Intent = plus.android.importClass('android.content.Intent');
+var intent = new Intent();
+intent.setClassName(main, "io.dcloud.MyService");
+main.startService(intent);
+
 getLogin()
     function getLogin(){
         var name=""
         var test=plus.android.newObject("io.dcloud.GetUserMessage");
+
         name=plus.android.invoke(test,'getLoginId')
-        vm.getLogin=name.toLowerCase()
+
+        vm.getLogin=name.toLowerCase();
+        vm.getName=plus.android.invoke(test,'getLoginName')
 
     }
+
     plus.navigator.setStatusBarBackground('#519be7');
-    plus.nativeUI.showWaiting( '正在加载' )
+    plus.nativeUI.showWaiting( '正在加载...请稍后' )
 
     function waring(){
-
-        mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?comfirm=0&startTime='+getPastHalfYear(),{
+        var data=new Date().getTime()
+        var fuller=7*24*60*60*1000
+        var time=data-new Date(fuller).getTime()
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?comfirm=0&userId="+vm.getLogin+"&startTime="+getPastHalfYear(),{
         			dataType:'json',//服务器返回json格式数据
         			type:'get',//HTTP请求类型
         			success:function(data){
@@ -97,7 +111,7 @@ getLogin()
         			},
         			error:function(xhr,type,errorThrown){
         				plus.nativeUI.closeWaiting();
-        				alert("网络错误")
+        				alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
         			}/*,
         			complete :function(){
         				 setTimeout(function(){
@@ -105,14 +119,26 @@ getLogin()
         				 },500)
         			 }*/
         		});
-         mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+vm.getLogin,{
+        mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+vm.getLogin,{
                      dataType:'json',//服务器返回json格式数据
                      type:'get',//HTTP请求类型
                      success:function(data){
                          //获得服务器响应,
+                            var datas=new Date().getTime()
+                             var fuller=7*24*60*60*1000
+                             var time=datas-new Date(fuller).getTime()
+
                          if(data.success==true){
-                             vm.items=data.data;
-                             vm.notice=data.data.length
+                         vm.items=[]
+                         for(var i=0;i<data.data.length;i++){
+                            var timget=new Date(data.data[i].releaseTime).getTime();
+                            if(timget>time){
+
+                                vm.items.push(data.data[i]);
+                                vm.notice=data.data.length
+                            }
+                        }
+
                          }
                      },
                      error:function(xhr,type,errorThrown){
@@ -125,12 +151,24 @@ getLogin()
                           },500)
                       }*/
                  });
-        mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge',{
+        mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge',{
         					dataType:'json',//服务器返回json格式数据
         					type:'get',//HTTP请求类型
         					success:function(data){
+        					    var datas=new Date().getTime()
+                                var fuller=7*24*60*60*1000
+                                var time=datas-new Date(fuller).getTime()
+
         						if(data.success==true){
-        							vm.repository=data.data.length;
+        						    	for(var i=0;i<data.data.length;i++){
+                                            var timget=new Date(data.data[i].create_time).getTime();
+
+                                            if(timget>time){
+                                                //vm.items.push(data.data[i]);
+                                                vm.hah.push(data.data[i]);
+                                                vm.repository=data.data.length;
+                                            }
+                                        }
         						}
         					},
         					error:function(xhr,type,errorThrown){
@@ -154,15 +192,17 @@ getLogin()
 
     },1000*60)
     function Agency(){
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=yjbzgl",{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=yjbzgl",{
             dataType:'json',
             type:'get',
             success:function(res){
             var items = res.ticket;
             var currentData = [];
-            vm.agency+=items.length
+            //vm.agency+=items.length
+            vm.yjbzgl=[]
             if(items.length>0){
                 for(var i in items){
+
                     if(new Date(items[i].createTime).getDate()==new Date().getDate()){
                         currentData.push(items[i]);
 
@@ -170,9 +210,7 @@ getLogin()
 
                      }
                 }
-             }else{
-                vm.yjbzgl=[]
-            }
+             }
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
@@ -184,234 +222,222 @@ getLogin()
                   },500)
               }*/
         })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=gzcllc1",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                     var items = res.ticket;
-                    var currentData = [];
-                    vm.agency+=items.length
-                    if(items.length>0){
-                        for(var i in items){
-                            if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                currentData.push(items[i]);
-                                vm.$set(vm.$data,'gzcllc1',currentData);
-                             }
-                        }
-                    }else{
-                         vm.gzcllc1=[]
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=gzcllc1",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+             var items = res.ticket;
+            var currentData = [];
+            //vm.agency+=items.length
+            vm.gzcllc1=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'gzcllc1',currentData);
+                         }
                     }
-
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                              //plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=TestPro",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                      var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'TestPro',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.TestPro=[]
-                        }
-
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                             // plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=dqgsTest",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                      var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'dqgsTest',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.dqgsTest=[]
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                             // plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=jjbgl",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                    var items = res.ticket;
-                    var currentData = [];
-                    vm.agency+=items.length
-                    if(items.length>0){
-                        for(var i in items){
-                            if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                currentData.push(items[i]);
-                                vm.$set(vm.$data,'jjbgl',currentData);
-                             }
-                        }
-                    }else{
-                        vm.jjbgl=[]
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                      //plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=TestPro",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+              var items = res.ticket;
+                var currentData = [];
+                //vm.agency+=items.length
+                vm.TestPro=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'TestPro',currentData);
+                         }
                     }
-
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                             // plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=ddzdjc",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                        var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'ddzdjc',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.ddzdjc=[]
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                             // plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=sbxjjl1",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                     var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'sbxjjl1',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.sbxjjl1=[]
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                        //alert("网络错误")
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                             // plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=zxgd",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                     var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'zxgd',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.zxgd=[]
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                      /* alert("网络错误")*/
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                              //plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=xcjszclc",{
-                    dataType:'json',
-                    type:'get',
-                    success:function(res){
-                    var items = res.ticket;
-                        var currentData = [];
-                        vm.agency+=items.length
-                        if(items.length>0){
-                            for(var i in items){
-                                if(new Date(items[i].createTime).getDate()==new Date().getDate()){
-                                    currentData.push(items[i]);
-                                    vm.$set(vm.$data,'xcjszclc',currentData);
-                                 }
-                            }
-                        }else{
-                            vm.xcjszclc=[]
-                        }
-                    },
-                    error:function(xhr,type,errorThrown){
-                        plus.nativeUI.closeWaiting();
-                       /* mui.alert("网络错误")*/
-                    },
-                     complete :function(){
-                          setTimeout(function(){
-                              //plus.nativeUI.closeWaiting()
-                          },500)
-                      }
-                })
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                     // plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=dqgsTest",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+              var items = res.ticket;
+                var currentData = [];
+                //vm.agency+=items.length
+                 vm.dqgsTest=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'dqgsTest',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                     // plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=jjbgl",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+            var items = res.ticket;
+            var currentData = [];
+            //vm.agency+=items.length
+            vm.jjbgl=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'jjbgl',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                     // plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=ddzdjc",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+                var items = res.ticket;
+                var currentData = [];
+               // vm.agency+=items.length
+                vm.ddzdjc=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'ddzdjc',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                     // plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=sbxjjl1",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+             var items = res.ticket;
+                var currentData = [];
+                //vm.agency+=items.length
+                vm.sbxjjl1=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'sbxjjl1',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                //alert("网络错误")
+            },
+             complete :function(){
+                  setTimeout(function(){
+                     // plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=zxgd",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+             var items = res.ticket;
+                var currentData = [];
+                //vm.agency+=items.length
+                  vm.zxgd=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'zxgd',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+              /* alert("网络错误")*/
+            },
+             complete :function(){
+                  setTimeout(function(){
+                      //plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId=xcjszclc",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+            var items = res.ticket;
+                var currentData = [];
+                //vm.agency+=items.length
+                vm.xcjszclc=[]
+                if(items.length>0){
+                    for(var i in items){
+                        if(new Date(items[i].createTime).getDate()==new Date().getDate()){
+                            currentData.push(items[i]);
+                            vm.$set(vm.$data,'xcjszclc',currentData);
+                         }
+                    }
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+               /* mui.alert("网络错误")*/
+            },
+             complete :function(){
+                  setTimeout(function(){
+                      //plus.nativeUI.closeWaiting()
+                  },500)
+              }
+        })
     }
 
     var onhand  = mui.preload({
@@ -475,7 +501,7 @@ mui('.mui-table-view').on('tap', '.carMap', function(e){
               title:'正在加载...',//等待对话框上显示的提示内容
             }
         })
-        plus.nativeUI.showWaiting( '正在加载' )
+        plus.nativeUI.showWaiting( '正在加载...请稍后' )
      setTimeout(function(){
         plus.nativeUI.closeWaiting()
     },500)
@@ -519,10 +545,10 @@ mui('.mui-table-view').on('tap', '.carMap', function(e){
           title:'正在加载...',//等待对话框上显示的提示内容
             }
     })
-     plus.nativeUI.showWaiting( '正在加载' )
+     /*plus.nativeUI.showWaiting( '正在加载' )
      setTimeout(function(){
         plus.nativeUI.closeWaiting()
-    },500)
+    },500)*/
     })
 
     var tice = mui.preload({
@@ -579,7 +605,7 @@ mui('.mui-table-view').on('tap', '.carMap', function(e){
           title:'正在加载...',//等待对话框上显示的提示内容
             }
     })
-     plus.nativeUI.showWaiting( '正在加载' )
+     plus.nativeUI.showWaiting( '正在加载...' )
      setTimeout(function(){
         plus.nativeUI.closeWaiting()
     },500)

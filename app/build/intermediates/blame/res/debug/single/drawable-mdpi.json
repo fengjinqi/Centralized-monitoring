@@ -1,11 +1,19 @@
 [
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\splash.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-mdpi\\splash.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\splash.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\splash.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\icon.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-mdpi\\icon.png"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\splash.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\splash.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\icon.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\icon.png"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\push.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\push.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\icon.png",
@@ -16,8 +24,12 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-mdpi\\splash.png"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\push.png",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable-mdpi\\push.png"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\icon.png",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\push.png",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable-mdpi\\push.png"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\push.png",

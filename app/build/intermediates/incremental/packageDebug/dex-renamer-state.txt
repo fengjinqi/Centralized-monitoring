@@ -1,4 +1,4 @@
-#Mon Apr 02 14:08:39 CST 2018
-base.0=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+#Tue Dec 25 14:49:40 CST 2018
+base.0=C\:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
-file.0=D\:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
+file.0=C\:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

@@ -110,25 +110,16 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <!-- 高德地图 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.READ_LOGS" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- Maps(地图) end -->
 
@@ -223,6 +214,7 @@
 
     <!-- 小米分享 -->
     <uses-permission android:name="com.xiaomi.permission.AUTH_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- 小米分享 end -->
     <application
@@ -241,7 +233,17 @@
             android:theme="@style/TranslucentTheme"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
+
+                <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+                <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+                <!-- TODO 隐藏桌面图标 -->
                 <action android:name="android.intent.action.MAIN" />
+
+                <data
+                    android:host="AuthActivity"
+                    android:scheme="io.dcloud.H58EFE8B6" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -254,8 +256,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="user"
             android:theme="@style/DCloudTheme"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
 
         <service
             android:name="io.dcloud.common.adapter.io.MiniServerService"
@@ -287,14 +288,12 @@
         <!-- meta-data节点android:name="com.baidu.lbsapi.API_KEY"项中android:value值为百度地图应用的Appkey -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="as2GPMqbNjusiFXCPd5e4dIKejSdo6am" >
-        </meta-data>
+            android:value="as2GPMqbNjusiFXCPd5e4dIKejSdo6am" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
-        </service>
+            android:process=":remote" />
         <!-- Maps(地图) end -->
 
 
@@ -407,8 +406,7 @@
             android:name="io.dcloud.feature.apsGt.GTNormalPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice" >
-        </service>
+            android:process=":pushservice" />
         <!-- Push(推送)-个推  end -->
 
 
@@ -429,8 +427,7 @@
             android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
@@ -455,8 +452,7 @@
 
         <activity
             android:name="io.dcloud.share.tencent.WebAuthorize"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.NoTitleBar" />
         <!-- 微信分享 配置begin -->
         <meta-data
             android:name="WX_SECRET"
@@ -486,14 +482,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind" />
         <!-- 支付宝支付 配置end -->
 
 
@@ -594,6 +588,10 @@
 
         <!-- 小米推送 end -->
 
+        <service
+            android:name="io.dcloud.MyService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

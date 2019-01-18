@@ -38,12 +38,12 @@
 			                 工单查询
 			            </a>
 			        </li>-->
-			        <li class="mui-table-view-cell query"data-type="canyu">
+			        <li class="mui-table-view-cell canyu"data-type="canyu">
 			            <a class="mui-navigate-right">
 			                 我参与的工单
 			            </a>
 			        </li>
-			        <li class="mui-table-view-cell query" data-type="chuangjian">
+			        <li class="mui-table-view-cell chuangjian" data-type="chuangjian">
 			            <a class="mui-navigate-right">
 			                 我创建的工单
 			            </a>
@@ -86,6 +86,8 @@
 			  vm.bizClass=event.detail.bizClass
 			  vm.field=event.detail.field
 			  vm.getLogin=event.detail.getLogin
+
+
 
 			  if(query=='queryadd'){
 			  	vm.isAppend=false;
@@ -152,7 +154,7 @@
 			        url:'tableList.html',
 			        id: 'tableList',
 		    	});
-				mui(".mui-table-view").on("tap",'.query',function(e){
+				mui(".mui-table-view").on("tap",'.canyu',function(e){
 					mui.fire(webview, 'detail', {
 					    guid: vm.id,
 					    title:this.getAttribute('data-type'),
@@ -180,6 +182,41 @@
 					 //plus.nativeUI.showWaiting( '正在加载' )
 
 				})
+
+
+				var git= mui.preload({
+			        url:'tableListTwo.html',
+			        id: 'tableListTwo',
+		    	});
+				mui(".mui-table-view").on("tap",'.chuangjian',function(e){
+					mui.fire(git, 'detail', {
+					    guid: vm.id,
+					    title:this.getAttribute('data-type'),
+					    author:author,
+					    time:'time',
+					    cover:'links',
+					    getLogin:vm.getLogin
+					});
+					mui.openWindowWithTitle({
+				    url:'tableListTwo.html',
+				    id:'tableListTwo',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+					 //plus.nativeUI.showWaiting( '正在加载' )
+
+				})
+
 
 
 			})

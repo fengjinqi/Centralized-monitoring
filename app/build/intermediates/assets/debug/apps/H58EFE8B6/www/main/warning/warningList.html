@@ -30,11 +30,12 @@
 	</head>
 
 <body>
+<div id="root1">
 	<header class="mui-bar mui-bar-nav hrader">
 	    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
-	    <h1 class="mui-title">告警信息列表</h1>
+	    <h1 class="mui-title">{{guid}}</h1>
 	</header>
-	<div class="mui-content top" id="root1" >
+	<div class="mui-content top"  >
 		<div class="mui-row"style="width:100%;padding-top: 20px;background: #fff;position:fixed;top:40px;left:0;z-index:99">
 		    <div class="mui-col-sm-4 mui-col-xs-4 serach">
 		    	<button class="btn form-control "id="showUserPicker" data='2' style="font-size: 16px !important;">告警类型</button>
@@ -51,13 +52,16 @@
 		            <a class="mui-navigate-right">
 		                <div  class="mui-ellipsis ellipsis">告警源名称:{{item.entity_name}}</div>
 		                <div  class="mui-ellipsis ellipsis">告警类型:{{item.type}}</div>
+		                <div  class="mui-ellipsis ellipsis">最后一次发生的时间:{{item.last_occurtime}}</div>
 		            </a>
 		        </li>
 		    
 		    </ul>
-			<p v-if='items.length<1'style='position:absolute;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
+
+			<p v-if='items.length<1'style='position:fixed;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
 		</div>
 	</div>
+</div>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
@@ -127,7 +131,8 @@ function getPastHalfYear() {
 		data:{
 			items:[],
 			uid:'',
-			getLogin:''
+			getLogin:'',
+			guid:''
 		},
 
 	})
@@ -160,23 +165,27 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 	  var id = event.detail.cover;
 	  var author=event.detail.author;
 	  vm.uid=author;
-	 vm.getLogin=event.detail.getLogin
-alert(vm.getLogin)
+	  vm.guid=event.detail.guid
+	  vm.getLogin=event.detail.getLogin
+	  vm.getLogin=event.detail.getLogin
 	  if(vm.uid==='all'){
  		plus.nativeUI.showWaiting( '正在加载' )
-		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&startTime='+getPastHalfYear(),{
+
+		  mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?userId="+vm.getLogin+"&startTime="+getPastHalfYear(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
 					//获得服务器响应,
+
 					if(data.success==true){
 						vm.items=data.data;
+
 
 					}
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
+					alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				},
 				complete :function(){
 					 setTimeout(function(){
@@ -186,7 +195,7 @@ alert(vm.getLogin)
 			});
 	  }else if(vm.uid==='untreated'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&comfirm=0&startTime='+getPastHalfYear(),{
+		mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?userId="+vm.getLogin+"&comfirm=0&startTime="+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){
@@ -197,7 +206,7 @@ alert(vm.getLogin)
 			},
 			error:function(xhr,type,errorThrown){
 				plus.nativeUI.closeWaiting();
-				alert('错误'+xhr.status+type+errorThrown)
+				alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 			},
 			complete :function(){
 				 setTimeout(function(){
@@ -207,7 +216,7 @@ alert(vm.getLogin)
 		});
 	  }else if(vm.uid==='links'){
 	  	plus.nativeUI.showWaiting( '正在加载' )
-		mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?uaerId="+vm.getLogin+"&comfirm=1&startTime='+getPastHalfYear(),{
+		mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?userId="+vm.getLogin+"&comfirm=1&startTime="+getPastHalfYear(),{
 			dataType:'json',//服务器返回json格式数据
 			type:'get',//HTTP请求类型
 			success:function(data){
@@ -218,7 +227,7 @@ alert(vm.getLogin)
 			},
 			error:function(xhr,type,errorThrown){
 				plus.nativeUI.closeWaiting();
-				alert('错误'+xhr.status+type+errorThrown)
+				alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 			},
 			complete :function(){
 				 setTimeout(function(){
@@ -233,9 +242,17 @@ alert(vm.getLogin)
 	document.getElementById('btn').addEventListener('tap',function(){
 		var value=document.getElementById('seach').value
 		var showUserPicker=document.getElementById('showUserPicker')
+		var com;
+		if(document.querySelector(".mui-title").innerText=='所有告警'){
+				com=''
+		}else if(document.querySelector(".mui-title").innerText=='未处理的告警'){
+				com=0
+		}else if(document.querySelector(".mui-title").innerText=='已处理的告警'){
+				com=1
+		}
 		if(showUserPicker.innerText=='告警源名称'){
 				plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?entity_name="+value+"&startTime="+getPastHalfYear(),{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?userId="+vm.getLogin+"&entity_name="+value+"&comfirm="+com+"&startTime="+getPastHalfYear(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -249,12 +266,12 @@ alert(vm.getLogin)
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
+					alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				}
 			});
 		}else if(showUserPicker.innerText=='告警类型'){
 			plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlert?type="+value+"&startTime="+getPastHalfYear(),{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlert?userId="+vm.getLogin+"&type="+value+"&comfirm="+com+"&startTime="+getPastHalfYear(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -269,7 +286,7 @@ alert(vm.getLogin)
 				},
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
+					alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				}
 			});
 		}
@@ -284,7 +301,8 @@ alert(vm.getLogin)
     	 //触发子窗口变更新闻详情
 		mui.fire(webview_detail, 'detail', {
 		    guid: this.getAttribute('data-id'),
-		    getLogin:vm.getLogin
+		    getLogin:vm.getLogin,
+		    title:vm.guid
 		});
 		//打开详情页面          
 		 mui.openWindowWithTitle({

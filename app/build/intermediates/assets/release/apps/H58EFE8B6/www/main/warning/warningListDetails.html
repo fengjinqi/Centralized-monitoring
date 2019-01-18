@@ -35,11 +35,12 @@
 	</head>
 
 	<body>
+	<div id="root">
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">告警信息详情页</h1>
+		    <h1 class="mui-title">{{title}}</h1>
 		</header>
-		<div class="mui-content top"id="root" style="background: #fff;">
+		<div class="mui-content top" style="background: #fff;">
 		   <div class="mui-row" v-for="(item,index) in items">
 		   	<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
 				<p  class="mui-col-sm-4 mui-col-xs-4 liner">告警类型</p>
@@ -72,12 +73,13 @@
 
 			   <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
 				   <p  class="mui-col-sm-4 mui-col-xs-4 liner">告警描述</p>
-				   <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.discrimination}}</p>
+				   <p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.description}}</p>
 				   </div>
 			</div>
 		    
 		    
 		</div>
+	</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -86,13 +88,15 @@
 				el:'#root',
 				data:{
 					items:[],
+					title:''
 				},
 			})
 			mui.plusReady(function() {
 				window.addEventListener('detail',function(event){
 					var id=event.detail.guid
+					vm.title=event.detail.title
 					plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/alert/getAlertInfo?id='+id,{
+					mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/alert/getAlertInfo?id='+id,{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
@@ -106,7 +110,7 @@
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
-							alert('错误'+xhr.status+type+errorThrown)
+							alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 						}
 					});
 				})

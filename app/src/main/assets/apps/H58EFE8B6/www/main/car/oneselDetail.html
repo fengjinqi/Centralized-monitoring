@@ -47,8 +47,8 @@
 					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.regdate}}</p>
 				</div>
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
-					<p  class="mui-col-sm-4 mui-col-xs-4 liner">运维人员</p>
-					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.ywry}}</p>
+					<p  class="mui-col-sm-4 mui-col-xs-4 liner">专职运维人员</p>
+					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.zzry}}</p>
 				</div>
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">单位</p>
@@ -63,23 +63,27 @@
 			var vm=new Vue({
 				el:'#root',
 				data:{
-					author:'gzcllc1',
+					author:'',
 					title:'',
 					id:'',
 					items:[]
 
 				}
 			})
+			mui.plusReady(function() {
 			window.addEventListener('get_detail',function(event){
 			vm.title=event.detail.title;
 			vm.id=event.detail.guid
+
 			plus.nativeUI.showWaiting( '正在加载' )
-				mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar",{
+				mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar",{
 					dataType:'json',
 					type:'get',
 					success:function(res){
+
 						for(var i=0;i<res.data.length;i++){
 							if(res.data[i].id===vm.id){
+
 									vm.items.push(res.data[i])
 							}
 						}
@@ -90,24 +94,25 @@
 						alert('错误'+xhr.status+type+errorThrown)
 					},
 					complete :function(){
-						setTimeout(function(){
+						//setTimeout(function(){
 							plus.nativeUI.closeWaiting()
-						},500)
+						//},500)
 					}
 				})
-	  })
-
-     mui.back = function() {
+	  	})
+			mui.back = function() {
+			vm.items=[];
 				plus.webview.currentWebview().hide("auto", 300);
 				var self = plus.webview.currentWebview();
 				self.addEventListener("hide",function (e) {
-					vm.author='',
-					vm.title='',
-					vm.id='',
-					vm.items=[]
+
+					author='';
+					title='';
+					id='';
 				},false);
 			}
-			mui.init()
+	})
+
 		</script>
 	</body>
 

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="petrochina.zj.txc"
-      android:versionCode="85"
-      android:versionName="5.7.0"
-      split="lib_slice_8_apk">
-</manifest>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>基本地图展示</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+    <script src="https://webapi.amap.com/maps?v=1.4.8&key=27577c8b802d460140ea7107a9ca3f5c"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=27577c8b802d460140ea7107a9ca3f5c&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style>
+        	.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell{padding-left:15px;}
+			.mui-content > .mui-table-view:first-child{margin-top:0}
+			.form-control{width: 60%!important;float: left!important;}
+			.mui-input-row{background-color: #fff;}
+			.mui-input-group .mui-input-row:after{height: 0px;}
+			.mui-input-row label{padding: 7px 15px;}
+			.mui-input-row{height: auto;}
+
+        .nb{margin-left:15px;margin-right:15px;padding-top: 15px;}
+        #myPageTop {
+
+	top: 45px;
+
+}
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav hrader">
+    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">全国车辆总览图管理</h1>
+</header>
+
+<div id="container"></div>
+<div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <label>请输入关键字：</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="tipinput"/>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="mui-backdrop" id="mui-backdrop" style="display:none;background:rgba(0,0,0,.7)">
+
+    <div  id="row" style="width:100%;height:400px;position:absolute;top:50%;margin-top:-205px;background:#fff">
+        <div class="mui-input-row" style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>经度</label>
+            <input type="text"name="jd" id="jd" value="" class="form-control" readonly >
+        </div>
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>纬度</label>
+            <input type="text" name="wd" id="wd" value="" class="form-control" readonly >
+        </div>
+
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>单位</label>
+            <input type="text" name="orgname"id="orgname" value="" class="form-control" >
+        </div>
+
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>负责人</label>
+            <input type="text" name="fzr" id="fzr" value="" class="form-control">
+
+        </div>
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>联系方式</label>
+            <input type="text" name="telephone" id="telephone" value="" class="form-control">
+
+        </div>
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>车牌号</label>
+            <input type="text" name="carid" id="carid" value="" class="form-control" >
+        </div>
+        <div class="mui-input-row"style="margin-left:15px;margin-right:15px;padding-top: 15px;">
+            <label for="" style=''>车辆型号</label>
+            <input type="text" name="carmodel" id="carmodel" value="" class="form-control" >
+        </div>
+        <div style="text-align:center;padding-top: 15px;">
+            <!--<button class="mui-btn"id="close">关闭</button>-->
+            <button class="mui-btn"@click='commmit'id='submit'>提交</button>
+            <!--<button class="mui-btn"id="remove">删除此车辆</button>-->
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.zoom.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/testupdate.js"></script>
+
+</body>
+</html>

@@ -56,6 +56,7 @@
 					<a class="mui-navigate-right mui-ellipsis">
 						<div class="mui-ellipsis ellipsis">标题:{{item.title}}</div>
 						<div class=" mui-ellipsis ellipsis">类别:{{item.category}}</div>
+						<div class=" mui-ellipsis ellipsis">创建时间:{{item.releaseTime}}</div>
 					</a>
 				</li>
 		        </ul>
@@ -119,35 +120,46 @@
 				return name.toLowerCase()
 
 			}
-
-					plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
+			window.addEventListener('get_detail',function(event){
+				var data=new Date().getTime()
+				var fuller=7*24*60*60*1000
+				var time=data-new Date(fuller).getTime()
+					plus.nativeUI.showWaiting( '正在加载...请稍后' )
+					mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
 							//获得服务器响应,
 							if(data.success==true){
-									vm.items=data.data;
+								for(var i=0;i<data.data.length;i++){
+								vm.items.push(data.data[i]);
+
+									var timget=new Date(data.data[i].releaseTime).getTime();
+									if(timget>time){
+
+									}
+								}
+
 							}
 						},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 						},
 						complete :function(){
-							 setTimeout(function(){
+							 //setTimeout(function(){
 								 plus.nativeUI.closeWaiting()
-							 },500)
+							 //},500)
 						 }
 					});
 
-
+},false)
 
 window.addEventListener('refresh', function(e) {
 //在父页面中添加监听事件，刷新页面
        plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
+					mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/bulletin?userId='+getLogin(),{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
@@ -159,7 +171,7 @@ window.addEventListener('refresh', function(e) {
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 						},
 						complete :function(){
 							 setTimeout(function(){
@@ -191,7 +203,7 @@ window.addEventListener('refresh', function(e) {
 		var showUserPicker=document.getElementById('showUserPicker')
 		if(showUserPicker.innerText=='类别'){
 				plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&category="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&category="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -206,12 +218,12 @@ window.addEventListener('refresh', function(e) {
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				}
 			});
 		}else if(showUserPicker.innerText=='标题'){
 			plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&title="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/bulletin?userId="+getLogin()+"&title="+value,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -227,7 +239,7 @@ window.addEventListener('refresh', function(e) {
 				error:function(xhr,type,errorThrown){
 					plus.nativeUI.closeWaiting();
 
-                        	mui.alert("网络错误")
+                        	mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
 				}
 			});
 		}
@@ -273,7 +285,7 @@ window.addEventListener('refresh', function(e) {
 		plus.webview.currentWebview().hide("auto", 300);
 		var self = plus.webview.currentWebview();
 		self.addEventListener("hide",function (e) {
-
+			vm.items=[]
 		})
 	}
 		</script>

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\Users\admin\Desktop\Centralized monitoring\Android-SDK@1.9.9.39354_20171120\HBuilder-Hello1\app\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\Users\admin\Desktop\Centralized monitoring\Android-SDK@1.9.9.39354_20171120\HBuilder-Hello1\app\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\admin\Desktop\Centralizedmonitoring\HBuilder-Hello2\app\src\main\shaders"/></dataSet><dataSet config="debug"><source path="C:\Users\admin\Desktop\Centralizedmonitoring\HBuilder-Hello2\app\src\debug\shaders"/></dataSet></merger>

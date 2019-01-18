@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/new_file.min.css"/>
+		<style>
+			.mui-table-view-cell{
+				padding: 13px 15px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn) {
+			  	color: #333;
+			    margin: -14px -15px;
+			}
+		
+		</style>
+	</head>
+
+	<body>
+	<div id="root">
+		<header class="mui-bar mui-bar-nav hrader">
+		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">车辆维护资料下载</h1>
+		</header>
+		<ul class="mui-table-view list" style="padding-top: 44px;">
+
+			<li class="mui-table-view-cell upload" v-for='items in item'>
+
+				<a class=" ellipsis mui-ellipsis mui-slider-handle ">
+					<!--车辆维护资料下载-->
+					<p class="ellipsis mui-ellipsis">{{items.fileName}}</p>
+					<p class="ellipsis mui-ellipsis">{{items.fileDate}}</p>
+				</a>
+				<div class="mui-slider-right mui-disabled">
+					<a class="mui-btn "@click='onUploadChange(items)'style="background: #68b5d0">下载</a>
+					<a class="mui-btn mui-btn-red" @click="deleteFiles(items,$event)"v-if="name=='CNPC/tx_gjl'||name=='CNPC/bzzx'">删除</a>
+				</div>
+
+			</li>
+		</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+				var vm=new Vue({
+				el:"#root",
+				data:{
+					item:[],
+					name:''
+				},
+				methods:{
+					deleteFiles:function(e,evt){
+					evt.target.parentNode.parentNode.parentNode.removeChild(evt.target.parentNode.parentNode)
+
+						mui.ajax("http://127.0.0.1:10330/cmonitor/servlet/deleteFile",{
+							dataType:'text',
+							type:'post',//HTTP请求类型
+						  	data:{"fileName":e.fileName},
+							success:function(data){
+								plus.nativeUI.toast(data)
+								if(data==='删除成功!'){
+
+									evt.target.parentNode.parentNode.parentNode.removeChild(evt.target.parentNode.parentNode)
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+
+								alert("与大厅连接中断,请退出APP重新进入大厅唤醒");
+							}
+
+						});
+					},
+					onUploadChange:function(e){
+						/*var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
+						var dtask = plus.downloader.createDownload(e.fileUrl, {
+							   method: 'get',
+							   filename: '_downloads/'
+						   }, function(d, status) {
+						   if(status == 200) {
+								watiting.setTitle("下载成功"+ decodeURIComponent(d.filename))
+								plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+									alert('打开失败');
+								})
+							   setTimeout(function(){
+									watiting.close()
+							   },2000)
+
+						   } else {
+								watiting.setTitle("下载失败")
+								watiting.close()
+						   }
+						});
+						 dtask.start();*/
+
+						 var w=plus.nativeUI.showWaiting("　　 开始下载...　　 ");
+                    var options = {method:"GET"};
+                    dtask = plus.downloader.createDownload( e.fileUrl, options );
+                    dtask.start();
+                    dtask.addEventListener( "statechanged", function(task,status){
+                   // alert(JSON.stringify(dtask.getAllResponseHeaders()))
+                        switch(task.state) {
+                            case 1: // 开始
+                                w.setTitle("　　 开始下载...　　 ");
+                            break;
+                            case 2: // 已连接到服务器
+                                w.setTitle("　　 开始下载...　　 ");
+                            break;
+                            case 3:
+
+                                var a = dtask.downloadedSize/e.fileSize*100;
+                                w.setTitle("　　 已下载"+parseInt(a)+"%　　 ");
+                            break;
+                            case 4: // 下载完成
+                            	w.setTitle("下载成功"+ decodeURIComponent(task.filename))
+								plus.runtime.openFile( task.filename, {}, function ( e ) {//调用第三方应用打开文件
+									alert('打开失败');
+								})
+                                w.close();
+                            break;
+                        }
+                    } );
+
+					}
+				}
+			})
+			mui.plusReady(function() {
+		    //预加载详情页
+		    		window.addEventListener('get_detail',function(event){
+		    		var name=""
+						var test=plus.android.newObject("io.dcloud.GetUserMessage");
+
+						name=plus.android.invoke(test,'getLoginId')
+						vm.name=name
+
+
+		    			mui.ajax("http://127.0.0.1:10330/cmonitor/servlet/ListFileServlet",{
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+						  	data:{},
+							success:function(data){
+									if(data.length>0){
+										for(var i=0;i<data.length;i++)
+										vm.item.push(data[i])
+
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								alert("与大厅连接中断,请退出APP重新进入大厅唤醒");
+							},
+							complete :function(){
+								 plus.nativeUI.closeWaiting()
+							 }
+						});
+		    		})
+
+
+				var old_back = mui.back;
+				mui.back=function(){
+					vm.item=[]
+					var slider=document.querySelectorAll(".mui-slider-handle")
+					var right=document.querySelectorAll(".mui-slider-right.mui-disabled")
+					var a=document.querySelectorAll(".mui-slider-right.mui-disabled a")
+					for (var i=0;i<slider.length;i++){
+						slider[i].style.transform="translate(0, 0)"
+					}
+					for (var i=0;i<right.length;i++){
+						right[i].style.className="mui-slider-right mui-disabled"
+					}
+					for (var i=0;i<a.length;i++){
+						a[i].style.transform="translate(0, 0)"
+					}
+					 old_back()
+				}
+			});
+		</script>
+	</body>
+
+</html>

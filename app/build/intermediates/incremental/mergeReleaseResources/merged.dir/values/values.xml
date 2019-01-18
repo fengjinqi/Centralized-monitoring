@@ -8,7 +8,7 @@
     <color name="ime_background">#cccccc</color>
     <declare-styleable name="ActionSheet"><attr format="color|reference" name="actionSheetBackground"/><attr format="color|reference" name="cancelButtonBackground"/><attr format="color|reference" name="otherButtonTopBackground"/><attr format="color|reference" name="otherButtonTitleBackground"/><attr format="color|reference" name="otherButtonMiddleBackground"/><attr format="color|reference" name="otherButtonBottomBackground"/><attr format="color|reference" name="otherButtonSingleBackground"/><attr format="color|reference" name="cancelButtonTextColor"/><attr format="color|reference" name="otherButtonTextColor"/><attr format="color|reference" name="destructiveButtonTextColor"/><attr format="color|reference" name="titleButtonTextColor"/><attr format="dimension|reference" name="actionSheetPadding"/><attr format="dimension|reference" name="otherButtonSpacing"/><attr format="dimension|reference" name="cancelButtonMarginTop"/><attr format="dimension|reference" name="actionSheetTextSize"/></declare-styleable>
     <declare-styleable name="ActionSheets"><attr format="reference" name="actionSheetStyle"/></declare-styleable>
-    <string name="app_name">集中监控</string>
+    <string name="app_name">应急通信车管理系统</string>
     <string name="dcloud_gallery_app_name">@string/app_name</string>
     <style name="ActionSheetStyleIOS6">
         <item name="actionSheetBackground">@drawable/dcloud_as_bg_ios6</item>

@@ -7,7 +7,7 @@ var vm=new Vue({
         data:{
             guid:'',
             validate:'validate',
-            author:'dqgsTest',
+            author:'gzcllc1',
             validaTetable:'validaTetable',
             items:[],
             fj:'',
@@ -18,28 +18,62 @@ var vm=new Vue({
             taskid:'',
             performer:[],
             select:'',
-            getLogin:''
+            getLogin:'',
+            claim:null,
+            fd:[],
+            acnys:false,
+            gender:''
 
         },
         methods:{
+            gettask:function(){
+                var obj={}
+                var _this=this
+                obj.taskId=String(this.taskid)
+                obj.creator=String(this.getLogin)
+                plus.nativeUI.showWaiting( '正在加载' )
+                mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/claim",{
+                            dataType:'json',
+                            type:'post',
+                            data:JSON.stringify(obj),
+                            success:function(res){
+                                if(res.success==true){
+                                     _this.claim=false
+
+                                }else{
+                                   mui.alert("提交失败")
+                                }
+                            },
+                            error:function(xhr,type,errorThrown){
+                             plus.nativeUI.closeWaiting()
+                                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+                            },
+                            complete :function(){
+                                setTimeout(function(){
+                                    plus.nativeUI.closeWaiting()
+                                },500)
+                            }
+                        })
+            },
             commint:function(item){
-                //alert(fd.has('file'))
-                alert(JSON.stringify(item))
+           // alert(JSON.stringify(item))
                 var wat=plus.nativeUI.showWaiting('提交中...')
-                mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
+                mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/progressing',{
                 data:item,
                 dataType:'json',
                 type:'POST',
                 timeout:12000,
                 headers:{'Content-Type':'application/json'},
                 success:function(data){
+
                     mui.back = function() {
                        var list = plus.webview.getWebviewById('commissionListview')||plus.webview.getLaunchWebview();
                         //触发列表界面的自定义事件（refresh）,从而进行数据刷新
                         //alert(JSON.stringify(list))
-                        fd.delete('file')
-                        fd.delete('objId')
-                        fd.delete('field')
+//                        fd.delete('file')
+//                        fd.delete('objId')
+//                        fd.delete('field')
+                            vm.fd=[]
                        mui.fire(list,'refresh');
                        plus.webview.currentWebview().hide("auto", 300);
                        var self = plus.webview.currentWebview();
@@ -51,44 +85,53 @@ var vm=new Vue({
                            vm.task=[]
                        },false);
                    }
-                     alert(JSON.stringify(data))
-
                      if(data.success==true){
-                        //alert(fd.has("file"))
-                        if(fd.getAll("file").length>0){
-                          //  alert("进入file")
-                            this.id=data.id
-                            fd.append("objId",vm.id)
-                            fd.append("field",vm.field+vm.fieIdCode)
-                           // alert(JSON.stringify(fd.getAll('file')))
-                            //alert(JSON.stringify(this.id)+"--"+JSON.stringify(fd.get('file').name)+"--"+JSON.stringify(vm.field))
-                            console.log(JSON.stringify(fd.get('file').name))
+
+                        if(vm.fd.length>0){
                             wat.setTitle("正在上传附件请稍后...")
-                            mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload',{
-                                data:fd,
+                           for(var i=0;i<vm.fd.length;i++){
+
+                                mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/upload',{
+                                data:vm.fd[i],
                                 type:'post',
                                 processData: false,
                                 contentType: false,
                                 success:function(data){
-                                    var data=JSON.parse(data)
-                                    //alert(JSON.stringify(data))
-                                    if(data.success){
-                                        mui.alert("附件上传成功")
+                                    var datas=JSON.parse(data)
+
+                                    if(datas.success==true){
+                                        vm.acnys=true
+//                                        mui.alert("附件上传成功")
                                         wat.close()
                                        mui.back()
+
                                     }else{
-                                        mui.alert("附件上传失败")
+                                        vm.acnys=false
+
+//                                        mui.alert("附件上传失败")
                                         wat.close()
                                          mui.back()
                                     }
                                 },
                                 error:function(xhr,type,errorThrown){
                                     //异常处理；
-                                    alert(2332);
+                                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒");
                                 }
                             })
+                           }
+
+
+                          /* if(this.acnys==true){
+                                mui.alert("附件上传成功")
+                               wat.close()
+                              mui.back()
+                           }else{
+                                mui.alert("附件上传失败")
+                                wat.close()
+                                 mui.back()
+                           }*/
                         }else{
-                        //alert("没有file")
+
                           wat.close()
                             plus.nativeUI.toast( "工单提交成功")
                             mui.back()
@@ -99,21 +142,17 @@ var vm=new Vue({
                          wat.close()
                          mui.back()
                     }
-
-
                    // mui.back()
-
                        //plus.nativeUI.closeWaiting()
                      //  mui.back()
                 },
                 error:function(xhr,type,errorThrown){
                     //异常处理；
-                    alert(2332);
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒");
                 }
             })
             },
             getTask: function(item){
-
                 var obj={};
                 var checkArr;
                 var yjbzgl=false;
@@ -126,14 +165,28 @@ var vm=new Vue({
                 for(var i=0;i<input.length;i++){
                     objData.bizObj[input[i].name]=input[i].value
                 }
-                  var person=document.querySelectorAll('#form1 .person ')
-                for(var i=0;i<person.length;i++){
-                    objData.bizObj[person[i].name]=person[i].getAttribute('data-id')
-                }
+//                  var person=document.querySelectorAll('#form1 .person ')
+//                for(var i=0;i<person.length;i++){
+//                    objData.bizObj[person[i].name]=person[i].getAttribute('data-id')
+//                }
                 var checked=document.querySelectorAll('#form1 .checked ')
+                var checkedradio=document.querySelectorAll('#form1 .checkedradio ')
+                for(var i=0;i<checkedradio.length;i++){
+
+                    if(checkedradio[i].checked){
+console.log(checkedradio[i].value)
+                          if(objData.bizObj.hasOwnProperty(checkedradio[i].name)){
+
+                            objData.bizObj[checkedradio[i].name] += ',' + checkedradio[i].getAttribute('mode');
+                          }else{
+                            objData.bizObj[checkedradio[i].name] = checkedradio[i].getAttribute('mode');
+                          }
+                    }
+                }
 
                 for(var i=0;i<checked.length;i++){
                     if(checked[i].checked){
+
                           if(objData.bizObj.hasOwnProperty(checked[i].name)){
                             objData.bizObj[checked[i].name] += ',' + checked[i].value;
                           }else{
@@ -141,7 +194,7 @@ var vm=new Vue({
                           }
                     }
                 }
-
+      console.log(objData)
                 var select=document.querySelectorAll('#form1 select ')
                 for(var i=0;i<select.length;i++){
                     select[i].disabled=false
@@ -151,6 +204,7 @@ var vm=new Vue({
                 for(var i=0;i<textare.length;i++){
                      objData.bizObj[textare[i].name]=textare[i].value
                 }
+
                var a = false;
                var b = false;
 
@@ -171,15 +225,18 @@ var vm=new Vue({
                      var count = 0;
                     var v = document.querySelectorAll(".radiogroup");
                     for(var i=0,len=v.length;i<len;i++){
-                       check[i] = v[i].querySelectorAll(".checked");
+                       check[i] = v[i].querySelectorAll(".checked").length>0?v[i].querySelectorAll(".checked"):v[i].querySelectorAll(".checkedradio");
+
                         for(var j=0,length=check[i].length;j<length;j++){
+
                             if(check[i][j].checked==true){
                                 count++;
                                 b = true;
                             }
                         }
                     }
-                    if(v.length==count){
+                    console.log(count,v.length)
+                    if(v.length==count||v.length<=count){
                         yjbzgl=true
                     }else{
                         mui.alert("必填项不允许为空");
@@ -188,22 +245,22 @@ var vm=new Vue({
                     }
                     console.log(yjbzgl)
                     console.log(checkArr)
-
+                    console.log(a,b)
                     if(a && b){
                         if(yjbzgl&&checkArr){
-                       // alert('都执行')
-                           this.commintData();
+                      // alert('都执行')
+                           this.commintData(item);
 
                         }
                     }else if(a){
                        if(checkArr){
                         //alert('执行文本')
-                               this.commintData()
+                               this.commintData(item)
                        }
                     }else if(b){
                         if(yjbzgl){
                          //alert('执行复选')
-                                this.commintData()
+                                this.commintData(item)
                         }
                      }
 
@@ -225,24 +282,154 @@ var vm=new Vue({
      }
 }*/
             },
-            commintData:function(){
+            getTaskTwo: function(item){
+                            var obj={};
+                            var checkArr;
+                            var yjbzgl=false;
+                            objData.processId=this.id,
+                            objData.transitionId=item.id,
+                            objData.taskId=String(this.taskid),
+                            objData.creator=vm.getLogin,
+                            objData.bizObj={};
+                            var input=document.querySelectorAll('#form1 .text ')
+                            for(var i=0;i<input.length;i++){
+                                objData.bizObj[input[i].name]=input[i].value
+                            }
+            //                  var person=document.querySelectorAll('#form1 .person ')
+            //                for(var i=0;i<person.length;i++){
+            //                    objData.bizObj[person[i].name]=person[i].getAttribute('data-id')
+            //                }
+                            var checked=document.querySelectorAll('#form1 .checked ')
 
+                            for(var i=0;i<checked.length;i++){
+                                if(checked[i].checked){
+                                      if(objData.bizObj.hasOwnProperty(checked[i].name)){
+                                        objData.bizObj[checked[i].name] += '$?$' + checked[i].value;
+                                      }else{
+                                        objData.bizObj[checked[i].name] = checked[i].value;
+                                      }
+                                }
+                            }
+
+                            var select=document.querySelectorAll('#form1 select ')
+                            for(var i=0;i<select.length;i++){
+                                select[i].disabled=false
+                                 objData.bizObj[select[i].name]=select[i].value
+                            }
+                            var textare=document.querySelectorAll('#form1 textarea ')
+                            for(var i=0;i<textare.length;i++){
+                                 objData.bizObj[textare[i].name]=textare[i].value
+                            }
+                           var a = false;
+                           var b = false;
+                            console.log(objData)
+                           mui("#form1 .validaTetable").each(function(i) {
+                                    a = true;
+                                    //若当前input为空，则alert提醒
+                                    console.log(i)
+                                    if(!this.value || this.value.trim() == "") {
+                                        var label = this.previousElementSibling;
+                                        mui.alert("必填项不允许为空");
+                                        checkArr = false;
+                                        return;
+                                    }else{
+                                        checkArr=true
+                                    }
+                           }); //校验通过，继续执行业务逻辑
+                           this.commintData(item)
+                               /*  var check = [];
+                                 var count = 0;
+                                var v = document.querySelectorAll(".radiogroup");
+                                for(var i=0,len=v.length;i<len;i++){
+                                   check[i] = v[i].querySelectorAll(".checked");
+                                    for(var j=0,length=check[i].length;j<length;j++){
+                                        if(check[i][j].checked==true){
+                                            count++;
+                                            b = true;
+                                        }
+                                    }
+                                }
+                                if(v.length==count||v.length<=count){
+                                    yjbzgl=true
+                                }else{
+                                    mui.alert("必填项不允许为空");
+                                    yjbzgl=false;
+                                    return;
+                                }
+                                console.log(yjbzgl)
+                                console.log(checkArr)
+                                console.log(a,b)
+                                if(a && b){
+                                    if(yjbzgl&&checkArr){
+                                   alert('都执行')
+                                       this.commintData(item);
+
+                                    }
+                                }else if(a){
+                                   if(checkArr){
+                                    alert('执行文本')
+                                           this.commintData(item)
+                                   }
+                                }else if(b){
+                                    if(yjbzgl){
+                                     alert('执行复选')
+                                            this.commintData(item)
+                                    }
+                                 }
+            */
+
+                                  //this.commintData()
+
+                               /* function commintData(){
                 if(this.author=='jjbgl'){
-                        if(item.name=='交班'){
-                            showone();
-                        }else{
-                            this.commint(objData)
-                        }
+                    if(item.name=='交班'){
+                        showone();
                     }else{
                         this.commint(objData)
-                     }
+
+                    }
+                }else{
+
+                    this.commint(objData)
+
+                 }
+            }*/
+                        },
+            commintData:function(item){
+
+
+                if(this.author=='jjbgl'){
+                    if(item.name=='交班'){
+                        showone();
+                    }else{
+                        this.commint(objData)
+                    }
+                }else if(this.author=='xcjszclc'){
+                     if(item.name=='提交审批'){
+                            showone();
+                        }else if(item.name=='指派工程师'){
+                            showone();
+                        }else{
+
+                            if(objData.hasOwnProperty('allocated')){
+
+                                delete objData.allocated
+                            }
+
+
+                         this.commint(objData)
+                        }
+                 }else{
+
+                 this.commint(objData)
+                 }
             },
             Download: function(obj){
-                var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
+                var path=obj.uri.replace(/http:\/\/11.55.0.68:8890/gi,'http:\/\/127.0.0.1:10332');
                 var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
                 //alert(JSON.stringify(decodeURIComponent(path+"&encoding=UTF8")));
                 var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
-                       method: 'post',
+                       method: 'get',
                        filename: '_downloads/'
                    }, function(d, status) {
                    if(status == 200) {
@@ -266,27 +453,24 @@ var vm=new Vue({
                 this.fj=obj.bizField
                 mui('#popover').popover('show');
             },
+
             onUploadChange(e){
-                 var form = document.getElementById("form2");
+                var fd =new FormData()
+                fd.append("field",vm.field+e.target.name)
+                fd.append("objId",vm.id)
                 for(var i=0;i<e.target.files.length;i++){
-                   // this.fileArray.push(e.target.files[0])
-                    fd.append('file',e.target.files[0])
+                    fd.append('file',e.target.files[i])
                     var p=document.createElement('p')
-                    /*var span=document.createElement('span')
-                    span.className='mui-icon mui-icon-close remove';
-                    span.style.position='absolute';
-                    span.style.top=0+'px';
-                    span.style.right=0+'px';
-                    span.style.color='red';*/
-                    p.className=" form-control doenload";
+                    p.className="form-control doenload";
                     p.style.marginBottom=15+'px';
                     p.style.position='relative';
                     p.innerHTML=e.target.files[0].name;
                     e.target.parentNode.parentNode.appendChild(p);
-                    document.querySelectorAll('.mui-btn.mui-btn-danger')[0].style.display='block';
-                    //p.appendChild(span)
-                //console.log(JSON.stringify(fd.get('file').name)+'--'+JSON.stringify(fd.get('objId')))
+                    e.target.parentNode.parentNode.querySelector('.mui-btn.mui-btn-danger').style.display='block';
+
                 }
+
+                vm.fd.push(fd)
                /* var form = document.getElementById("form2");
                 var fd = new FormData(form);
                 fd.append("objId",vm.id)
@@ -323,7 +507,8 @@ var vm=new Vue({
                         for (var i = 0; i<p.length; i++){
                             e.target.parentNode.parentNode.removeChild(p[i])
                         }
-                        fd.delete('file')
+                        vm.fd=[]
+                       // fd.delete('file')
                         //alert(JSON.stringify(fd.getAll('file')))
                         e.target.style.display='none'
                      },
@@ -332,26 +517,7 @@ var vm=new Vue({
                  plus.runtime.openFile( "/1.png",{},function(e){
                         alert(e)
                  } )
-                /* plus.io.requestFileSystem(plus.io.PUBLIC_DOWNLOADS, function( fs ) {
-                        // 可通过fs操作PRIVATE_WWW文件系统
 
-                          var directoryReader = fs.root.createReader();
-                                 directoryReader.readEntries( function( entries )  //遍历该文件夹下的文件
-                                          {
-                                     var i;
-                                     for( i=0; i < entries.length; i++ )
-                                                  {
-                                         alert( entries[i].name );  //获得文件名称
-
-                                     }
-
-                                 }, function ( e )
-                                           {
-                                     alert( "Read entries failed: " + e.message );
-                                 } );
-                    }, function ( e ) {
-                        alert( "Request file system failed: " + e.message );
-                    })*/
             }
         }
     })
@@ -363,869 +529,350 @@ mui.plusReady(function(){
         vm.author=event.detail.author;
         vm.field=event.detail.field;
         vm.getLogin=event.detail.getLogin
-
         plus.nativeUI.showWaiting( '正在加载' )
        getAjax()
     })
     function getAjax(){
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/queryByForm?userId="+vm.getLogin+"&processId="+vm.id,{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/queryByForm?userId="+vm.getLogin+"&processId="+vm.id,{
             dataType:'json',
             type:'get',
             success:function(res){
 
-                //alert(JSON.stringify(res))
 
-          /* var res={
-                     "result": {
-                       "success": true
-                     },
-                     "ticket": {
-                       "id": "8ecd0ef0-6f17-4f5e-8906-d0973c7dccdf",
-                       "data": [
-                         {
-                           "id": "954ca47b-cfe2-4cb1-8988-da464c101fc1",
-                           "row": 1,
-                           "col": 1,
-                           "title": "地区公司测试记录",
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "6a1c78d7-7844-47f7-a9df-47277799e2f6",
-                               "row": 1,
-                               "col": 1,
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "85265b19-1b56-486e-a8bc-0cbb38929b07",
+           /*var res={
+                       "result": {
+                           "success": true
+                       },
+                       "ticket": {
+                           "id": "72adff7d-8055-4384-94f1-8a9e35098d2f",
+                           "data": [
+                               {
+                                   "id": "a1481032-3d5d-4c52-a788-ee7ae1c204e3",
                                    "row": 1,
                                    "col": 1,
-                                   "title": "填写人",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "txr",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "userSelect",
-                                   "value": {
-                                     "id": "fe9f0e70-e461-49fa-8600-16493c4ea982",
-                                     "name": "王伟东",
-                                     "dept": "生产科",
-                                     "email": "lzwangweidong@petrochina.com.cn",
-                                     "mobile": "18089315218"
-                                   }
-                                 }
-                               ]
-                             },
-                             {
-                               "id": "f7a10905-4cc9-4121-bca1-ae188d133b9e",
-                               "row": 2,
-                               "col": 1,
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "82272be4-6db8-43d9-bf5c-ad4bcaa4dfbd",
-                                   "row": 1,
-                                   "col": 1,
-                                   "title": "地区公司测试人员",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "dqgscsy",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "text",
-                                   "value": "看见没看"
-                                 },
-                                 {
-                                   "id": "fa4469ca-b154-433f-8734-930d359c0df1",
-                                   "row": 1,
-                                   "col": 2,
-                                   "title": "测试开始时间",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "Time_Start",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "date",
-                                   "value": "2018-03-25 11:22",
-                                   "dataType": "Date",
-                                   "dataFormat": "yyyy-MM-dd HH:mm"
-                                 }
-                               ]
-                             },
-                             {
-                               "id": "ef263246-e091-41f9-8de7-943e416e92c4",
-                               "row": 3,
-                               "col": 1,
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "30069600-5431-413b-8824-e6be4e648305",
-                                   "row": 1,
-                                   "col": 1,
-                                   "title": "测试内容",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "csnr",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "textarea",
-                                   "value": "携家带口"
-                                 },
-                                 {
-                                   "id": "7f844c59-afb1-4958-a3a4-6b9f4275081d",
-                                   "row": 2,
-                                   "col": 1,
-                                   "title": "测试车辆",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "cscl",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "textarea",
-                                   "value": "小寂寞的"
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "1e964d2c-c4c9-497e-9343-f155bcceb447",
-                           "row": 2,
-                           "col": 1,
-                           "title": "审批意见",
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "be2ec02b-21ce-46f8-82fd-cf5ca76fa70f",
-                               "row": 1,
-                               "col": 1,
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "ccf9c7f1-de38-418b-93ed-69bb1c7a34db",
-                                   "row": 1,
-                                   "col": 1,
-                                   "title": "审批人",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "sprname",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "text",
-                                   "value": "肖健"
-                                 },
-                                 {
-                                   "id": "662d2105-74d9-4796-9585-0da3236a9217",
-                                   "row": 1,
-                                   "col": 2,
-                                   "title": "审批时间",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "spsj",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "date",
-                                   "value": "2018-03-25 11:23",
-                                   "dataType": "Date",
-                                   "dataFormat": "yyyy-MM-dd HH:mm"
-                                 }
-                               ]
-                             },
-                             {
-                               "id": "10b296a0-24a7-4a5b-bdaa-5bf9574c3e37",
-                               "row": 2,
-                               "col": 1,
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "743cd475-9752-4bb2-a388-f9142bfb4bfd",
-                                   "row": 1,
-                                   "col": 1,
-                                   "title": "审批意见",
-                                   "bizClass": "dqgscs",
-                                   "bizField": "spyj",
-                                   "displayType": "readonly",
-                                   "readonly": "false",
-                                   "type": "element",
-                                   "bzType": "textarea",
-                                   "value": "同意"
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "400dea46-c4b3-46b0-81b1-7c906a0e0b51",
-                           "row": 4,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "16792b89-92a1-42c1-90ff-973df27dd117",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:网络延时",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "9b255fb4-1745-4453-8029-80e64fff9e4c",
-                                   "row": 1,
-                                   "col": 1,
+                                   "title": "故障申告表单",
                                    "type": "group",
                                    "item": [
-                                     {
-                                       "id": "1d896ca4-9251-4327-a2e7-37495a446d7e",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wlys",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试"
-                                     },
-                                     {
-                                       "id": "bf52406d-d550-4576-ad8e-fbc9fdcef526",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms1",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
+                                       {
+                                           "id": "3be56851-6971-4a80-b7be-5088a115bf72",
+                                           "row": 1,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "1f1af13c-ed12-4b94-bc41-332cc5dad5fb",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "标题",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "title",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "中国石油天然气集团公司-车载卫星天线子系统-后[2018-05-18 15:14]"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "7e0dbebd-7fc3-4dfd-922b-dbcad6d2c5c0",
+                                           "row": 2,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "7c7b120c-8ddc-4342-96ef-24ff8466dc73",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "故障申告人",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "gzsgr",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "tx_gjl"
+                                               },
+                                               {
+                                                   "id": "474248fc-b5c8-41d7-a5b4-ea8dee548425",
+                                                   "row": 1,
+                                                   "col": 2,
+                                                   "title": "申告人单位",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "sgrdw",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "中国石油天然气集团公司"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "dbefda48-cf35-44bb-b8e5-791f7562207d",
+                                           "row": 3,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "32d581c6-9d17-4b8a-b66c-7a7c508a1794",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "申告人部门",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "sgrbm",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "应急通信保障中心"
+                                               },
+                                               {
+                                                   "id": "6ea55702-e7d1-48f0-a3df-87d6006911d6",
+                                                   "row": 1,
+                                                   "col": 2,
+                                                   "title": "联系方式",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "lxfs",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "13703160513"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "da9b8ba3-420e-4139-b554-8598102483db",
+                                           "row": 4,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "3f815942-73c5-4dbb-bc60-a20ae315a4af",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "故障申告时间",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "gzsgsj",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "date",
+                                                   "value": "2018-05-18 15:14",
+                                                   "dataType": "Date",
+                                                   "dataFormat": "yyyy-MM-dd HH:mm"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "78fa189b-7ada-4855-988c-a80d51de31aa",
+                                           "row": 5,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "bc3019f5-48f6-46c4-98f0-13252b8920aa",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "故障设备类别",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "gzsblb",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "select",
+                                                   "defaultValue": "车载卫星天线子系统$^$车载卫星天线子系统$?$综合接入子系统$^$综合接入子系统$?$视频子系统$^$视频子系统$?$发电子系统$^$发电子系统$?$辅助子系统$^$辅助子系统$?$音频子系统$^$音频子系统$?$其他通信设备$^$其他通信设备$?$其它$^$其它",
+                                                   "value": "车载卫星天线子系统"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "21c5d153-e1e4-489b-b1de-5121ac664a07",
+                                           "row": 6,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "df1d60a9-f26c-4b0d-a09c-b1ebedc91d44",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "故障设备名称",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "gzsbmc",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "text",
+                                                   "value": "后"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "772ecde6-89ac-40cd-9fc5-7f2322b29553",
+                                           "row": 7,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "16fb55d4-e2ba-4817-b266-e3bb8e162e02",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "故障现象",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "gzxx",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "textarea",
+                                                   "value": "破"
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "id": "10a00e42-353f-4c7d-9da8-bd38943b97a9",
+                                           "row": 8,
+                                           "col": 1,
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "9fcfd59e-a8c5-40ba-8123-a27c27768597",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "title": "附件",
+                                                   "bizClass": "gzcllc",
+                                                   "bizField": "fj",
+                                                   "displayType": "readonly",
+                                                   "readonly": "false",
+                                                   "type": "element",
+                                                   "bzType": "attachFile",
+                                                   "value": []
+                                               }
+                                           ]
+                                       }
                                    ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "5f569f56-9e41-4363-8f90-8baa17b1bf0c",
-                           "row": 5,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "ac88a2a5-12d5-4626-aa4d-56644d8fa77c",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:视频会议",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "a7de8bfb-1ab8-46c6-af56-fdb41e36c1a9",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "edc9773b-10bd-458a-8f56-703d47f8cf97",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "sphy",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "812b7833-f75b-4680-b32a-97dedcfafa78",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms2",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "86647306-a7d3-4d12-9af4-e3b57251a203",
-                           "row": 6,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "afde3fc5-7cc9-4d1a-8942-654cb30f53cf",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:车顶图像",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "838d7b02-672d-4f13-aede-7e580908c479",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "dd737af6-4d52-4863-9d65-027166c33955",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "cdtx",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "9c050212-12a6-45f2-9483-ab8fa7fcf701",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms3",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "fbcfd5ae-e0e1-476b-b4b2-2ff2f3b06109",
-                           "row": 7,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "428eb9de-1986-420b-bce6-a69cab0db7c0",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:单兵图像",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "86202170-bcac-4cad-b3c3-03a994bbdf9b",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "dad8df50-9a9d-4b58-8dde-496b807e77ee",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "dbtx",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "e52bf127-8973-465a-bd99-0e24c0a61882",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms4",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "c0ab94cd-7e30-4e59-94f3-4d24aeb2553a",
-                           "row": 8,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "0c9d5c14-a258-456e-8f53-5397f10dfe1e",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:车载电话",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "6682157c-5e32-49a7-be74-a6c5f6bfab47",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "307f93fe-04fb-49e8-a848-ff9b1960e11d",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "czdh",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "198bde5d-2069-4c4d-b471-2b0c1ea78f29",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms5",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "9fa447b2-d20d-4d01-bd71-fd25c967ff0c",
-                           "row": 9,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "7c82b933-f961-41d2-9fae-c5b3a2c5825b",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:对讲机",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "863c594a-903d-4c1f-986a-01d188e89994",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "266a5dbf-5410-4783-8e21-8015554dd9ff",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "djj",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "12680ead-6c50-45f6-885a-f3f1f4488798",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms6",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "c9ca3b0b-4f4c-4ba2-a8d9-c9d52416eb49",
-                           "row": 10,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "682b8e1a-3ce2-4755-a873-3a3e39e133c8",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:PBX防爆手机",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "cdd9ec85-ff28-4415-8b80-a488acd6ef29",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "a4751702-611a-4d57-8315-5cc809e73aa6",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "PBXFBSJ",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "03724a0f-5c09-4cd4-99eb-f4f525d70e4e",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms7",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "f5011a43-cf73-40fe-ba70-6bbf6b798fda",
-                           "row": 11,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "5b7df1e3-e430-44ad-81ce-892dc3ac57fa",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:北斗数据",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "3a783959-2a13-4ccc-ab0e-17e6a47c952c",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "e08630d0-625d-4bd1-b031-e6477ef6df20",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "bdsj",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "d1042139-017b-431e-9a5f-4ee62ed55ea3",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms8",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "85f4bcb1-50ed-4d9b-9458-c726042ce5a1",
-                           "row": 12,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "9a0efdaa-f63f-4e1a-bae4-b8921dbab16f",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:集中监控单元",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "8ddd4f71-1254-452c-b7af-d4063f9c551a",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "7289b7ba-8722-4d50-a5f7-f03ef1bb4eda",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "jzjkdy",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "1d4ddc18-d621-46d2-b1b4-e7c0128be425",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms9",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "10b54ffc-c411-4b17-8bee-dfcf8c3b750a",
-                           "row": 13,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "6d7f3746-35fa-4044-a74b-51b1296a3c89",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:激光夜视仪",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "de87604a-253a-431d-be93-bdbe47113348",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "22d34699-dc60-4583-9380-c980a8015c35",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "jgysy",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "b20587ec-09fd-4826-b854-849809733786",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms10",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "efab858a-3614-429e-931c-7b7f1b64d392",
-                           "row": 14,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "a4bb61ed-9337-482b-b059-a4fb831b179b",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:调度台",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "bdc9f195-d422-4f93-b0c0-9bdf5fc1e1c7",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "440d9287-c6e4-46e9-8445-1170345c4ee6",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "ddt",
-                                       "displayType": "required",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "c6148379-cddb-4270-9ac2-d0071743c55c",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms11",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         },
-                         {
-                           "id": "48731752-da7d-43ed-ad4c-0c2719d499f4",
-                           "row": 15,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "978720cf-4f5a-49e8-8f07-d15657c68d37",
-                               "row": 1,
-                               "col": 1,
-                               "title": "测试项:其它",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "6c76c9c8-6d25-4608-a16a-4de22f011571",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "83371f95-94b5-4bed-bc67-9ddba7226880",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试内容",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "dqgsqtnr",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
-                                   ]
-                                 },
-                                 {
-                                   "id": "4b9bae48-9215-49d4-a568-b01e7b1572ed",
+                               },
+                               {
+                                   "id": "e426f17f-47d7-4e97-9292-e982689512cd",
                                    "row": 2,
                                    "col": 1,
                                    "type": "group",
                                    "item": [
-                                     {
-                                       "id": "1c8b46dc-3e75-4bf4-827d-d52b71054338",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "测试结果",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "qt",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "radiogroup",
-                                       "defaultValue": "1$^$正常$?$0$^$异常$?$2$^$未测试$?$3$^$无此设备"
-                                     },
-                                     {
-                                       "id": "11b015dc-193f-4747-9c1e-e521c1e318cf",
-                                       "row": 1,
-                                       "col": 2,
-                                       "title": "问题描述",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "wtms12",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "textarea"
-                                     }
+                                       {
+                                           "id": "55f501f4-80c0-453d-9e76-2f72a5390b13",
+                                           "row": 1,
+                                           "col": 1,
+                                           "title": "保障中心处置",
+                                           "type": "group",
+                                           "item": [
+                                               {
+                                                   "id": "c6698638-b896-4abd-a197-af5fffd625a9",
+                                                   "row": 1,
+                                                   "col": 1,
+                                                   "type": "group",
+                                                   "item": [
+                                                       {
+                                                           "id": "b1fc3cb6-88b8-46d8-9dd8-e30121f3f522",
+                                                           "row": 1,
+                                                           "col": 1,
+                                                           "title": "处置人",
+                                                           "bizClass": "gzcllc",
+                                                           "bizField": "bzzxczr",
+                                                           "displayType": "readonly",
+                                                           "readonly": "false",
+                                                           "type": "element",
+                                                           "bzType": "text"
+                                                       },
+                                                       {
+                                                           "id": "33028087-c8ad-4f52-9311-d7ec75c369fc",
+                                                           "row": 1,
+                                                           "col": 2,
+                                                           "title": "部门",
+                                                           "bizClass": "gzcllc",
+                                                           "bizField": "bzzxczbm",
+                                                           "displayType": "readonly",
+                                                           "readonly": "false",
+                                                           "type": "element",
+                                                           "bzType": "text"
+                                                       },
+                                                       {
+                                                           "id": "e047df18-97e4-4564-b319-5e43315bbf72",
+                                                           "row": 1,
+                                                           "col": 3,
+                                                           "title": "时间",
+                                                           "bizClass": "gzcllc",
+                                                           "bizField": "bzzxczsj",
+                                                           "displayType": "readonly",
+                                                           "readonly": "false",
+                                                           "type": "element",
+                                                           "bzType": "date"
+                                                       }
+                                                   ]
+                                               },
+                                               {
+                                                   "id": "e4f495fb-f2b0-4131-9402-79248aa6ff0f",
+                                                   "row": 2,
+                                                   "col": 1,
+                                                   "type": "group",
+                                                   "item": [
+                                                       {
+                                                           "id": "7a48dd0f-560a-477c-8457-ed73e874097b",
+                                                           "row": 1,
+                                                           "col": 1,
+                                                           "title": "是否返厂",
+                                                           "bizClass": "gzcllc",
+                                                           "bizField": "fc",
+                                                           "displayType": "required",
+                                                           "readonly": "false",
+                                                           "type": "element",
+                                                           "bzType": "radiogroup",
+                                                           "defaultValue": "0$^$返厂维修$?$1$^$不返厂维修"
+                                                       }
+                                                   ]
+                                               },
+                                               {
+                                                   "id": "06943968-6a0a-4428-bfcb-f1745f82af93",
+                                                   "row": 3,
+                                                   "col": 1,
+                                                   "type": "group",
+                                                   "item": [
+                                                       {
+                                                           "id": "98849faa-6de9-424f-90b2-15e1db846633",
+                                                           "row": 1,
+                                                           "col": 1,
+                                                           "title": "故障处理意见",
+                                                           "bizClass": "gzcllc",
+                                                           "bizField": "clyj",
+                                                           "displayType": "required",
+                                                           "readonly": "false",
+                                                           "type": "element",
+                                                           "bzType": "textarea"
+                                                       }
+                                                   ]
+                                               }
+                                           ]
+                                       }
                                    ]
-                                 }
-                               ]
-                             }
+                               }
                            ]
-                         },
-                         {
-                           "id": "51af2986-9483-42ad-9e9a-fcff69e7ad07",
-                           "row": 16,
-                           "col": 1,
-                           "type": "group",
-                           "item": [
-                             {
-                               "id": "16ad9f6c-976d-421f-a294-ea208e1751f8",
-                               "row": 1,
-                               "col": 1,
-                               "title": "附件",
-                               "type": "group",
-                               "item": [
-                                 {
-                                   "id": "c2baa399-0f8b-4718-8219-949baa935300",
-                                   "row": 1,
-                                   "col": 1,
-                                   "type": "group",
-                                   "item": [
-                                     {
-                                       "id": "b7687918-d5ee-4dea-99a5-3f0044123bb0",
-                                       "row": 1,
-                                       "col": 1,
-                                       "title": "附件",
-                                       "bizClass": "dqgscs",
-                                       "bizField": "dqgsfj",
-                                       "displayType": "opitonal",
-                                       "readonly": "false",
-                                       "type": "element",
-                                       "bzType": "attachFile",
-                                       "value": []
-                                     }
-                                   ]
-                                 }
-                               ]
-                             }
-                           ]
-                         }
-                       ]
-                     },
-                     "task": [
-                       {
-                         "id": 45274,
-                         "name": "地区公司测试报告填写",
-                         "action": [
+                       },
+                       "task": [
                            {
-                             "id": "Link_4",
-                             "name": "测试反馈"
+                               "id": 49378,
+                               "name": "保障中心-故障受理",
+                               "action": [
+                                   {
+                                       "id": "Link_1",
+                                       "name": "返厂维修"
+                                   },
+                                   {
+                                       "id": "Link_2",
+                                       "name": "不返厂维修"
+                                   }
+                               ],
+                               "claim": false
                            }
-                         ]
-                       }
-                     ]
+                       ]
                    }*/
             if(res.message=='工单查询出错 null'){
                 mui.alert('数据有误，请返回')
@@ -1257,7 +904,8 @@ mui.plusReady(function(){
                             bizField:item.item[i].bizField,
                             bzType:item.item[i].bzType,
                             displayType:item.item[i].displayType,
-                            defaultValue:item.item[i].defaultValue
+                            defaultValue:item.item[i].defaultValue,
+                            dispValue:item.item[i].dispValue
                         })
                         }
                     }
@@ -1274,13 +922,14 @@ mui.plusReady(function(){
                     }
                 }
            }
+
         tran(ob)
         String.prototype.endWith=function(endStr){
               var d=this.length-endStr.length;
               return (d>=0&&this.lastIndexOf(endStr)==d)
             }
         function GetChinese(strValue,sValue) {
-            console.log("=="+sValue+"==");
+            //console.log("=="+sValue+"==");
             if(strValue!= null && strValue!= ""){
                 //var reg = /[\u4e00-\u9fa5]/g;
                 var return_strs = new Array();
@@ -1292,18 +941,22 @@ mui.plusReady(function(){
                     var re_str ;
                     console.log("=="+st[0]+"==");
                     if(st[0].endWith(":default")){
+
                         if(contains(sValue, st[0].trim().substring(0,(st[0].length - 8)))){
                             re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : true}';
                         }else{
                             re_str = '{"value" : "' + st[0].substring(0,(st[0].length - 8)) + '","name" : "' + st[1] + '","default" : true,"selected" : false}';
                         }
                     }else{
+
                         if(contains(sValue, st[0].trim())){
+
                             re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : true}';
                         }else{
+
                             re_str = '{"value" : "' + st[0] + '","name" : "' + st[1] + '","default" : false,"selected" : false}';
                         }
-
+console.log(re_str)
                     }
                     re_str = eval('(' + re_str + ')');
                     //console.log(re_str);
@@ -1360,7 +1013,7 @@ mui.plusReady(function(){
                             var str=new Array()
                             str.push(t[n].value)
                             t[n].value=str
-                            console.log(t[n].value)
+                            //console.log(t[n].value)
                         }
 
 
@@ -1390,7 +1043,7 @@ mui.plusReady(function(){
 
                 }
             }
-
+console.log(GetChinese(t[n].defaultValue,t[n].value))
             if(t[n].defaultValue!=undefined){
                 t[n].defaultValue = GetChinese(t[n].defaultValue,t[n].value);
             }
@@ -1409,11 +1062,20 @@ mui.plusReady(function(){
     console.log(vm.items)
     for(var i=0;i<vm.items.length;i++){
         if(vm.items[i].title.indexOf("附件")>=0){
+
                vm.fieIdCode=vm.items[i].bizField
         }
     }
 
     var task=res.task[0];
+        if(task.claim!=undefined){
+             vm.claim=task.claim
+        }else{
+            vm.claim=false
+        }
+
+    //alert(vm.claim)
+
     for(var n in task.action){
         vm.task.push(task.action[n])
         if(task.action[n].hasOwnProperty("performer")&&Array.isArray(task.action[n].performer)&&task.action[n].name==='交班'){
@@ -1433,22 +1095,23 @@ mui.plusReady(function(){
 
         vm.taskid=task.id
 
-            },
+       },
             error:function(xhr,type,errorThrown){
              plus.nativeUI.closeWaiting()
-                alert('错误'+xhr.status+type+errorThrown)
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
             },
             complete :function(){
-                setTimeout(function(){
+                //setTimeout(function(){
                     plus.nativeUI.closeWaiting()
-                },500)
+                //},500)
             }
         })
         mui.back = function() {
                    plus.webview.currentWebview().hide("auto", 300);
-                   fd.delete('file')
-                      fd.delete('objId')
-                      fd.delete('field')
+//                   fd.delete('file')
+//                      fd.delete('objId')
+//                      fd.delete('field')
+                    vm.fd=[]
                    var self = plus.webview.currentWebview();
                    close()
                    closeOne()
@@ -1471,7 +1134,7 @@ function getPerson(obj,bumen,jianchar){
         document.getElementById('bumen').value=""
         document.getElementById('jianchar').value=""
         var userPicker = new mui.PopPicker();
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/org",{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/org",{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -1493,7 +1156,7 @@ function getPerson(obj,bumen,jianchar){
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
             }
         })
     }, false);
@@ -1507,7 +1170,7 @@ function getPerson(obj,bumen,jianchar){
         if(danwei.getAttribute('data')==null){
                 return false;
         }else{
-             mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
+             mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -1522,7 +1185,7 @@ function getPerson(obj,bumen,jianchar){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                 }
             })
              user.show(function(items) {
@@ -1542,7 +1205,7 @@ function getPerson(obj,bumen,jianchar){
         if(bumen.getAttribute('data')==null){
                 return false;
         }else{
-            mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
+            mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -1557,7 +1220,7 @@ function getPerson(obj,bumen,jianchar){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                 }
             })
             user.show(function(items) {
@@ -1578,17 +1241,26 @@ function getPersonOne(obj,bumen,jianchar){
          document.getElementById('bumenone').value=""
          document.getElementById('jiancharone').value=""
          var userPicker = new mui.PopPicker();
-         mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/org",{
+         mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/org",{
              dataType:'json',
              type:'get',
              success:function(res){
                  var ni=[]
-                 for(var n in res.data){
-                     ni.push({
-                         text:res.data[n].name,
-                         id:res.data[n].id
-                     })
+                 if(vm.guid=='值班日志'){
+                    for(var n in res.data){
+                      ni.push({
+                          text:res.data[n].name,
+                          id:res.data[n].id
+                      })
+                    }
+                 }else{
+                      ni.push({
+                           text:res.data[0].name,
+                           id:res.data[0].id
+                       })
                  }
+              /*   */
+
                  userPicker.setData(ni);
                  userPicker.show(function(items) {
                      showUserPickerButton.value = items[0].text;
@@ -1600,21 +1272,22 @@ function getPersonOne(obj,bumen,jianchar){
              },
              error:function(xhr,type,errorThrown){
                  plus.nativeUI.closeWaiting();
-                 alert('错误'+xhr.status+type+errorThrown)
+                 alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
              }
          })
      }, false);
      var bumen = document.getElementById(bumen);
      var danwei =document.getElementById('danweione');
      bumen.addEventListener('tap', function(event) {
+
      var evt=event ||window.event
      evt.stopPropagation()
      document.getElementById('jiancharone').value=""
          var user = new mui.PopPicker();
-         if(danwei.getAttribute('data')==null){
+         if(danwei.getAttribute('data')==null||danwei.getAttribute('data')==''){
                  return false;
          }else{
-              mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
+              mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
                  dataType:'json',
                  type:'get',
                  success:function(res){
@@ -1629,11 +1302,19 @@ function getPersonOne(obj,bumen,jianchar){
                  },
                  error:function(xhr,type,errorThrown){
                      plus.nativeUI.closeWaiting();
-                     alert('错误'+xhr.status+type+errorThrown)
+                     alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                  }
              })
               user.show(function(items) {
-                     bumen.value = items[0].text;
+
+                    if(items[0].text==undefined){
+                          bumen.value = ''
+                          return false;
+                      }else{
+                      bumen.value = items[0].text;
+
+                      }
+
                      document.getElementById('bumenone').setAttribute('data',items[0].id)
                      //返回 false 可以阻止选择框的关闭
                      //return false;
@@ -1649,7 +1330,7 @@ function getPersonOne(obj,bumen,jianchar){
          if(bumen.getAttribute('data')==null){
                  return false;
          }else{
-             mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
+             mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
                  dataType:'json',
                  type:'get',
                  success:function(res){
@@ -1664,7 +1345,7 @@ function getPersonOne(obj,bumen,jianchar){
                  },
                  error:function(xhr,type,errorThrown){
                      plus.nativeUI.closeWaiting();
-                     alert('错误'+xhr.status+type+errorThrown)
+                     alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                  }
              })
              user.show(function(items) {
@@ -1696,7 +1377,7 @@ function galleryImgs(){
 	console.log("从相册中选择多张图片:");
 
     plus.gallery.pick( function(path){
-    var task = plus.uploader.createUpload( "http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/upload",
+    var task = plus.uploader.createUpload( "http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/upload",
     		{ method:"POST" },
     		function ( t, status ) {
     			if ( status == 200 ) {
@@ -1785,6 +1466,7 @@ function confirm(){
 
 }
 function confirmone(){
+
     if(document.getElementById('jiancharone').value==""){
         return false
     }else{
@@ -1793,19 +1475,19 @@ function confirmone(){
         document.getElementById('bumenone').value="";
         document.getElementById('jiancharone').value="";
         document.getElementById('danweione').value="";
-        alert(JSON.stringify(objData))
-          mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/progressing',{
+        //alert(JSON.stringify(objData))
+          mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/progressing',{
             data:objData,
             dataType:'json',
             type:'post',
             headers:{'Content-Type':'application/json'},
             success:function(data){
-                alert(JSON.stringify(data))
+                //alert(JSON.stringify(data))
                // mui.back()
                mui.back = function() {
                        var list = plus.webview.getWebviewById('commissionListview')||plus.webview.getLaunchWebview();
                    //触发列表界面的自定义事件（refresh）,从而进行数据刷新
-                   alert(JSON.stringify(list))
+                  // alert(JSON.stringify(list))
                        mui.fire(list,'refresh');
                        plus.webview.currentWebview().hide("auto", 300);
                        var self = plus.webview.currentWebview();
@@ -1822,7 +1504,7 @@ function confirmone(){
             },
             error:function(xhr,type,errorThrown){
                 //异常处理；
-                alert(2332);
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒");
             }
         })
     }

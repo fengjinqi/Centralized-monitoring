@@ -59,7 +59,7 @@ mui.plusReady(function(){
         document.getElementById('bumen').value=""
         document.getElementById('jianchar').value=""
         var userPicker = new mui.PopPicker();
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/org",{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/org",{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -81,7 +81,7 @@ mui.plusReady(function(){
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
             }
         })
     }, false);
@@ -95,7 +95,7 @@ mui.plusReady(function(){
         if(danwei.getAttribute('data')==null){
                 return false;
         }else{
-             mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
+             mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/dept?orgId="+danwei.getAttribute('data'),{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -110,10 +110,16 @@ mui.plusReady(function(){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                 }
             })
              user.show(function(items) {
+                 if(items[0].text==undefined){
+                     bumen.value = ''
+                     return false;
+                 }else{
+                 bumen.value = items[0].text;
+                 }
                     bumen.value = items[0].text;
                     document.getElementById('bumen').setAttribute('data',items[0].id)
                     //返回 false 可以阻止选择框的关闭
@@ -130,7 +136,7 @@ mui.plusReady(function(){
         if(bumen.getAttribute('data')==null){
                 return false;
         }else{
-            mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
+            mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/?deptId="+bumen.getAttribute('data'),{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -145,7 +151,7 @@ mui.plusReady(function(){
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                 }
             })
             user.show(function(items) {
@@ -169,7 +175,7 @@ var sear=document.getElementById('sear')
         evt.stopPropagation()
         var name=jianchar.getAttribute('data')||"";
         plus.nativeUI.showWaiting( '正在加载' )
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&creatorId="+name+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
                 dataType:'json',
                 type:'get',
                 success:function(res){
@@ -181,7 +187,7 @@ var sear=document.getElementById('sear')
                 },
                 error:function(xhr,type,errorThrown){
                     plus.nativeUI.closeWaiting();
-                    alert('错误'+xhr.status+type+errorThrown)
+                    alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
                 }
             })
 
@@ -196,7 +202,7 @@ var sear=document.getElementById('sear')
         vm.items="";
         plus.nativeUI.showWaiting( '正在加载' )
 
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&startTime=2017-01-01 01:01:01",{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -207,7 +213,7 @@ var sear=document.getElementById('sear')
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
             }
         })
 
@@ -226,7 +232,7 @@ var sear=document.getElementById('sear')
         vm.field=event.detail.field;
         vm.getLogin=event.detail.getLogin
         plus.nativeUI.showWaiting( '正在加载' )
-        mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author+"&startTime="+document.getElementById('startTime').value,{
             dataType:'json',
             type:'get',
             success:function(res){
@@ -234,12 +240,12 @@ var sear=document.getElementById('sear')
             },
             error:function(xhr,type,errorThrown){
                 plus.nativeUI.closeWaiting();
-                alert('错误'+xhr.status+type+errorThrown)
+                alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
             },
              complete :function(){
                   setTimeout(function(){
                       plus.nativeUI.closeWaiting()
-                  },500)
+                  },100)
               }
         })
     })
@@ -291,7 +297,7 @@ var sear=document.getElementById('sear')
             document.getElementById('bumen').value="",
             document.getElementById('danwei').value="",
             document.getElementById('jianchar').value="",
-            document.getElementById('startTime').value="",
+            document.getElementById('startTime').value="2017-01-01 01:01:01",
             document.getElementById('endTime').value=""
         },false);
     }

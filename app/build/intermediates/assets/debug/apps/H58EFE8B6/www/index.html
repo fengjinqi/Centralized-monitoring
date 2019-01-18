@@ -47,16 +47,18 @@ margin-top: 10px;
 	</head>
 
 	<body>
+	<div id="root">
 		<header class="mui-bar mui-bar-nav hrader" style="box-shadow: none;">
 	    <h1 class="mui-title">应急通信车管理系统</h1>
+			<span id='btn' class="btn  mui-pull-right"style="color:#fff;padding-top:12px;">{{getName}}</span>
 		</header>
 		<div id="wrapper">
 
-			<div id='root'>
+			<div >
 				<div class="swiper-container"style="padding-top:42px ;">
 				    <div class="swiper-wrapper">
 				        <div class="swiper-slide">
-							<img src="images/banner.png" style="width: 100%;height:100%;" />
+							<img src="images/418203008333147851.jpg" style="width: 100%;height:100%;" />
 							<!--<img style="width: 100%;height:100%;background: url(images/banner.png)no-repeat;background-size: cover;" />--></div>
 				        <!--<div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=2065752029,946572736&fm=27&gp=0.jpg"/></div>
 				        <div class="swiper-slide"><img src="http://img3.imgtn.bdimg.com/it/u=720518622,1398976851&fm=27&gp=0.jpg"/></div>
@@ -70,7 +72,33 @@ margin-top: 10px;
 					        <span class='img buss'></span>
 					        <div class="mui-media-body" style="font-size: 16px;">业务填报</div>
 					    </a>
-						<span class="mui-badge mui-badge-red"style="top:15%" v-show="agency>0">{{agenc}}</span>
+					<!--	<span class="mui-badge mui-badge-red"style="top:15%" v-show="agency>0">{{agenc}}</span>-->
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carMap">
+						<a href="#">
+							<span class="img car"></span>
+							<div class="mui-media-body"style="font-size: 16px;">车辆定位</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carList">
+						<a href="#">
+							<span class="img inf"></span>
+							<div class="mui-media-body"style="font-size: 16px;">车辆信息</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 repository">
+						<a href="#">
+							<span class="img knowledge"></span>
+							<div class="mui-media-body"style="font-size: 16px;">知识库</div>
+						</a>
+						<span class="mui-badge mui-badge-red"style="top:15%;padding:6px 6px;"v-show="repository>0"><!--{{repository}}--></span>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 notice notice-time fr">
+						<a href="#">
+							<span class="img mes"></span>
+							<div class="mui-media-body"style="font-size: 16px;">通知公告</div>
+						</a>
+						<span class="mui-badge mui-badge-red"style="top:15%;padding:6px 6px;"v-show="notice>0"><!--{{notice}}--></span>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 waring" >
 					    <a href="#">
@@ -78,33 +106,7 @@ margin-top: 10px;
 					        <div class="mui-media-body"style="font-size: 16px;">告警信息</div>
 
 					    </a>
-						<span class="mui-badge mui-badge-red"style="top:15%"v-show="number>0">{{number}}</span>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 notice notice-time fr">
-					    <a href="#">
-					        <span class="img mes"></span>
-					        <div class="mui-media-body"style="font-size: 16px;">通知公告</div>
-					    </a>
-						<span class="mui-badge mui-badge-red"style="top:15%"v-show="notice>0">{{notice}}</span>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 repository">
-					    <a href="#">
-					        <span class="img knowledge"></span>
-					        <div class="mui-media-body"style="font-size: 16px;">知识库</div>
-					    </a>
-						<span class="mui-badge mui-badge-red"style="top:15%"v-show="repository>0">{{repository}}</span>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carMap">
-					    <a href="#">
-					        <span class="img car"></span>
-					        <div class="mui-media-body"style="font-size: 16px;">车辆定位</div>
-					    </a>
-					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4 carList">
-					    <a href="#">
-					        <span class="img inf"></span>
-					        <div class="mui-media-body"style="font-size: 16px;">车辆信息</div>
-					    </a>
+						<span class="mui-badge mui-badge-red"style="top:15%;padding:6px 6px;"v-show="number>0"><!--{{number}}--></span>
 					</li>
 			    </ul>
 				<div class="" v-show='items.length>0'>
@@ -119,6 +121,7 @@ margin-top: 10px;
 				    	更多
 				    </div>
 				</div>
+
 					<ul class="mui-table-view" :style="items.length>2?'height: 128px;overflow-y: auto;':'height:auto;'" >
 					    <li class="mui-table-view-cell  mui-media"v-for="(item,index) in items">
 					        <a href="javascript:;"class='obj' :data-id=item.id>
@@ -159,7 +162,7 @@ margin-top: 10px;
 						       <p>故障处理</p>
 								<div class="">
 									<p  class="mui-ellipsis ellipsis">{{item.bizObj.gzsbmc}}</p>
-									<p class="mui-ellipsis ellipsis">{{item.bizObj.sqrdw}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.sgrdw}}</p>
 								</div>
 						    </a>
 						</li>
@@ -167,7 +170,7 @@ margin-top: 10px;
 						    <a>
 						       <p>保障中心联调</p>
 								<div class="">
-									<p class="mui-ellipsis ellipsis">{{item.bizObj.csdw}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
 									<p class="mui-ellipsis ellipsis">{{item.bizObj.title}}</p>
 								</div>
 						    </a>
@@ -185,7 +188,7 @@ margin-top: 10px;
 							<a>
 						        <p>值班日志</p>
 								<div class="">
-									<p class="mui-ellipsis ellipsis">{{item.bizObj.zbr}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.zbrwb}}</p>
 									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
 								</div>
 						    </a>
@@ -223,7 +226,7 @@ margin-top: 10px;
 							<a href="#">
 						        <p>现场技术支持</p>
 								<div class="">
-									<p class="mui-ellipsis ellipsis">{{item.bizObj.txr}}</p>
+									<p class="mui-ellipsis ellipsis">{{item.bizObj.dqgstxr}}</p>
 									<p class="mui-ellipsis ellipsis">{{item.bizObj.dw}}</p>
 								</div>
 						    </a>
@@ -234,6 +237,8 @@ margin-top: 10px;
 				</div>
 			</div>
 
+	</div>
+		<audio src="main/111.mp3" muted autoplay loop controls style="display:none;"></audio>
 	</div>
 		<!--<button id='getContent' style="margin-top:100px;">获取所有</button>
 		<button id='getLoginId'onclick="getLogin()" style="margin-top:100px;">获取用户id</button>

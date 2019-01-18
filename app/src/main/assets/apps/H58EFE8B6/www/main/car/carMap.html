@@ -64,9 +64,11 @@
 	           
 	        </ul>
 	</div>
+	<!--<button onclick="getGeocode()">获取位置</button>-->
 	<!--获取用户的当前位置信息<br/>
-		<button onclick="getUserLocation()">获取位置</button>-->
+		-->
 		<div id="map" style="display: none;">地图加载中...</div>
+
 		<div id="output">
 <!--Geolocation可获取设备位置信息，包括经度、纬度、高度等信息。-->
 		</div>
@@ -76,127 +78,26 @@
 <script type="text/javascript">
 
 var watchId;
-function geoInf( position ) {
-	var str = "";
-	str += "地址："+position.addresses+"\n";//获取地址信息
-	str += "坐标类型："+position.coordsType+"\n";
-	var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
-	str += "时间戳："+timeflag+"\n";
-	var codns = position.coords;//获取地理坐标信息；
-	var lat = codns.latitude;//获取到当前位置的纬度；
-	str += "纬度："+lat+"\n";
-	var longt = codns.longitude;//获取到当前位置的经度
-	str += "经度："+longt+"\n";
-	var alt = codns.altitude;//获取到当前位置的海拔信息；
-	str += "海拔："+alt+"\n";
-	var accu = codns.accuracy;//地理坐标信息精确度信息；
-	str += "精确度："+accu+"\n";
-	var altAcc = codns.altitudeAccuracy;//获取海拔信息的精确度；
-	str += "海拔精确度："+altAcc+"\n";
-	var head = codns.heading;//获取设备的移动方向；
-	str += "移动方向："+head+"\n";
-	var sped = codns.speed;//获取设备的移动速度；
-	str += "移动速度："+sped;
-	console.log(JSON.stringify(position));
-	outLine( str );
-}
-function getPos() {
-	outSet( "获取位置信息:" );
-	plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
-		outSet( "获取位置信息失败："+e.message );
-	}, {geocode:false} );
-}
-function watchPos() {
-	if ( watchId ) {
-		return;
-	}
-	watchId = plus.geolocation.watchPosition( function ( p ) {
-		outSet( "监听位置变化信息:" );
-		geoInf( p );
-	}, function ( e ) {
-		outSet( "监听位置变化信息失败："+e.message );
-	}, {geocode:false} );
-}
-function clearWatch() {
-	if ( watchId ) {
-		outSet( "停止监听位置变化信息" );
-		plus.geolocation.clearWatch( watchId );
-		watchId = null;
-	}
-}
-// 通过定位模块获取位置信息
-function getGeocode(){
-	outSet( "获取定位位置信息:" );
-	plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
-		outSet( "获取定位位置信息失败："+e.message );
-	},{geocode:true,enableHighAccuracy:true});
-}
 
-
-	//判断用户是否开启gps
-	function getGEO_status(){
-	    var context = plus.android.importClass("android.content.Context");
-	    var locationManager=plus.android.importClass("android.location.LocationManager");
-	    var main=plus.android.runtimeMainActivity();
-	    var mainSvr=main.getSystemService(context.LOCATION_SERVICE);
-	    console.log(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER));
-    }
 	var gps=null;
 
 
 	document.getElementById("mySwitch").addEventListener("toggle",function(event){
-	/*var att=document.getElementById('showUserPicker').getAttribute('data-id');
-	if(att==null){
-		console.log(event)
-		this.className="mui-switch mui-switch-blue"
-
-		return ;
-	}else{
-		*/
 	 if(event.detail.isActive){
 
-	    console.log("你启动了开关");
-	    //getGEO_status()
-	/*	 var context = plus.android.importClass("android.content.Context");
-	    var locationManager=plus.android.importClass("android.location.LocationManager");
-	    var main=plus.android.runtimeMainActivity();
-	    var mainSvr=main.getSystemService(context.LOCATION_SERVICE);
-	    if(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER)){
-	    	clearInterval(gps)
-	    	outSet( "获取定位位置信息:" );
-			plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
-				outSet( "获取定位位置信息失败："+e.message );
-			},{geocode:true,enableHighAccuracy:false});
-	    	gps=setInterval(function(){
-	    		outSet( "获取定位位置信息:" );
-				plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
-					outSet( "获取定位位置信息失败："+e.message );
-				},{geocode:true,enableHighAccuracy:true});
-			},1000*60)
-	    }else{
-	    	clearInterval(gps)
-	    	//plus.nativeUI.alert( "亲,不开启GPS会有误差哦O(∩_∩)O!", function(){
-			//	getUserLocation();console.log( "User pressed!" );
-			//}, "", "关闭" );
-			getUserLocation()
-			gps=setInterval(function(){
-				getUserLocation()
-			},1000*60)
-	   }*/
+
 	  	 getUserLocation()
 		gps=setInterval(function(){
 			getUserLocation()
-		},1000*60)
+		},1000*30)
 
 	}else{
 			console.log("你关闭了开关");
 			clearInterval(gps)
-			/*setTimeout(function(){
-				document.getElementById("mySwitch").style.display='none'
-			},1500)*/
+
 			document.getElementById('output').innerHTML=""
 		}
-		//}
+
 })
 	mui.plusReady(function() {
 	function getLogin(){
@@ -206,19 +107,25 @@ function getGeocode(){
         return name.toLowerCase()
 
     }
-	plus.nativeUI.showWaiting( '正在加载' )
+
+	plus.nativeUI.showWaiting( '正在加载...请稍后' )
 	var arr=[]
-		  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar?userId='+getLogin(),{
+
+		  mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar?userId='+getLogin(),{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
 					//获得服务器响应,
 					if(data.success==true){
 						for(var n in data.data){
+
 							if(data.data[n].hasOwnProperty('carid')&& data.data[n].carid!==undefined ){
 								arr.push({
 								text:data.data[n].carid,
-								value:data.data[n].id
+								value:data.data[n].id,
+								orgname:data.data[n].orgname,
+								carmodel:data.data[n].carmodel,
+								fzr:data.data[n].fzr
 							})
 							}
 
@@ -244,6 +151,10 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
                 }else{
                 document.getElementById('showUserPicker').innerText = SelectedItem[0].text;
                 document.getElementById('showUserPicker').setAttribute('data-id',SelectedItem[0].value)
+                document.getElementById('showUserPicker').setAttribute('text',SelectedItem[0].text)
+                document.getElementById('showUserPicker').setAttribute('orgname',SelectedItem[0].orgname)
+                document.getElementById('showUserPicker').setAttribute('carmodel',SelectedItem[0].carmodel)
+                document.getElementById('showUserPicker').setAttribute('fzr',SelectedItem[0].fzr)
                 document.getElementById("mySwitch").style.display='block'
                 }
 		})
@@ -252,14 +163,26 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 })
 
 </script>
+	<script type="text/javascript">
+function getGeocode(){
+
+plus.geolocation.getCurrentPosition( function(option){
+		alert(JSON.stringify(option.coords.latitude))
+}, function ( e ) {
+		alert( "获取定位位置信息失败："+e.message );
+	},{geocode:true,provider:'system',enableHighAccuracy:true});
+}
+		</script>
 <script type="text/javascript">
+
+
 	var em=null,map=null;
 	// H5 plus事件处理
 	function plusReady(){
 		// 确保DOM解析完成
 		if(!em||!window.plus||map){return};
 		map = new plus.maps.Map("map");
-			//map.centerAndZoom( new plus.maps.Point(116.3977,39.906016), 12 );
+			map.centerAndZoom( new plus.maps.Point(116.3977,39.906016), 12 );
 	}
 	if(window.plus){
 		plusReady();
@@ -274,31 +197,72 @@ document.getElementById('showUserPicker').addEventListener('tap',function(){
 	// 获取用户的当前位置信息
 	function getUserLocation(){
 		var obj={}
+		var time={}
+		plus.geolocation.getCurrentPosition( function(option){
+			obj.jd=String(option.coords.latitude),
+
+			obj.wd=String(option.coords.longitude),
+			obj.code=document.getElementById('showUserPicker').getAttribute('data-id'),
+			obj.gd="5"
+			//alert(JSON.stringify(obj))
+			mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/instGps',{
+				data:JSON.stringify(obj),
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				headers:{'Content-Type':'application/json'},
+				success:function(data){
+
+					if(data.success==false){
+						//mui.alert('请选择车辆')
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+				}
+			});
+}, function ( e ) {
+		alert( "获取定位位置信息失败：" );
+	},{geocode:true,provider:'system',enableHighAccuracy:true});
+
+
 		map.getUserLocation( function ( state, point ){
 			if( 0 == state ){
+				if(point.latitude=='5e-324'&&point.longitude=='5e-324'){
+					mui.alert("请运行程序使用定位权限")
 
+				}
 				obj.jd=String(point.latitude),
+
 				obj.wd=String(point.longitude),
 				obj.code=document.getElementById('showUserPicker').getAttribute('data-id'),
 				obj.gd="5"
-				alert(JSON.stringify(obj))
-				  mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/instGps',{
-					data:JSON.stringify(obj),
-					dataType:'json',//服务器返回json格式数据
-					type:'post',//HTTP请求类型
-					headers:{'Content-Type':'application/json'},
-					success:function(data){
-						alert(JSON.stringify(data))
 
-						if(data.success==false){
-							//mui.alert('请选择车辆')
-						}
+
+				time.jd=String(point.latitude),
+				time.wd=String(point.longitude),
+				time.carid=document.getElementById('showUserPicker').getAttribute('text'),
+				time.orgname=document.getElementById('showUserPicker').getAttribute('orgname'),
+				time.carmodel=document.getElementById('showUserPicker').getAttribute('carmodel'),
+				time.fzr=document.getElementById('showUserPicker').getAttribute('fzr'),
+				time.time=getPastHalfYear()
+				mui.ajax('http://127.0.0.1:10330/cmonitor/servlet/GetJWServlet',{
+					data:{"jd":String(point.latitude),"wd":String(point.longitude),"carid":document.getElementById('showUserPicker').getAttribute('text'),"orgname":document.getElementById('showUserPicker').getAttribute('orgname'),"carmodel":document.getElementById('showUserPicker').getAttribute('carmodel'),"fzr":document.getElementById('showUserPicker').getAttribute('fzr'),"time":getPastHalfYear()},
+                	dataType:'text',
+					type:'post',//HTTP请求类型
+					success:function(data){
+
 					},
-				error:function(xhr,type,errorThrown){
-					plus.nativeUI.closeWaiting();
-					alert('错误'+xhr.status+type+errorThrown)
-				}
-			});
+					error:function(xhr,type,errorThrown){
+						alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+					}
+				});
+
+
+
+
+
+				  /**/
 			}else{
 				alert( "获取坐标失败" );
 			}

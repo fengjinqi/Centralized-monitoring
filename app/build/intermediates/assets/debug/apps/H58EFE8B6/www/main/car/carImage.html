@@ -4,10 +4,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>全国车辆信息拓扑图</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/new_file.css"/>
+		<!--<link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">-->
 		<style type="text/css">
+		#allmap{
+				    margin-top: 44px;
+			}
+		#map{width:100%;height:100%;}
 			.mui-preview-image.mui-fullscreen {
 				position: fixed;
 				z-index: 20;
@@ -159,72 +164,162 @@
 				max-width: 100%;
 				height: auto;
 			}
+
 		</style>
 	</head>
-
+	<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+		#r-result{height:100%;width:20%;float:left;}
+	</style>
 	<body>
+	<div id="root">
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">全国车辆信息拓扑图</h1>
+		    <h1 class="mui-title">GPS车辆拓扑图</h1>
 		</header>
-		<div >
-	
-		    <img style="width: 100%;"style='margin-top:10px;' data-preview-src=""id='img' data-preview-group="1"
-				 src=""/>
-		</div>
+
+	</div>
+
+			<div id="allmap"></div>
+
+			<!--<div id="map"></div>-->
+		    <!--<img style="width: 100%;"style='margin-top:10px;' data-preview-src=""id='img' data-preview-group="1"-->
+				 <!--src=""/>-->
+
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=MIvRIaO2el2Hf40S3PX2UPe92Ah6NfG4"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
 		<script src="../../js/mui.previewimage.js"></script>
+		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
-			mui.previewImage();
-			var clientHeight=document.body.clientHeight||document.element.clientHeight
-			var image=document.querySelector('img')
-			var imageHeight=image.offsetHeight
-			/*image.style.position='absolute';
-			image.style.top='50%';
-			image.style.left='50%';
-			image.style.marginTop=''
-			image.style.marginTop='173.5px'*/
+		var vm=new Vue({
+		el:'#root',
+			data:{
+				item:''
+			}
+		})
 
 	mui.plusReady(function(){
-	window.addEventListener('get_detail',function(event){
-			plus.nativeUI.showWaiting("正在加载 ")
-					mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/downImage",{
-						dataType:'json',
-						type:'get',
-						success:function(res){
-						var reg=new RegExp('\r\n','g')
-						var image=res.data[0].data.replace(reg,'')
-						//alert(JSON.stringify(res.data[1].data.replace(reg,'不仅仅')))
-						document.getElementById('img').style.marginTop='100px'
-						document.getElementById('img').src="data:image/gif;base64,"+image;
-						},
-						error:function(xhr,type,errorThrown){
-							alert('错误'+xhr.status+type+errorThrown)
-						}
-						,
-						 complete :function(){
+		window.addEventListener('get_detail',function(event){
 
-								 plus.nativeUI.closeWaiting()
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	map.setMapStyle({style:'googlelite'});
+	var point = new BMap.Point(116.404, 39.915);
+	map.addControl(new BMap.ScaleControl());
+	map.centerAndZoom(point, 5);
+	// 编写自定义函数,创建标注
+	function addMarker(point){
+	  var marker = new BMap.Marker(point);
+	  map.addOverlay(marker);
+	}
+		var opts = {
+				width : 250,     // 信息窗口宽度
+				height: 250,     // 信息窗口高度
+				//title : "信息窗口" , // 信息窗口标题
+				enableMessage:true//设置允许信息窗发送短息
+			   };
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+	// 添加带有定位的导航控件
+  var navigationControl = new BMap.NavigationControl({
+    // 靠左上角位置
+    anchor: BMAP_ANCHOR_BOTTOM_LEFT,
+    // LARGE类型
+    type: BMAP_NAVIGATION_CONTROL_LARGE,
+    // 启用显示定位
+    enableGeolocation: true
+  });
+  map.addControl(navigationControl);
 
-						 }
-					})
-					})
-				mui.back = function() {
-				plus.webview.currentWebview().hide("auto", 300);
-				var self = plus.webview.currentWebview();
-				self.addEventListener("hide",function (e) {
-				document.getElementById('img').src=""
-				},false);
-			}
-			})
+
+
+	mui.ajax('http://127.0.0.1:10330/cmonitor//servlet/GetCarServlet',{
+	dataType:'json',
+	type:'post',//HTTP请求类型
+	success:function(data){
+	//var data=[{"carid":"甘AJG901","carmodel":"依维柯NJ2045","fzr":"曾锋德","jd":"30.55762","orgname":"兰州石化","time":"2018-5-22 10:32:17","wd":"104.074524"},{"carid":"冀R6511M","carmodel":"依维柯NJ2045","fzr":"裴晓峰","jd":"40.110885","orgname":"管道局","time":"2018-5-25 8:47:29","wd":"116.425247"},{"carid":"冀R 7S112","carmodel":"丰田4000","fzr":"李锐","jd":"40.110723","orgname":"管道局","time":"2018-5-24 21:46:49","wd":"116.425312"}]
+		//vm.item=data;
+		for(var i=0;i<data.length;i++){
+
+			var marker = new BMap.Marker(new BMap.Point(Math.abs(data[i].wd)+(Math.random()*0.00005),Math.abs(data[i].jd)+(Math.random()*0.00005)));  // 创建标注
+
+			map.addOverlay(marker)
+				addClickHandler("<p>经度:"+data[i].jd+"</p>"+"<p>纬度:"+data[i].wd+"</p>"+"<p>车牌号:"+data[i].carid+"</p>"+"<p>单位:"+data[i].orgname+"</p>"+"<p>车辆型号:"+data[i].carmodel+"</p>"+"<p>负责人:"+data[i].fzr+"</p>"+"<p>最近更新时间:"+data[i].time+"</p>",marker);
+				}
+	},
+	error:function(xhr,type,errorThrown){
+		alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+	}
+});
+
+})
+})
+
+
+</script>
+<!--		<script src="http://js.arcgis.com/3.10/"></script>-->
+		<!--<script type="text/javascript">-->
+			<!--mui.previewImage();-->
+			<!--var clientHeight=document.body.clientHeight||document.element.clientHeight-->
+			<!--var image=document.querySelector('img')-->
+			<!--var imageHeight=image.offsetHeight-->
+			<!--/*image.style.position='absolute';-->
+			<!--image.style.top='50%';-->
+			<!--image.style.left='50%';-->
+			<!--image.style.marginTop=''-->
+			<!--image.style.marginTop='173.5px'*/-->
+
+	<!--mui.plusReady(function(){-->
+	<!--window.addEventListener('get_detail',function(event){-->
+			<!--plus.nativeUI.showWaiting("正在加载 ")-->
+					<!--mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/downImage",{-->
+						<!--dataType:'json',-->
+						<!--type:'get',-->
+						<!--success:function(res){-->
+						<!--var reg=new RegExp('\r\n','g')-->
+						<!--var image=res.data[0].data.replace(reg,'')-->
+						<!--//alert(JSON.stringify(res.data[1].data.replace(reg,'不仅仅')))-->
+						<!--document.getElementById('img').style.marginTop='100px'-->
+						<!--document.getElementById('img').src="data:image/jpg;base64,"+image;-->
+						<!--},-->
+						<!--error:function(xhr,type,errorThrown){-->
+							<!--alert('错误'+xhr.status+type+errorThrown)-->
+						<!--}-->
+						<!--,-->
+						 <!--complete :function(){-->
+
+								 <!--plus.nativeUI.closeWaiting()-->
+
+						 <!--}-->
+					<!--})-->
+					<!--})-->
+				<!--mui.back = function() {-->
+				<!--plus.webview.currentWebview().hide("auto", 300);-->
+				<!--var self = plus.webview.currentWebview();-->
+				<!--self.addEventListener("hide",function (e) {-->
+				<!--document.getElementById('img').src=""-->
+				<!--},false);-->
+			<!--}-->
+			<!--})-->
 
 
 
 
 
 
-		</script>
+		<!--</script>-->
+
 	</body>
 
 </html>

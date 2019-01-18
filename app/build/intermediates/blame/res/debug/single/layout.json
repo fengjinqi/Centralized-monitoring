@@ -1,19 +1,15 @@
 [
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_loadingview.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_loadingview.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery_item.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery_item.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_dialog.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_market_fragment_base.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_market_fragment_base.xml"
-    },
-    {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_activity_main_market.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_activity_main_market.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery_item.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery_item.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_market_fragment_base.xml",
@@ -24,28 +20,28 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_activity_main_market.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_activity_main_market.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery_item.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery_item.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_dialog.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_dialog.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\getui_notification.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\getui_notification.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_white_progress.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_white_progress.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_custom_notification.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_custom_notification.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_white_progress.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_white_progress.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_dialog.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_dialog.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\getui_notification.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\getui_notification.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_black_progress.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_snow_black_progress.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_loadingview.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_loadingview.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_activity_main_market.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_activity_main_market.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_custom_notification.xml",
@@ -56,35 +52,83 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_main_test_activity.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery_item.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery_item.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_black_progress.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_black_progress.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\getui_notification.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\getui_notification.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery_item.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery_item.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_main_test_activity.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_main_test_activity.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_activity_main_market.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_activity_main_market.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_main_test_activity.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_main_test_activity.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_market_fragment_base.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_market_fragment_base.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_white_progress.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_white_progress.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_loadingview.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_loadingview.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_activity_main_market.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_activity_main_market.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\getui_notification.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\getui_notification.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_loadingview.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_loadingview.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_dialog.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_custom_notification.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_custom_notification.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_image_pick_gallery.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_image_pick_gallery.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_black_progress.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_black_progress.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_white_progress.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_snow_white_progress.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_black_progress.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_snow_black_progress.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_white_progress.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_snow_white_progress.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_loadingview.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_loadingview.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_market_fragment_base.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_market_fragment_base.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_main_test_activity.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\dcloud_main_test_activity.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_snow_black_progress.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_snow_black_progress.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\debug\\layout\\getui_notification.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\layout\\getui_notification.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dcloud_custom_notification.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\layout\\dcloud_custom_notification.xml"
     }
 ]

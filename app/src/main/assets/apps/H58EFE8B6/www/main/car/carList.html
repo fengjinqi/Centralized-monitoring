@@ -15,45 +15,182 @@
 			  	color: #333;
 			    margin: -14px -15px;
 			}
-		
+			#file{
+			    position: absolute;
+				width: 100%;
+				height: 100%;
+				z-index: 9;
+				top: 0;
+				opacity: 0;
+			}
 		</style>
 	</head>
 
 	<body>
+	<div id="root">
+
+
 		<header class="mui-bar mui-bar-nav hrader">
 		    <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">车辆信息</h1>
 		</header>
 		<ul class="mui-table-view list" style="padding-top: 44px;">
-		        <li class="mui-table-view-cell tong" data-type = "tongjian">
+		       <!-- <li class="mui-table-view-cell tong" data-type = "tongjian">
 		            <a class="mui-navigate-right">
 		                统建车辆信息
 		            </a>
-		        </li>
+		        </li>-->
 		        <li class="mui-table-view-cell oneself"data-type = "zijian">
 		            <a class="mui-navigate-right">
-		                 自建车辆信息
+		                 车辆信息
 		            </a>
 		        </li>
-		        <li class="mui-table-view-cell carImage"data-type = "links">
-		            <a class="mui-navigate-right">
-		                 全国车辆拓扑图
+				<!--<li class="mui-table-view-cell carImage"data-type = "links">
+					<a class="mui-navigate-right">
+						GPS车辆拓扑图
+					</a>
+				</li>-->
+			<li class="mui-table-view-cell quanguo"data-type = "links">
+				<a class="mui-navigate-right">
+					全国车辆总览图
+				</a>
+			</li>
+			<li class="mui-table-view-cell guanli"data-type = "links"v-if="name=='CNPC/bzzx'||name=='CNPC/tx_gjl'">
+				<a class="mui-navigate-right">
+					车辆总览图管理
+				</a>
+			</li>
+			<li class="mui-table-view-cell BGAN"data-type = "links"v-if="name=='CNPC/bzzx'||name=='CNPC/tx_gjl'">
+				<a class="mui-navigate-right">
+					BGAN总览图管理
+				</a>
+			</li>
+				<li class="mui-table-view-cell submit"style=" position: relative;"v-if="name=='CNPC/bzzx'||name=='CNPC/tx_gjl'">
+		            <a class="mui-navigate-right ">
+						车辆维护资料上传
 		            </a>
+					<input type="file" name="file" id="file"@change='upload($event)'>
 		        </li>
+				<li class="mui-table-view-cell upload">
+					<a class="mui-navigate-right ellipsis mui-ellipsis ">
+						车辆维护资料下载
+
+					</a>
+				</li>
+
 		    </ul>
+	</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/vue.min.js"></script>
 		<script src="../../js/public.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
+			var vm=new Vue({
+				el:"#root",
+				data:{
+					item:[],
+					name:''
+				},
+				methods:{
+					upload:function(e){
+						var fd= new FormData()
+						 /*if(!/application\/\w+/.test(e.target.files[0].type)){
+						 	mui.alert('请上传正确的格式文件');
+							return false;
+						 }*/
+						fd.append('file',e.target.files[0])
+						console.log(e.target.files[0])
+						plus.nativeUI.showWaiting('正在上传附件请稍后...')
+
+						mui.ajax("http://127.0.0.1:10330/cmonitor/servlet/UploadHandleServlet",{
+							dataType:'text',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+						  	data:fd,
+							processData: false,
+							contentType: false,
+							success:function(data){
+
+								if (data.indexOf("成功")){
+									plus.nativeUI.toast("上传成功")
+								}
+								mui.ajax("http://127.0.0.1:10330/cmonitor/servlet/ListFileServlet",{
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+						  	data:{},
+
+							success:function(data){
+
+								if(data!=null){
+									vm.item=data
+								}
+
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								alert('错误'+xhr.status+type+errorThrown)
+							},
+							complete :function(){
+								 plus.nativeUI.closeWaiting()
+
+							 }
+						});
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+							},
+							complete :function(){
+								 plus.nativeUI.closeWaiting()
+
+							 }
+						});
+					},
+					onUploadChange:function(e){
+
+						var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
+
+						var dtask = plus.downloader.createDownload(e.fileUrl, {
+							   method: 'get',
+							   filename: '_downloads/'
+						   }, function(d, status) {
+						   if(status == 200) {
+								watiting.setTitle("下载成功"+ decodeURIComponent(d.filename))
+								plus.runtime.openFile( d.filename, {}, function ( e ) {//调用第三方应用打开文件
+									alert('打开失败');
+								})
+
+							   setTimeout(function(){
+									watiting.close()
+							   },2000)
+
+						   } else {
+								watiting.setTitle("下载失败")
+								watiting.close()
+						   }
+						});
+						 dtask.start();
+					}
+				}
+			})
 			mui.init({
 				preloadPages:[
 			    {
 			      url:'carImage.html',
 			      id:'carImage',
+			    },
+			    {
+			    url:'caruplate.html',
+			      id:'caruplate',
 			    }
 			  ]
 		})
+
 			mui.plusReady(function() {
+			var name=""
+			var test=plus.android.newObject("io.dcloud.GetUserMessage");
+
+			name=plus.android.invoke(test,'getLoginId')
+
+			vm.name=name
 		    //预加载详情页
 		    webview_detail = mui.preload({
 		        url: 'oneselfLilst.html',
@@ -63,6 +200,69 @@
 		        url: 'carImage.html',
 		        id: 'carImage',
 		    });
+		    caruplate = mui.preload({
+		        url: 'caruplate.html',
+		        id: 'caruplate',
+		    });
+		      quan = mui.preload({
+		        url: 'test.html',
+		        id: 'test',
+		    });
+		      gunali = mui.preload({
+		        url: 'testupdate.html',
+		        id: 'testupdate',
+		    });
+		    bgan = mui.preload({
+		        url: 'bgan.html',
+		        id: 'bgan',
+		    });
+				function ajax(){
+		    		mui.ajax("http://127.0.0.1:10330/cmonitor/servlet/ListFileServlet",{
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+						  	data:{},
+
+							success:function(data){
+									if(data!=null){
+									vm.item=data
+								}
+
+							},
+							error:function(xhr,type,errorThrown){
+								plus.nativeUI.closeWaiting();
+								alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+							},
+							complete :function(){
+								 plus.nativeUI.closeWaiting()
+
+							 }
+						});
+				}
+				ajax()
+		   mui('.mui-table-view').on('tap', '.upload', function(e) {
+				mui.fire(caruplate, 'get_detail', {
+
+				});
+				mui.openWindowWithTitle({
+				    url:'caruplate.html',
+				    id:'caruplate',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+		   })
+
+
+
+
 		   mui('.mui-table-view').on('tap', '.oneself', function(e) {
 		    	 //触发子窗口变更新闻详情
 				mui.fire(webview_detail, 'get_detail', {
@@ -86,10 +286,84 @@
 				      title:'正在加载...',//等待对话框上显示的提示内容
 					    }
 				})
-
-			   
 		   })
-		   mui('.mui-table-view').on('tap', '.tong', function(e) {
+
+
+		//全国
+		mui('.mui-table-view').on('tap', '.quanguo', function(e) {
+		    	 //触发子窗口变更新闻详情
+				mui.fire(quan, 'get_detail', {
+
+				});
+				mui.openWindowWithTitle({
+				    url:'test.html',
+				    id:'test',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      duration:300,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+		   })
+			mui('.mui-table-view').on('tap', '.guanli', function(e) {
+		    	 //触发子窗口变更新闻详情
+				mui.fire(gunali, 'get_detail', {
+
+				});
+				mui.openWindowWithTitle({
+				    url:'testupdate.html',
+				    id:'testupdate',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      duration:300,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+		   })
+mui('.mui-table-view').on('tap', '.BGAN', function(e) {
+		    	 //触发子窗口变更新闻详情
+				mui.fire(bgan, 'get_detail', {
+
+				});
+				mui.openWindowWithTitle({
+				    url:'bgan.html',
+				    id:'bgan',
+				    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+				    show:{
+				      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+				      aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+				      duration:300,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+				      event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+				      extras:{}//窗口动画是否使用图片加速
+				    },
+				    waiting:{
+				      autoShow:true,//自动显示等待框，默认为true
+				      title:'正在加载...',//等待对话框上显示的提示内容
+					    }
+				})
+
+		   })
+
+
+
+
+		 /*  mui('.mui-table-view').on('tap', '.tong', function(e) {
 		    	 //触发子窗口变更新闻详情
 				mui.fire(webview_detail, 'get_detail', {
 				    guid: this.innerText,
@@ -113,7 +387,7 @@
 				})
 
 		   })
-
+*/
 
 
 

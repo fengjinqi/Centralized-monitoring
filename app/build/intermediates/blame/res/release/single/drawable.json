@@ -1,19 +1,15 @@
 [
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_longding_bg.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_longding_bg.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape.xml"
-    },
-    {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_image_pick_title_sel.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_image_pick_title_sel.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_longding_bg.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_longding_bg.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml",
@@ -24,48 +20,44 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape_bg.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape_bg.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_longding_bg.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_longding_bg.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_longding_bg.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_longding_bg.xml"
-    },
-    {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape.xml"
     },
     {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_image_pick_title_sel.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_image_pick_title_sel.xml"
+    },
+    {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_image_pick_title_sel.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_image_pick_title_sel.xml"
     },
     {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml"
-    },
-    {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml"
-    },
-    {
-        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml",
-        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml"
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape_bg.xml",
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml"
     },
     {
         "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml",
@@ -76,7 +68,55 @@
         "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml"
     },
     {
-        "merged": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml",
-        "source": "C:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml"
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape_bg.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_middle.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape_bg.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape_bg.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_dialog_shape.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_dialog_shape.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_image_pick_title_sel.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_image_pick_title_sel.xml"
+    },
+    {
+        "merged": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml",
+        "source": "C:\\Users\\admin\\Desktop\\Centralizedmonitoring\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_single.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_cancel_bt.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello1\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_top.xml"
+    },
+    {
+        "merged": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\build\\intermediates\\res\\merged\\release\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml",
+        "source": "D:\\Users\\admin\\Desktop\\Centralized monitoring\\Android-SDK@1.9.9.39354_20171120\\HBuilder-Hello2\\app\\src\\main\\res\\drawable\\dcloud_slt_as_ios7_other_bt_title.xml"
     }
 ]

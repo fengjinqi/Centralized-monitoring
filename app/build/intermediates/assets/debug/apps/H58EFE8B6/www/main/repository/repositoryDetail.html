@@ -23,7 +23,7 @@
 		    <h1 class="mui-title">知识库详情列表</h1>
 		</header>
 		<div class="mui-content"id='root' style="background: #fff;">
-			<div v-for="item in items">
+			<div v-for="item in objtime">
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">设备名称</p>
 					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.sbmc}}</p>
@@ -32,23 +32,29 @@
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">标题</p>
 					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.title}}</p>
 				</div>
-				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
-					<p  class="mui-col-sm-4 mui-col-xs-4 liner">规格</p>
-					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.pp}}</p>
-				</div>
+				<!--<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">-->
+					<!--<p  class="mui-col-sm-4 mui-col-xs-4 liner">规格</p>-->
+					<!--<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.pp}}</p>-->
+				<!--</div>-->
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">知识类别</p>
 					<p  class="mui-col-sm-8 mui-col-xs-8 liner">{{item.category}}</p>
 				</div>
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;overflow:hidden;">
-					<p  class="mui-col-sm-4 mui-col-xs-4 liner">内容</p>
-					<p  class="mui-col-sm-8 mui-col-xs-8 liner" v-html='item.content'></p>
+					<div  class="mui-col-sm-12 mui-col-xs-12 liner">内容
+						<p v-html='item.content'></p>
+					</div>
+				</div>
+				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;overflow:hidden;"v-if="item.img.length>0">
+
+					<p  class="mui-col-sm-12 mui-col-xs-12 liner">
+						<img v-for="it in item.img" :src="it" alt=""style="width:100%;margin-right:15px;">
+					</p>
 				</div>
 				<div class="mui-row"style="padding-left: 15px;padding-right: 15px;overflow:hidden;">
 					<p  class="mui-col-sm-4 mui-col-xs-4 liner">附件</p>
 					<div  class="mui-col-sm-8 mui-col-xs-8 liner" >
 						<span style='display:block;overflow:hidden;margin-top:10px;'>
-
 							<!--<button type="button" class="mui-btn form-control"  @click.stop='Gareth(item)':name="item.bizField">附件上传</button>-->
 								<p style='margin-bottom:15px;height:auto!important;width:100%!important;' @click='Download(it)' class=" form-control doenload"v-for='it in item.attachfile':url='it.uri'>{{it.name}}</p>
 
@@ -56,18 +62,7 @@
 					</div>
 				</div>
 			</div>
-		 <!--   <div class="mui-row"style="padding-left: 15px;padding-right: 15px;">
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">设备名称:</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner"></p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">标题:</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.title}}</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">规格:</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.pp}}</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">知识类别:</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">{{item.category}}</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">附近:</p>
-		    	<p class="mui-col-sm-6 mui-col-xs-6 liner">文档 <span class="mui-icon mui-icon-download" style="color: #61ced0;"></span></p>
-		    </div>-->
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
@@ -77,13 +72,28 @@
 				el:'#root',
 				data:{
 					guid:'',
-					items:[]
+					items:[],
+					img:[],
+					item:'',
+					objtime:[]
+				},
+				filters:{
+					capitalize:function(value){
+						var regx = /<[^>]*>|<\/[^>]*>/gm
+						var reg=value.replace(regx,"")
+						var imgReg = /(?<=(src="))[^"]*?(?=")/ig;
+						var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/gi;
+						var arr = value.match(imgReg);
+						this.img=arr
+						alert(value)
+					//alert('所有已成功匹配图片的数组：'+"http://127.0.0.1:10261"+arr);
+						return reg+`<img src="http://127.0.0.1:10332${arr}">`
+					}
 				},
 				methods:{
 					   Download: function(obj){
-					    var path=obj.uri.replace(/http:\/\/11.55.0.81:8890/gi,'http:\/\/127.0.0.1:10261');
+					    var path=obj.uri.replace(/http:\/\/11.55.0.68:8890/gi,'http:\/\/127.0.0.1:10332');
                          var watiting=plus.nativeUI.showWaiting("下载中。。。请稍后");
-                         alert(JSON.stringify(path))
 						   var dtask = plus.downloader.createDownload(path+"&encoding=UTF8", {
 								   method: 'post',
 								   filename: '_downloads/'
@@ -106,44 +116,111 @@
 				}
 			})
 
-    console.log(vm.items)
 			mui.plusReady(function() {
+			var obj=new Object()
+
 				window.addEventListener('get_detail',function(event){
+
 				  vm.guid= event.detail.guid;
+				  vm.item=event.detail.item
+
 				  	plus.nativeUI.showWaiting( '正在加载' )
-					mui.ajax('http://127.0.0.1:10261/itsm/rest/api/v2/itsm/tickets/knowledge',{
+					/*mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/knowledge',{
 						dataType:'json',//服务器返回json格式数据
 						type:'get',//HTTP请求类型
 						success:function(data){
-							if(data.success==true){
-								for(var n in data.data){
-									if(data.data[n].id==vm.guid)
-									vm.items.push(data.data[n]);
+							if(data.success==true){*/
+							var regimg=new RegExp('\r\n','ig')
+							var imgReg =/src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+							var regx = /<[^>]*>|<\/[^>]*>/gm
+								for(var n in vm.item){
+									if(vm.item[n].id==vm.guid)
+									vm.items.push(vm.item[n]);
 								}
+							//}
+							var imgReg = /<img.*?(?:>|\/>)/gi;
+							//匹配src属性
+							var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+							var arr = vm.items[0].content.match(imgReg);
+							var arrimg=[]
+							//alert('所有已成功匹配图片的数组：'+arr);
+							if(vm.items[0].content.indexOf("img")>=1){
+							for (var i = 0; i < arr.length; i++) {
+							 var src = arr[i].match(srcReg);
+							 //获取图片地址
+							 if(src[1]){
+								arrimg.push("http://127.0.0.1:10332"+src[1])
+							 // alert('已匹配的图片地址'+(i+1)+'：'+"http://127.0.0.1:10261"+src[1]);
+							 }
+							/* //当然你也可以替换src属性
+							 if (src[0]) {
+							  var t = src[0].replace(/src/i, "href");
+							  //alert(t);
+							 }*/
 
 							}
-						},
+
+							}
+							/*if(vm.items[0].content.indexOf("img")>=1){
+								var arr = vm.items[0].content.match(imgReg);
+								alert(arr)
+								if(arr[1]){
+									vm.img=arr[1]
+								}
+							}*/
+								var regxobj=vm.items[0].content.replace(regx,"")
+
+								for(var i=0;i<regxobj.length;i++){
+										var imagereg=regxobj.replace(regimg,'<br>')
+								}
+								obj.rownum_=vm.items[0].rownum_
+								obj.sbmc=vm.items[0].sbmc
+								obj.pp=vm.items[0].pp
+								obj.title=vm.items[0].title
+								obj.content=imagereg
+								obj.category=vm.items[0].category
+								obj.attachfile=vm.items[0].attachfile
+								obj.processobjid=vm.items[0].processobjid
+								obj.id=vm.items[0].id
+								obj.img=arrimg
+								//var reg=/(?<=(src="))[^"]*?(?=")/ig;
+								vm.objtime.push(obj)
+
+plus.nativeUI.closeWaiting()
+						/*},
 						error:function(xhr,type,errorThrown){
 							plus.nativeUI.closeWaiting();
 
                         	mui.alert("网络错误")
 						},
 						complete :function(){
-							setTimeout(function(){
+							//setTimeout(function(){
 								plus.nativeUI.closeWaiting()
-							},500)
+							//},500)
 						}
-					});
+					});*/
 				})
+
+
 
 			})
 			mui.back = function() {
 		plus.webview.currentWebview().hide("auto", 300);
 		var self = plus.webview.currentWebview();
 		self.addEventListener("hide",function (e) {
-			vm.items=[]
+			vm.items=[],
+			vm.objtime=[]
 	})
 	}
+/*var regx = /<[^>]*>|<\/[^>]*>/gm
+	var reg= "<p>dfghdfghfgdhfdghfdghfdhdf< img width=\"1024\" height=\"768\" alt=\"\" src=\"/itsm/update/05b8980c-24f8-42ff-823c-d79784130797Desert.jpg\" /></p >"
+	console.log(reg.replace(regx,""))
+	var imgReg = /(?<=(src="))[^"]*?(?=")/ig;
+	var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/gi;
+	alert(imgReg)
+	var arr = reg.match(imgReg);
+alert('所有已成功匹配图片的数组：'+"http://127.0.0.1:10261"+arr);
+*/
 		</script>
 	</body>
 

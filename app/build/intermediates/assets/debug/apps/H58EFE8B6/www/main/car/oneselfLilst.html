@@ -32,27 +32,35 @@
 	    <h1 class="mui-title">{{title}}</h1>
 	</header>
 	<div class="mui-content top"style="background: #fff;" >
-		<div class="mui-row"style="padding-top: 20px;background: #fff;position:fixed;top:40px;left:0;z-index:99">
-		    <div class="mui-col-sm-4 mui-col-xs-4 serach">
-		    	<button class="btn form-control "id="showUserPicker" data='2'style="font-size: 16px !important;">车牌号码</button>
-		    	<span></span>
-		    </div>
-		    <div class="mui-col-sm-6 mui-col-xs-6 media">
-		        <input type="text" class="form-control" id='seach'>
-		    </div>
-		    <div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn" id="btn"style="font-size: 16px !important;">查询</button></div>
+		<div class="mui-row"style="padding-top: 20px;background: #fff;width:100%;position:fixed;top:40px;left:0;z-index:99">
+		    <div class="mui-row">
+				<div class="mui-col-sm-4 mui-col-xs-4 serach">
+					<button class="btn form-control "id="showUserPicker" data='2'style="font-size: 16px !important;">车牌号码</button>
+					<span></span>
+				</div>
+				<div class="mui-col-sm-6 mui-col-xs-6 media">
+					<input type="text" class="form-control" id='seach'>
+				</div>
+				<div class="mui-col-sm-2 mui-col-xs-2"><button type="button" class="mui-btn" id="btn"style="font-size: 16px !important;">查询</button></div>
+			</div>
+			<div class="mui-row">
+				<div class="mui-col-sm-12 mui-col-xs-12 "style="padding-left:15px;padding-right: 15px;">
+					<input type="text"  id="danwei" class="form-control" placeholder="单位"readonly style="background:#fff!important;">
+				</div>
+			</div>
 		</div>
-		<div class="container "style='margin-top:69px'>
-				
+		<div class="container "style='margin-top:128px'>
 		<ul class="mui-table-view">
-		        <li class="mui-table-view-cell" v-for="(item,index) in items" :data-id=item.id>
+		        <li class="mui-table-view-cell" v-for="(item,index) in items" @click="remo(item)" :data-id=item.id>
 		            <a class="mui-navigate-right">
 						<p class="mui-col-sm-6 mui-col-xs-6" style="padding:0">单位:{{item.orgname}}</p>
 						<p class="mui-col-sm-6 mui-col-xs-6"style="padding:0">负责人:{{item.fzr}}</p>
+						<p class="mui-col-sm-6 mui-col-xs-6"style="padding:0">是否统建:{{item.carshowtype=='0'?'是':'否'}}</p>
 		            </a>
 		        </li>
 		    </ul>
 			<p v-if='items.length<1'style='position:absolute;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
+
 		</div>
 	</div>
 </div>
@@ -75,13 +83,14 @@
 			};
 			//普通示例
 			var userPicker = new $.PopPicker();
-			userPicker.setData([{
+			userPicker.setData([
+			{
 				value: '2',
 				text: '车牌号码'
-			}, {
+			}/*, {
 				value: '1',
 				text: '车辆型号'
-			}]);
+			}*/]);
 			var showUserPickerButton = doc.getElementById('showUserPicker');
 			var userResult = doc.getElementById('userResult');
 			showUserPickerButton.addEventListener('tap', function(event) {
@@ -100,17 +109,40 @@
 	var vm=new Vue({
 				el:'#root',
 				data:{
-					author:'gzcllc1',
+					author:'',
 					title:'',
 					type:'',
 					items:[]
+				},
+				methods:{
+					remo:function(item){
+						 //触发子窗口变更新闻详情
+						mui.fire(webview_detail, 'get_detail', {
+							guid:item.id,
+							title:this.title,
+						});
+						//打开详情页面
+						 mui.openWindowWithTitle({
+							url:'oneselDetail.html',
+							id:'oneselDetail',
+							createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+							show:{
+							  autoShow:true,//页面loaded事件发生后自动显示，默认为true
+							  aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+							  //duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+							  event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+							  extras:{}//窗口动画是否使用图片加速
+							},
+							waiting:{
+							  autoShow:true,//自动显示等待框，默认为true
+							  title:'正在加载...',//等待对话框上显示的提示内容
+								}
+						})
+					}
 				}
 			})
 
-	mui.init()
-	window.onload=function(){	
-	}
-	
+
 	mui.plusReady(function() {
     //预加载详情页
     webview_detail = mui.preload({
@@ -121,12 +153,20 @@
 	window.addEventListener('get_detail',function(event){
 		vm.title=event.detail.guid;
 		vm.type=event.detail.time
+
 			plus.nativeUI.showWaiting( '正在加载' )
-				mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar",{
+				mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar",{
 					dataType:'json',
 					type:'get',
 					success:function(res){
-						if(vm.type==='tongjian'){
+					console.log(res)
+						for(var i=0;i<res.data.length;i++){
+
+							vm.items.push(res.data[i])
+
+						}
+
+						/*if(vm.type==='tongjian'){
 							for(var i=0;i<res.data.length;i++){
 								if(res.data[i].carshowtype==0){
 								vm.items.push(res.data[i])
@@ -135,35 +175,60 @@
 							setTimeout(function(){
 								plus.nativeUI.closeWaiting()
 							},500)
-						}else{
+						}else if(vm.type==='zijian'){
 							for(var i=0;i<res.data.length;i++){
 								if(res.data[i].carshowtype==1){
 								vm.items.push(res.data[i])
 								}
 							}
-							setTimeout(function(){
+							//setTimeout(function(){
 								plus.nativeUI.closeWaiting()
-							},500)
-						}
+							//},500)
+						}*/
+
 					},
 					error:function(xhr,type,errorThrown){
 						plus.nativeUI.closeWaiting();
 						alert('错误'+xhr.status+type+errorThrown)
 					},
         			complete :function(){
-        				 setTimeout(function(){
+
         					 plus.nativeUI.closeWaiting()
-        				 },500)
+
         			 }
 				})
 
 
+
 	  document.getElementById('btn').addEventListener('tap',function(){
 		var value=document.getElementById('seach').value
+		var name=document.getElementById('danwei').getAttribute('data')||""
 		var showUserPicker=document.getElementById('showUserPicker')
-		if(showUserPicker.innerText=='车牌号码'){
+			plus.nativeUI.showWaiting( '正在加载' )
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar?carcode="+value+"&orgid="+name,{
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				success:function(data){
+					if(data.success==true){
+							vm.items=data.data;
+						document.getElementById('seach').value=""
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					plus.nativeUI.closeWaiting();
+					alert('错误'+xhr.status+type+errorThrown)
+				},
+				complete :function(){
+					 setTimeout(function(){
+						 plus.nativeUI.closeWaiting()
+					 },500)
+				 }
+			});
+
+
+		/*if(showUserPicker.innerText=='车牌号码'){
 				plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar?carcode="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar?carcode="+value+"&orgid="+name,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -184,7 +249,7 @@
 			});
 		}else if(showUserPicker.innerText=='车辆型号'){
 			plus.nativeUI.showWaiting( '正在加载' )
-			mui.ajax("http://127.0.0.1:10261/itsm/rest/api/v2/itsm/car/getCar?carmodel="+value,{
+			mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/getCar?carmodel="+value+"&orgid="+name,{
 				dataType:'json',//服务器返回json格式数据
 				type:'get',//HTTP请求类型
 				success:function(data){
@@ -205,29 +270,20 @@
 					 },500)
 				 }
 			});
-		}
+		}*/
 	})
 
 
 
-	})
-
-     mui.back = function() {
-				plus.webview.currentWebview().hide("auto", 300);
-				var self = plus.webview.currentWebview();
-				self.addEventListener("hide",function (e) {
-					vm.author='',
-					vm.title='',
-					vm.type='',
-					vm.items=[]
-				},false);
-			}
 
 
-   mui('.top').on('tap', '.mui-table-view .mui-table-view-cell', function(e) {
-			
+
+   /*mui('.top').on('tap', '.mui-table-view .mui-table-view-cell', function(e) {
+  	e.stopPropagation()
+alert()
     	 //触发子窗口变更新闻详情
 		mui.fire(webview_detail, 'get_detail', {
+
 		    guid: this.getAttribute('data-id'),
 		    title:vm.title,
 		});
@@ -249,9 +305,53 @@
 			    }
 		})
 
-   })
+   })*/
    
 });
+ mui.back = function() {
+				plus.webview.currentWebview().hide("auto", 300);
+				var self = plus.webview.currentWebview();
+				self.addEventListener("hide",function (e) {
+					vm.author='';
+					vm.title='';
+					vm.type='';
+					vm.items=[];
+					document.getElementById('danwei').value = '';
+                    document.getElementById('danwei').setAttribute('data','')
+				},false);
+			}
+
+document.getElementById('danwei').addEventListener('tap', function(event) {
+        var evt=event ||window.event
+        evt.stopPropagation()
+        var userPicker = new mui.PopPicker();
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/acm/user/org",{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+                var ni=[]
+                for(var n in res.data){
+                    ni.push({
+                        text:res.data[n].name,
+                        id:res.data[n].id
+                    })
+                }
+                userPicker.setData(ni);
+                userPicker.show(function(items) {
+                    document.getElementById('danwei').value = items[0].text;
+                    document.getElementById('danwei').setAttribute('data',items[0].id)
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                    userPicker.dispose()
+                });
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                alert('错误'+xhr.status+type+errorThrown)
+            }
+        })
+    }, false);
+	})
 </script>
 </body>
 

@@ -1,0 +1,464 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/new_file.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css"/>
+    <style type="text/css">
+			::-webkit-input-placeholder { /* WebKit browsers */
+		　　color:#555;font-size: 16px;
+		　　}
+		　　:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		　　color:#555;font-size: 16px;
+		　　}
+		　　::-moz-placeholder { /* Mozilla Firefox 19+ */
+		　　color:#555;font-size: 16px;
+		　　}
+		　　:-ms-input-placeholder { /* Internet Explorer 10+ */
+		　　color:#555;
+		font-size: 16px;
+		　　}
+		p{color: #333;padding-top: 10px;font-size: 16px;}
+		.time{background:#fff !important;;}
+		.ellipsis{
+				margin: 0 15px 0 0;
+				padding: 0 15px 0 0;
+			}
+		</style>
+</head>
+<div id="root">
+    <header class="mui-bar mui-bar-nav hrader">
+        <a class="mui-action-back black mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">{{title}}</h1>
+        <span type="button" class="mui-icon mui-icon-search mui-pull-right"style="color: #fff;font-weight: bold;" id="sear"></span>
+    </header>
+    <div class="mui-content top">
+        <div :style='activeFixed'style="width:100%">
+            <!--<div class="mui-row">-->
+            <!--<div class="mui-col-sm-4 mui-col-xs-4 serach"style="padding-left: 15px;">-->
+            <!--<input type="text" id='danwei' class="form-control" placeholder="单位"readonly style="background:#fff!important;">-->
+            <!--</div>-->
+            <!--<div class="mui-col-sm-4 mui-col-xs-4 serach">-->
+            <!--<input id="bumen"  type="text" class="form-control" placeholder="部门" readonly style="background:#fff!important;">-->
+            <!--</div>-->
+            <!--<div class="mui-col-sm-4 mui-col-xs-4 serach"style="padding-right: 15px;">-->
+            <!--<input type="text"  id="jianchar" class="form-control" placeholder="创建人"readonly style="background:#fff!important;">-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="mui-row">
+                <div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-left: 15px;">
+                    <input type="text"data-options='{}'
+                           onclick='getTime(this)'readonly='readonly'  class="datatime form-control time"style="background:#fff !important;" placeholder="请选择开始时间" id="startTime">
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-right: 15px;">
+                    <input type="text"data-options='{}'
+                           onclick='getTime(this)'readonly='readonly'  class="datatime form-control time"style="background:#fff !important;" placeholder="请选择结束时间" id="endTime">
+                </div>
+                <!--<div class="mui-col-sm-6 mui-col-xs-6"style="padding-right: 15px;margin-top:10px;">
+                    <input type="text"  class="form-control time datatime"
+                           onclick='getTime(this)'data-options='{}'readonly='readonly'style="background:#fff !important;" placeholder="结束时间">
+                </div>-->
+            </div>
+        </div>
+        <template v-if="author==='yjbzgl'">
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <div v-if="item.bizObj.yjsjmc"class=" mui-ellipsis ellipsis" >标题:{{item.bizObj.yjsjmc}}</div>
+                        <div v-else class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</div>
+                        <div class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</div>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='jjbgl'">
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='zxgd'">
+
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='gzcllc1'">
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='sbxjjl1'">
+            <!--应急车设备检查记录-->
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='ddzdjc'">
+            <!--<div class="mui-row":style='activeFixed'>
+                <div class="mui-col-sm-6 mui-col-xs-6 serach"style="padding-left: 15px;">
+                    <input type="text" class="form-control" placeholder="单位">
+                    &lt;!&ndash;<button class="btn form-control "id="showUserPicker" data='2' style="font-size: 16px !important;padding: 0 !important;">单位</button>
+                    <span></span>&ndash;&gt;
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6 serach"style="padding-right: 15px;">
+                    <input type="text" class="form-control" placeholder="检查人">
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6 media"style="padding-left: 15px;margin-top: 10px;">
+                    <input type="text"data-options='{}'
+                           onclick='getTime(this)'readonly='readonly'  class="datatime form-control time"style="background:#fff !important;" placeholder="开始时间">
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6"style="padding-right: 15px;margin-top:10px;">
+                    <input type="text"  class="form-control time datatime"
+                           onclick='getTime(this)'data-options='{}'readonly='readonly'style="background:#fff !important;" placeholder="结束时间">
+                </div>
+            </div>-->
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='TestPro'">
+            <!--联调测试-->
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='dqgsTest'">
+            <!--联调测试-->
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <template v-else-if="author==='xcjszclc'">
+
+            <ul class="mui-table-view":style='activeMargin'>
+                <li class="mui-table-view-cell append"v-for="(item,index) in items" :data-id=item.processId>
+                    <a class="mui-navigate-right">
+                        <p class=" mui-ellipsis ellipsis">标题:{{item.bizObj.title}}</p>
+                        <p class=" mui-ellipsis ellipsis">创建时间:{{item.createTime}}</p>
+                    </a>
+                </li>
+            </ul>
+        </template>
+        <p v-if='items.length<1'style='position:absolute;top:50%;left:38%;font-size:20px;color:#8f8f94'> 暂无数据</p>
+    </div>
+</div>
+<body>
+<script src="../../js/mui.min.js"></script>
+<script  src="../../js/vue.min.js"></script>
+<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.dtpicker.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+
+var vm=new Vue({
+el:'#root',
+data:{
+activeFixed:{
+    position:'fixed',
+    paddingTop: '20px',
+    background: '#519be7',
+    zIndex:99
+},
+activeMargin:{
+    marginTop:'70px'
+},
+author:'gzcllc1',
+title:'',
+type:'',
+items:'',
+getLogin:'',
+total:''
+
+}
+})
+function getTime(obj){
+    var picker = new mui.DtPicker({
+ "type": "datatime",
+ beginDate: new Date(1990, 04, 25),//设置开始日期
+endDate: new Date(2099, 04, 25),//设置结束日期
+});
+    picker.show(function(rs) {
+// alert(rs.y.value+"-"+rs.m.value+"-"+rs.d.value+' '+rs.h.value+':'+rs.i.value)
+/*
+ * rs.value 拼合后的 value
+ * rs.text 拼合后的 text
+ * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+ * rs.m 月，用法同年
+ * rs.d 日，用法同年
+ * rs.h 时，用法同年
+ * rs.i 分（minutes 的第二个字母），用法同年
+ */
+obj.value =rs.y.value+"-"+rs.m.value+"-"+rs.d.value+' '+rs.h.value+':'+rs.i.value+":00";
+/*
+ * 返回 false 可以阻止选择框的关闭
+ * return false;
+ */
+/*
+ * 释放组件资源，释放后将将不能再操作组件
+ * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+ * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+ * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+ */
+picker.dispose();
+});
+}
+mui.plusReady(function(){
+
+
+
+
+
+
+
+
+
+window.addEventListener('detail',function(event){
+
+  vm.title= event.detail.guid;
+  var author=event.detail.author;
+  vm.author=author;
+  vm.type=event.detail.title;
+  vm.getLogin=event.detail.getLogin
+  function windowHeight(){
+  return (document.compatMode == "CSS1Compat")?
+  document.documentElement.clientHeight:
+  document.body.clientHeight;
+ }
+  //获取页面文档的总高度
+  function documentHeight(){
+  //现代浏览器（IE9+和其他浏览器）和IE8的document.body.scrollHeight和document.documentElement.scrollHeight都可以
+  return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+ }
+  //获取页面顶部被卷起来的高度
+  function scrollTop(){
+  return Math.max(
+   //chrome
+   document.body.scrollTop,
+   //firefox/IE
+   document.documentElement.scrollTop);
+ }
+  //参与
+//if(vm.type==='chuangjian'){//创建
+      plus.nativeUI.showWaiting( '正在加载' )
+       mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/create?userId="+vm.getLogin+"&moduleId="+vm.author,{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+                if(res.success==false){
+                    mui.alert('数据有误，请返回')
+                     plus.nativeUI.closeWaiting()
+
+                }
+                vm.total=res.total
+                vm.items=res.ticket;
+
+                //总条数
+                    var num=vm.total;
+                    //总共多少页；
+                    var pageSize=num/20
+                    //第几页
+                    pageStatr=1
+        window.onscroll=function(){
+                     if(scrollTop() + windowHeight() >= documentHeight()){
+                    pageStatr++;
+                    if(pageStatr<=Math.ceil(pageSize)){
+
+                    waterallowDatatwo(pageStatr);
+                    }else{
+                         plus.nativeUI.toast( "没有更多数据了")
+                    }
+
+                  }
+                }
+
+
+
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                alert('错误'+xhr.status+type+errorThrown)
+            },
+         complete :function(){
+              setTimeout(function(){
+                  plus.nativeUI.closeWaiting()
+              },500)
+          }
+        })
+
+       function waterallowDatatwo(pageStatr){
+
+         plus.nativeUI.showWaiting( '正在加载...请稍后' )
+         mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/create?userId="+vm.getLogin+"&moduleId="+vm.author+"&pageNum="+pageStatr,{
+        dataType:'json',//服务器返回json格式数据
+        type:'get',//HTTP请求类型
+        timeout:12000,
+        success:function(data){
+
+                for(var i=0;i<data.ticket.length;i++){
+
+                vm.items.push(data.ticket[i]);
+
+                }
+
+        },
+        error:function(xhr,type,errorThrown){
+            plus.nativeUI.closeWaiting();
+
+                mui.alert("与大厅连接中断,请退出APP重新进入大厅唤醒")
+        },
+         complete :function(){
+              setTimeout(function(){
+                  plus.nativeUI.closeWaiting()
+              },500)
+          }
+    });
+    }
+
+       var sear=document.getElementById('sear')
+
+        sear.addEventListener('tap', function(event) {
+
+            var evt=event ||window.event
+                evt.stopPropagation()
+            plus.nativeUI.showWaiting( '正在加载' )
+            //var name=jianchar.getAttribute('data')||"";
+
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/create?userId="+vm.getLogin+"&moduleId="+vm.author+"&startTime="+document.getElementById('startTime').value+"&endTime="+document.getElementById('endTime').value,{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+            if(res.success==false){
+                    mui.alert('数据有误，请返回')
+                     plus.nativeUI.closeWaiting()
+
+                }
+                vm.items=res.ticket;
+
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                alert('错误'+xhr.status+type+errorThrown)
+            },
+         complete :function(){
+              setTimeout(function(){
+                  plus.nativeUI.closeWaiting()
+              },500)
+          }
+        })
+
+}, false);
+  /*}else if(vm.type=='chaxun'){
+            plus.nativeUI.showWaiting( '正在加载' )
+        mui.ajax("http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/query/onhand?userId="+vm.getLogin+"&moduleId="+vm.author,{
+            dataType:'json',
+            type:'get',
+            success:function(res){
+                vm.items=res.ticket;
+                //setTimeout(function(){
+                    plus.nativeUI.closeWaiting()
+                //},500)
+            },
+            error:function(xhr,type,errorThrown){
+                plus.nativeUI.closeWaiting();
+                alert('错误'+xhr.status+type+errorThrown)
+            }
+        })
+  }*/
+
+
+
+webview_detail = mui.preload({
+url: 'tableView.html',
+id: 'tableView',
+});
+mui(".top").on("tap",".mui-table-view .append",function(e){
+mui.fire(webview_detail, 'get_detail', {
+guid:vm.title,
+author:vm.author,
+id:this.getAttribute('data-id'),
+getLogin:vm.getLogin
+});
+mui.openWindowWithTitle({
+url:'tableView.html',
+id:'tableView',
+createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+show:{
+autoShow:true,//页面loaded事件发生后自动显示，默认为true
+aniShow:'slide-in-right',//页面显示动画，默认为”slide-in-right“；
+//duration:animationTime,//页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+event:'titleUpdate',//页面显示时机，默认为titleUpdate事件时显示
+extras:{}//窗口动画是否使用图片加速
+},
+waiting:{
+autoShow:true,//自动显示等待框，默认为true
+title:'正在加载...',//等待对话框上显示的提示内容
+}
+})
+plus.nativeUI.showWaiting( '正在加载' )
+/* setTimeout(function(){
+plus.nativeUI.closeWaiting()
+},500)*/
+})
+
+
+  mui.back = function() {
+    plus.webview.currentWebview().hide("auto", 300);
+
+    var self = plus.webview.currentWebview();
+    self.addEventListener("hide",function (e) {
+        vm.author='',
+        vm.title='',
+        vm.type='',
+        vm.items='',
+
+    document.getElementById('startTime').value="",
+    document.getElementById('endTime').value=""
+    },false);
+}
+})
+})
+
+</script>
+</body>
+
+</html>

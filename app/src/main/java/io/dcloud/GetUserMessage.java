@@ -1,11 +1,14 @@
 package io.dcloud;
 
+
+
 import cn.com.petrochina.BSMCPBaseUtils;
 import io.dcloud.application.DCloudApplication;
 
 /**
- * Created by admin on 2017/12/8.
+ * Created by 冯金琪 on 2017/12/8.
  */
+
 
 public class GetUserMessage {
    //rivate String name;
@@ -67,4 +70,8 @@ public class GetUserMessage {
         bsmcpBaseUtils = new BSMCPBaseUtils(DCloudApplication.getInstance());
         return bsmcpBaseUtils.getSubAccounts();
     }
+
+
+
+
 }
