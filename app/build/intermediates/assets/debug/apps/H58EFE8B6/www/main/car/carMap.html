@@ -204,7 +204,7 @@ plus.geolocation.getCurrentPosition( function(option){
 			obj.wd=String(option.coords.longitude),
 			obj.code=document.getElementById('showUserPicker').getAttribute('data-id'),
 			obj.gd="5"
-			alert(JSON.stringify(obj))
+			//alert(JSON.stringify(obj))
 			mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/car/instGps',{
 				data:JSON.stringify(obj),
 				dataType:'json',//服务器返回json格式数据

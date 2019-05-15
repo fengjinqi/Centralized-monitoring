@@ -103,7 +103,7 @@ var vm=new Vue({
      methods:{
          commintData:function(item){
             var watiting=plus.nativeUI.showWaiting('提交中...')
-
+            alert(JSON.stringify(item))
             mui.ajax('http://127.0.0.1:10332/itsm/rest/api/v2/itsm/tickets/create',{
                  data:item,
                  dataType:'json',
@@ -197,6 +197,7 @@ var vm=new Vue({
                               mui.back()
                          }*/
                      }else{
+                     alert(JSON.stringify(data))
                           plus.nativeUI.toast( data.message=='权限不足!'?data.message:'工单创建失败');
                           watiting.close()
                           mui.back()
